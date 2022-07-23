@@ -1,6 +1,6 @@
 import { ignoreParameters, parameterNames } from "../model/parameterNames";
 import { AnyParameter, NamedParameters } from "../model/parameters";
-import { Property } from "../model/vCard";
+import { Property } from "../model/properties";
 import { isPropertyObject } from "../validate/properties";
 import { escapeParameterValue } from "./escape";
 
@@ -20,7 +20,7 @@ export function generateParameters<Parameters extends NamedParameters | AnyParam
   return Object.entries(parameters)
     .filter(([name]) => ignoreParameters.includes(name) === false)
     .map(([name, value]) => {
-      const parameterName = parameterNames[name] ? parameterNames[name] : name;
+      const parameterName = name in parameterNames ? parameterNames[name as keyof NamedParameters] : name;
       const valueList = value instanceof Array ? value : [value];
       const escapedValues = valueList.map((value) => escapeParameterValue(value));
 

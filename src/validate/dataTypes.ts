@@ -7,12 +7,10 @@ import {
   TimeStamp,
   LanguageTag,
   Uri,
-  Kind,
-  Gender,
-  TelType,
   TimeOnly,
   UtcOffset,
 } from "../model/datatypes";
+import { Gender, Kind } from "../model/propertyValues";
 
 export function isText(value: any): value is Text {
   return typeof value === "string";
@@ -73,10 +71,6 @@ export function isKind(value: any): value is Kind {
 
 export function isGender(value: any): value is Gender {
   return typeof value === "string" && value in Gender;
-}
-
-export function isTelType(value: any): value is TelType {
-  return typeof value === "string" && value in TelType;
 }
 
 export function ianaIsUtf8(value: any): boolean {

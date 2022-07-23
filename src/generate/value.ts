@@ -4,9 +4,7 @@ import {
   DateOnly,
   DateTime,
   DateTimeString,
-  Kind,
   LanguageTag,
-  Relation,
   TimeOnly,
   TimeStamp,
   TimeString,
@@ -14,6 +12,7 @@ import {
   UtcOffset,
   ValueType,
 } from "../model/datatypes";
+import { Kind } from "../model/propertyValues";
 import { escapeValue } from "./escape";
 
 interface PartialDate {
@@ -218,10 +217,6 @@ export function generateKindValue(value: Kind | Kind[], separator: string = ",")
 }
 
 export function generateTypeValue(value: string | string[], separator: string = ","): string {
-  return value instanceof Array ? value.join(separator) : value;
-}
-
-export function generateRelationValue(value: Relation | Relation[], separator: string = ","): string {
   return value instanceof Array ? value.join(separator) : value;
 }
 

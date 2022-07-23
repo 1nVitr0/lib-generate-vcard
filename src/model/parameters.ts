@@ -1,5 +1,38 @@
 import { LanguageTag, IanaToken, XName, ValueType } from "./datatypes";
 
+export enum TelType {
+  Text = "text",
+  Voice = "voice",
+  Fax = "fax",
+  Cell = "cell",
+  Video = "video",
+  Pager = "pager",
+  Textphone = "textphone",
+}
+
+export enum RelationType {
+  Contact = "contact",
+  Acquaintance = "acquaintance",
+  Friend = "friend",
+  Met = "met",
+  CoWorker = "co-worker",
+  Colleague = "colleague",
+  CoResident = "co-resident",
+  Neighbor = "neighbor",
+  Child = "child",
+  Parent = "parent",
+  Sibling = "sibling",
+  Spouse = "spouse",
+  Kin = "kin",
+  Muse = "muse",
+  Crush = "crush",
+  Date = "date",
+  Sweetheart = "sweetheart",
+  Me = "me",
+  Agent = "agent",
+  Emergency = "emergency",
+}
+
 export interface LanguageParameter {
   language?: LanguageTag;
 }

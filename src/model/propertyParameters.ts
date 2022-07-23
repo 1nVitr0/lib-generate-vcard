@@ -1,5 +1,4 @@
 import { IanaToken, XName } from "./datatypes";
-import { Relation, TelType } from "./enums";
 import {
   AltIdParameter,
   AnyParameter,
@@ -10,7 +9,9 @@ import {
   MediaTypeParameter,
   PIdParameter,
   PrefParameter,
+  RelationType,
   SortAsParameter,
+  TelType,
   TimezoneParameter,
   TypeParameter,
   ValueParameter,
@@ -101,7 +102,7 @@ export interface RelatedPropertyParameters
     MediaTypeParameter,
     LanguageParameter,
     BasePropertyParameters,
-    TypeParameter<Relation> {}
+    TypeParameter<RelationType> {}
 
 export interface CategoriesPropertyParameters extends ValueParameter<"text">, BaseTypedPropertyParameters {}
 

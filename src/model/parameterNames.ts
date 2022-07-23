@@ -1,6 +1,20 @@
 import { NamedParameters } from "./parameters";
 
-export const parameterNames: Record<keyof NamedParameters, string> = {
+export type ParameterName =
+  | "LANGUAGE"
+  | "ALTID"
+  | "CALSCALE"
+  | "GEO"
+  | "LABEL"
+  | "MEDIATYPE"
+  | "PID"
+  | "PREF"
+  | "SORT-AS"
+  | "TZ"
+  | "TYPE"
+  | "VALUE";
+
+export const parameterNames: Record<keyof NamedParameters, ParameterName> = {
   language: "LANGUAGE",
   altId: "ALTID",
   calScale: "CALSCALE",

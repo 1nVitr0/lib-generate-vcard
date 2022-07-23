@@ -1,130 +1,147 @@
 import {
-  DateTimeString,
-  IanaToken,
-  LanguageTag,
-  Text,
-  TimezoneString,
-  Uri,
-  XName,
-  DateAndOrTime,
-  TimeStamp,
-} from "./datatypes";
-import { Gender, Kind } from "./enums";
-import { AltIdParameter } from "./parameters";
-import { AddressPropertyValue, GenderPropertyValue, NamePropertyValue } from "./properties";
-import {
-  AddressPropertyParameters,
-  AnniversaryPropertyParameters,
-  BirthdayPropertyParameters,
-  CalendarAddressUriPropertyParameters,
-  CalendarUriPropertyParameters,
-  CategoriesPropertyParameters,
-  ClientPIdMapParameters,
-  EmailPropertyParameters,
-  FbUrlPropertyParameters,
-  FullNamePropertyParameters,
-  GenderPropertyParameters,
-  GeoLocationPropertyParameters,
-  IMPPPropertyParameters,
-  KeyPropertyParameters,
-  KindPropertyParameters,
-  LanguagePropertyParameters,
-  LogoPropertyParameters,
-  MemberPropertyParameters,
-  NickNamePropertyParameters,
-  NotePropertyParameters,
-  OrganizationPropertyParameters,
-  PhotoPropertyParameters,
-  ProductIdPropertyParameters,
-  RelatedPropertyParameters,
-  RevisionPropertyParameters,
-  RolePropertyParameters,
-  SoundPropertyParameters,
-  SourcePropertyParameters,
-  TelPropertyParameters,
-  TimezonePropertyParameters,
-  TitlePropertyParameters,
-  UIdPropertyParameters,
-  UrlPropertyParameters,
-  VersionPropertyParameters,
-  XmlPropertyParameters,
-} from "./propertyParameters";
-
-export type PropertyValue = Text | number | Date | (Text | number | Date)[];
-export type RecordedPropertyValue = Record<string, PropertyValue>;
-
-export type Property<
-  Value extends PropertyValue | RecordedPropertyValue = PropertyValue | RecordedPropertyValue,
-  Params extends {} = {}
-> = Value | { value: Value; parameters?: Params };
-export type MultiProperty<
-  Value extends PropertyValue | RecordedPropertyValue = PropertyValue | RecordedPropertyValue,
-  Params extends {} = {}
-> =
-  | { value: Value; parameters?: Params }[]
-  | { commonParameters?: Params; values: Property<Value, Params>[] }
-  | (Value extends RecordedPropertyValue ? Value[] : never);
-export type MultiOrSingleProperty<
-  Value extends PropertyValue | RecordedPropertyValue = PropertyValue | RecordedPropertyValue,
-  Params extends {} = {}
-> = MultiProperty<Value, Params> | Value;
-export type AltProperty<
-  Value extends PropertyValue | RecordedPropertyValue = PropertyValue | RecordedPropertyValue,
-  Params extends AltIdParameter = AltIdParameter
-> = { value: Value; parameters: Params }[] | { value: Value; parameters: Params } | Value;
+  AddressProperty,
+  AnniversaryProperty,
+  BeginProperty,
+  BirthdayProperty,
+  CalendarAddressUriProperty,
+  CalendarUriProperty,
+  CategoriesProperty,
+  ClientPidMapProperty,
+  EmailProperty,
+  EndProperty,
+  FbUrlProperty,
+  FullNameProperty,
+  GenderProperty,
+  GeoLocationProperty,
+  ImppProperty,
+  KeyProperty,
+  KindProperty,
+  LanguageProperty,
+  LogoProperty,
+  MemberProperty,
+  NameProperty,
+  NickNameProperty,
+  NoteProperty,
+  OrganizationProperty,
+  PhotoProperty,
+  ProductIdProperty,
+  Property,
+  RelatedProperty,
+  RevisionProperty,
+  RoleProperty,
+  SoundProperty,
+  SourceProperty,
+  TelProperty,
+  TimezoneProperty,
+  TitleProperty,
+  UidProperty,
+  UrlProperty,
+  VersionProperty,
+  XmlProperty,
+} from "./properties";
+import { PropertyName } from "./propertyNames";
+import { Kind } from "./propertyValues";
+import { IanaToken, XName } from "./datatypes";
+import { MultiProperty } from "./properties";
 
 export interface VCard {
   // General Properties
-  begin?: Property<"VCARD", {}>;
-  end?: Property<"VCARD", {}>;
-  source?: AltProperty<Uri, SourcePropertyParameters>;
-  kind: MultiOrSingleProperty<Kind | XName | IanaToken, KindPropertyParameters>;
-  xml?: MultiOrSingleProperty<Text, XmlPropertyParameters>;
+  begin?: BeginProperty;
+  end?: EndProperty;
+  source?: SourceProperty;
+  kind: KindProperty;
+  xml?: XmlProperty;
   // Identification Properties
-  fullName: MultiOrSingleProperty<Text, FullNamePropertyParameters>;
-  name?: AltProperty<Text | (RecordedPropertyValue & NamePropertyValue), FullNamePropertyParameters>;
-  nickName?: MultiOrSingleProperty<Text | Text[], NickNamePropertyParameters>;
-  photo?: MultiOrSingleProperty<Uri, PhotoPropertyParameters>;
-  birthday?: AltProperty<DateAndOrTime, BirthdayPropertyParameters>;
-  anniversary?: AltProperty<DateAndOrTime, AnniversaryPropertyParameters>;
-  gender?: Property<Gender | [Gender, Text] | (RecordedPropertyValue & GenderPropertyValue), GenderPropertyParameters>;
+  fullName: FullNameProperty;
+  name?: NameProperty;
+  nickName?: NickNameProperty;
+  photo?: PhotoProperty;
+  birthday?: BirthdayProperty;
+  anniversary?: AnniversaryProperty;
+  gender?: GenderProperty;
   // Delivery Addressing Properties
-  address?: MultiOrSingleProperty<RecordedPropertyValue & AddressPropertyValue, AddressPropertyParameters>;
+  address?: AddressProperty;
   // Communications Properties
-  tel?: MultiOrSingleProperty<Uri | Text, TelPropertyParameters>;
-  email?: MultiOrSingleProperty<Text, EmailPropertyParameters>;
-  impp?: MultiOrSingleProperty<Uri, IMPPPropertyParameters>;
-  language?: MultiOrSingleProperty<LanguageTag, LanguagePropertyParameters>;
+  tel?: TelProperty;
+  email?: EmailProperty;
+  impp?: ImppProperty;
+  language?: LanguageProperty;
   // Geographical Properties
-  timezone?: MultiOrSingleProperty<TimezoneString | Uri | Text, TimezonePropertyParameters>;
-  geoLocation?: MultiOrSingleProperty<Uri, GeoLocationPropertyParameters>;
+  timezone?: TimezoneProperty;
+  geoLocation?: GeoLocationProperty;
   // Organizational Properties
-  title?: MultiOrSingleProperty<Text, TitlePropertyParameters>;
-  role?: MultiOrSingleProperty<Text, RolePropertyParameters>;
-  logo?: MultiOrSingleProperty<Uri, LogoPropertyParameters>;
-  organization?: MultiOrSingleProperty<Text | Text[], OrganizationPropertyParameters>;
-  related?: MultiOrSingleProperty<Uri | Text, RelatedPropertyParameters>;
+  title?: TitleProperty;
+  role?: RoleProperty;
+  logo?: LogoProperty;
+  organization?: OrganizationProperty;
+  related?: RelatedProperty;
   // Explanatory Properties
-  categories?: MultiOrSingleProperty<Text | Text[], CategoriesPropertyParameters>;
-  note?: MultiOrSingleProperty<Text, NotePropertyParameters>;
-  productId?: Property<Text, ProductIdPropertyParameters>;
-  revision?: Property<TimeStamp, RevisionPropertyParameters>;
-  sound?: MultiOrSingleProperty<Uri, SoundPropertyParameters>;
-  uid?: Property<Uri | Text, UIdPropertyParameters>;
-  clientPidMap?:
-    | MultiOrSingleProperty<[Text, Text] | { pid: Text; uri: Text }, ClientPIdMapParameters>
-    | Record<Text, Property<Text, ClientPIdMapParameters>>;
-  url?: MultiOrSingleProperty<Uri, UrlPropertyParameters>;
-  version?: Property<"4.0", VersionPropertyParameters>;
+  categories?: CategoriesProperty;
+  note?: NoteProperty;
+  productId?: ProductIdProperty;
+  revision?: RevisionProperty;
+  sound?: SoundProperty;
+  uid?: UidProperty;
+  clientPidMap?: ClientPidMapProperty;
+  url?: UrlProperty;
+  version?: VersionProperty;
   // Security Properties
-  key?: MultiOrSingleProperty<Uri | Text, KeyPropertyParameters>;
-  fbUrl?: MultiOrSingleProperty<Uri, FbUrlPropertyParameters>;
-  calendarAddressUri?: MultiOrSingleProperty<Uri, CalendarAddressUriPropertyParameters>;
-  calendarUri?: MultiOrSingleProperty<Uri, CalendarUriPropertyParameters>;
+  key?: KeyProperty;
+  fbUrl?: FbUrlProperty;
+  calendarAddressUri?: CalendarAddressUriProperty;
+  calendarUri?: CalendarUriProperty;
 }
 
 export interface VCardGroup extends VCard {
-  kind: MultiOrSingleProperty<Kind.Group, KindPropertyParameters>;
+  kind: KindProperty<Kind.Group>;
   // Organizational Properties
-  member?: MultiOrSingleProperty<Uri, MemberPropertyParameters>;
+  member?: MemberProperty;
 }
+
+export type VCardListProperty<
+  Name extends PropertyName | XName | IanaToken = PropertyName | XName | IanaToken,
+  Prop extends Property | MultiProperty = Property | MultiProperty
+> = Prop extends Property<infer Value, infer Params>
+  ? { property: Name; value: Value; params?: Params }
+  : Prop extends MultiProperty<infer Value, infer Params>
+  ? { property: Name; value: Value; params?: Params }
+  : never;
+
+export type VCardList = (
+  | VCardListProperty<"BEGIN", BeginProperty>
+  | VCardListProperty<"END", EndProperty>
+  | VCardListProperty<"SOURCE", SourceProperty>
+  | VCardListProperty<"KIND", KindProperty>
+  | VCardListProperty<"XML", XmlProperty>
+  | VCardListProperty<"FN", FullNameProperty>
+  | VCardListProperty<"N", NameProperty>
+  | VCardListProperty<"NICKNAME", NickNameProperty>
+  | VCardListProperty<"PHOTO", PhotoProperty>
+  | VCardListProperty<"BDAY", BirthdayProperty>
+  | VCardListProperty<"ANNIVERSARY", AnniversaryProperty>
+  | VCardListProperty<"GENDER", GenderProperty>
+  | VCardListProperty<"ADR", AddressProperty>
+  | VCardListProperty<"TEL", TelProperty>
+  | VCardListProperty<"EMAIL", EmailProperty>
+  | VCardListProperty<"IMPP", ImppProperty>
+  | VCardListProperty<"LANGUAGE", LanguageProperty>
+  | VCardListProperty<"TZ", TimezoneProperty>
+  | VCardListProperty<"GEO", GeoLocationProperty>
+  | VCardListProperty<"TITLE", TitleProperty>
+  | VCardListProperty<"ROLE", RoleProperty>
+  | VCardListProperty<"LOGO", LogoProperty>
+  | VCardListProperty<"ORG", OrganizationProperty>
+  | VCardListProperty<"RELATED", RelatedProperty>
+  | VCardListProperty<"CATEGORIES", CategoriesProperty>
+  | VCardListProperty<"NOTE", NoteProperty>
+  | VCardListProperty<"PRODID", ProductIdProperty>
+  | VCardListProperty<"REV", RevisionProperty>
+  | VCardListProperty<"SOUND", SoundProperty>
+  // TODO: CLIENTPIDMAP
+  | VCardListProperty<"URL", UrlProperty>
+  | VCardListProperty<"VERSION", VersionProperty>
+  | VCardListProperty<"KEY", KeyProperty>
+  | VCardListProperty<"FBURL", FbUrlProperty>
+  | VCardListProperty<"CALADRURI", CalendarAddressUriProperty>
+  | VCardListProperty<"CALURI", CalendarUriProperty>
+)[];

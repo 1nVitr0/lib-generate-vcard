@@ -1,8 +1,12 @@
-import { VCard, VCardGroup } from "../model/vCard";
+import { VCard, VCardGroup, VCardList } from "../model/vCard";
 import { generateContentLine } from "./contentLine";
+import { PropertyName } from "../model/propertyNames";
 
-export function generateVCard(vCard: VCard | VCardGroup): string {
-  const entries = Object.entries(vCard);
+export function generateVCard(vCard: VCard | VCardGroup | VCardList): string {
+  const entries =
+    vCard instanceof Array
+      ? vCard.map(({ property, value, params }) => [property, { value, params }] as [PropertyName, VCardList[number]])
+      : Object.entries(vCard);
 
   const beginIndex = entries.findIndex(([key]) => key === "begin");
   const endIndex = entries.findIndex(([key]) => key === "end");

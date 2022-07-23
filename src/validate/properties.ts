@@ -1,4 +1,4 @@
-import { MultiProperty, Property, PropertyValue, RecordedPropertyValue } from "../model/vCard";
+import { MultiProperty, Property, PropertyValue, RecordedPropertyValue } from "../model/properties";
 
 export function isPropertyObject(
   property: Property

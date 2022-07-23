@@ -2,7 +2,6 @@ import {
   DateAndOrTime,
   DateOnly,
   DateTime,
-  Kind,
   LanguageTag,
   TimeOnly,
   TimeStamp,
@@ -13,11 +12,11 @@ import {
 import {
   NamePropertyValue,
   PropertyDescriptor,
-  propertyNames,
   AddressPropertyValue,
   GenderPropertyValue,
-} from "../model/properties";
-import { Property, PropertyValue, RecordedPropertyValue, VCard, VCardGroup } from "../model/vCard";
+  Kind,
+} from "../model/propertyValues";
+import { VCard, VCardGroup } from "../model/vCard";
 import { ianaIsUtf8, isUri, isUtcOffset } from "../validate/dataTypes";
 import { isValueParameter } from "../validate/parameters";
 import {
@@ -34,9 +33,11 @@ import {
   generateUriValue,
   generateUtcOffsetValue,
 } from "./value";
-import { generateParameters } from "./parameter";
+import { generateParameters } from "./parameters";
 import { generateKindValue } from "./value";
 import { escapeParameterValue } from "./escape";
+import { propertyNames, PropertyName } from "../model/propertyNames";
+import { Property, PropertyValue, RecordedPropertyValue } from "../model/properties";
 
 function componentList(list: (string | string[])[]): string {
   return list
@@ -61,7 +62,9 @@ function valueTypedProperty(property: string, value: any, type: ValueType, param
     case "boolean":
       return {
         property,
-        value: generateBooleanValue((value as any) instanceof Array ? (value as any).map((v) => !!v) : !!value),
+        value: generateBooleanValue(
+          (value as any) instanceof Array ? (value as any).map((v: boolean) => !!v) : !!value
+        ),
         parameters,
       };
     case "integer":
@@ -79,7 +82,7 @@ function valueTypedProperty(property: string, value: any, type: ValueType, param
 }
 
 export function generateProperty(
-  property: string,
+  propertyKey: string,
   data: Property<PropertyValue | RecordedPropertyValue, any>
 ): PropertyDescriptor {
   const value = typeof data == "object" && "value" in data ? data.value : data;
@@ -90,13 +93,15 @@ export function generateProperty(
     parameterDict.charset = "UTF-8";
   }
 
-  property = property in propertyNames ? propertyNames[property as keyof VCard | keyof VCardGroup] : property;
+  const property = (
+    propertyKey in propertyNames ? propertyNames[propertyKey as keyof VCard | keyof VCardGroup] : propertyKey
+  ) as PropertyName;
   const parameters = generateParameters(parameterDict);
   let components: (string | string[])[] = [];
 
   if (isValueParameter(parameterDict) && typeof value !== "object") {
     // TODO: value is not array?
-    return valueTypedProperty(property, value, parameterDict.value as ValueType, parameters);
+    return valueTypedProperty(propertyKey, value, parameterDict.value as ValueType, parameters);
   }
 
   switch (property) {
@@ -184,7 +189,6 @@ export function generateProperty(
     case "CALADRURI":
     case "CALURI":
     case "MEMBER":
-    case "TZ": // Also TimezoneString | Text
     case "TEL": // Also Text
     case "RELATED": // Also Text
     case "UID": // Also Text
@@ -201,11 +205,6 @@ export function generateProperty(
     case "CATEGORIES":
     case "NOTE":
     case "PRODID":
-    case "TZ": // Also TimezoneString | Uri
-    case "TEL": // Also Uri
-    case "RELATED": // Also Uri
-    case "UID": // Also Uri
-    case "KEY": // Also Uri
     default: // Default to normal text value type
       return { property, value: generateTextValue(value as string | string[]), parameters };
   }
