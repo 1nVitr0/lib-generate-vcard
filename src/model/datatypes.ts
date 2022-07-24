@@ -9,7 +9,7 @@ export type LocalTimeString = Exclude<
   "*:*:*" | "*:*"
 >;
 
-export type TimezoneString = "Z" | `${"+" | "-"}${number}` | `${"+" | "-"}${number}:${number}`;
+export type TimezoneString = "Z" | `${"+" | "-"}${number}${`:${number}` | ""}`;
 
 export type UtcOffset = Exclude<TimezoneString, "Z">;
 
@@ -17,13 +17,10 @@ export type TimeString = LocalTimeString | `${LocalTimeString}${TimezoneString}`
 
 export type DateAndOrTimeString = DateString | TimeString | `${DateString} ${TimeString}`;
 
-export type DateTimeString = `${`*-*-${number}` | `*-${number}-${number}` | `${number}-${number}-${number}`} ${
-  | number
-  | `${number}:${number}${"" | TimezoneString}`
-  | `${number}:*${"" | TimezoneString}`
-  | `${number}:${number}:*${"" | TimezoneString}`
-  | `${number}:*:*${"" | TimezoneString}`
-  | `${number}:${number}:${number}`}${"" | TimezoneString}`;
+export type DateTimeString = `${`*-${number | "*"}-${number}` | `${number | "*"}-${number}-${number}`} ${
+  | `${number}:${number | "*"}`
+  | `${number}:${number}:${number | "*"}`
+  | `${number}:*:*`}${"" | TimezoneString}`;
 
 export type DateOnly = DateString | Date;
 
