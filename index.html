@@ -10,7 +10,37 @@
 <div class="col-8 col-content">
 <div class="tsd-page-title">
 <h2>generate-vcard - v1.0.0</h2></div>
-<div class="tsd-panel tsd-typography"></div></div>
+<div class="tsd-panel tsd-typography">
+<a href="#generate-vcard" id="generate-vcard" style="color: inherit; text-decoration: none;">
+  <h1>Generate vCard</h1>
+</a>
+<p>A simple library for <a href="https://tools.ietf.org/html/rfc6350">vCard</a> generation.</p>
+
+<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+  <h2>Documentation</h2>
+</a>
+<p>For more documentation see <a href="https://1nvitr0.github.io/lib-generate-vcard/">https://1nvitr0.github.io/lib-generate-vcard/</a>.</p>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<pre><code class="language-bash"><span class="hl-0">npm install --save generate-vcard</span>
+</code></pre>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<pre><code class="language-javascript"><span class="hl-1">import</span><span class="hl-0"> </span><span class="hl-2">generateVCard</span><span class="hl-0">, { </span><span class="hl-2">Kind</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;generate-vcard&quot;</span><span class="hl-0">;</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">vCard</span><span class="hl-0"> = </span><span class="hl-6">generateVCard</span><span class="hl-0">({</span><br/><span class="hl-0">  </span><span class="hl-2">kind:</span><span class="hl-0"> </span><span class="hl-2">Kind</span><span class="hl-0">.</span><span class="hl-2">Individual</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">fullName:</span><span class="hl-0"> </span><span class="hl-3">&quot;Aram Becker&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">});</span>
+</code></pre>
+<blockquote>
+<pre><code class="language-vcs">BEGIN:VCARD
+VERSION:4.0
+KIND:individual
+FN:Aram Becker
+END:VCARD
+</code></pre>
+</blockquote>
+</div></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -80,7 +110,6 @@
 <li class="tsd-kind-interface"><a href="interfaces/RelatedPropertyParameters.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Related<wbr/>Property<wbr/>Parameters</a></li>
 <li class="tsd-kind-interface"><a href="interfaces/RevisionPropertyParameters.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Revision<wbr/>Property<wbr/>Parameters</a></li>
 <li class="tsd-kind-interface"><a href="interfaces/RolePropertyParameters.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Role<wbr/>Property<wbr/>Parameters</a></li>
-<li class="tsd-kind-interface"><a href="interfaces/SimplifyOptions.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Simplify<wbr/>Options</a></li>
 <li class="tsd-kind-interface"><a href="interfaces/SortAsParameter.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Sort<wbr/>As<wbr/>Parameter</a></li>
 <li class="tsd-kind-interface"><a href="interfaces/SoundPropertyParameters.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Sound<wbr/>Property<wbr/>Parameters</a></li>
 <li class="tsd-kind-interface"><a href="interfaces/SourcePropertyParameters.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Source<wbr/>Property<wbr/>Parameters</a></li>
@@ -141,7 +170,6 @@
 <li class="tsd-kind-type-alias"><a href="types/RelatedProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Related<wbr/>Property</a></li>
 <li class="tsd-kind-type-alias"><a href="types/RevisionProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Revision<wbr/>Property</a></li>
 <li class="tsd-kind-type-alias"><a href="types/RoleProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Role<wbr/>Property</a></li>
-<li class="tsd-kind-type-alias"><a href="types/Simplify.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Simplify</a></li>
 <li class="tsd-kind-type-alias"><a href="types/SoundProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Sound<wbr/>Property</a></li>
 <li class="tsd-kind-type-alias"><a href="types/SourceProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Source<wbr/>Property</a></li>
 <li class="tsd-kind-type-alias"><a href="types/TelProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Tel<wbr/>Property</a></li>
