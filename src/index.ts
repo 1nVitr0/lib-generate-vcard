@@ -1,7 +1,14 @@
+import VCard from "./model/classes/VCard";
+import { generateVCard } from "./generate/vCard";
+
 export * from "./model/datatypes";
-export * from "./model/enums";
+export * from "./model/properties";
+export * from "./model/propertyValues";
 export * from "./model/parameters";
 export * from "./model/propertyParameters";
-export { VCardObject as VCard, VCardGroupObject as VCardGroup } from "./model/vCard";
+export * from "./model/vCard";
 
 export * from "./helpers/property";
+
+export { VCard };
+export default generateVCard;

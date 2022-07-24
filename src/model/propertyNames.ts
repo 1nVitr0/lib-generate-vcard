@@ -1,4 +1,4 @@
-import { VCardObject, VCardGroupObject } from "./vCard";
+import { VCardDefinition, VCardGroupDefinition } from "./vCard";
 
 export type PropertyName =
   | "ADR"
@@ -40,7 +40,7 @@ export type PropertyName =
   | "VERSION"
   | "XML";
 
-export const propertyNames: Record<keyof VCardObject | keyof VCardGroupObject, PropertyName> = {
+export const propertyNames: Record<keyof VCardDefinition | keyof VCardGroupDefinition, PropertyName> = {
   address: "ADR",
   anniversary: "ANNIVERSARY",
   begin: "BEGIN",

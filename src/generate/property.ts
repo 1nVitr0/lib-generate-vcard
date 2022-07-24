@@ -16,7 +16,7 @@ import {
   GenderPropertyValue,
   Kind,
 } from "../model/propertyValues";
-import { VCardObject, VCardGroupObject } from "../model/vCard";
+import { VCardDefinition, VCardGroupDefinition } from "../model/vCard";
 import { ianaIsUtf8, isUri, isUtcOffset, isDateAndOrTime } from "../validate/dataTypes";
 import { isValueParameter } from "../validate/parameters";
 import {
@@ -95,7 +95,7 @@ export function generateProperty(
 
   const property = (
     propertyKey in propertyNames
-      ? propertyNames[propertyKey as keyof VCardObject | keyof VCardGroupObject]
+      ? propertyNames[propertyKey as keyof VCardDefinition | keyof VCardGroupDefinition]
       : propertyKey
   ) as PropertyName;
   let parameters = generateParameters(

@@ -1,13 +1,13 @@
 import { MultiProperty, Property } from "../model/properties";
-import { VCardObject, VCardGroupObject } from "../model/vCard";
+import { VCardDefinition, VCardGroupDefinition } from "../model/vCard";
 import { isMultiProperty, isMultiPropertyList } from "../validate/properties";
 import { mergeParameters } from "./parameters";
 import { generateProperty } from "./property";
 
-export function generateContentLine<VCardType extends VCardObject | VCardGroupObject, Name extends keyof VCardType>(
-  propertyKey: string,
-  data: Property | MultiProperty
-): string {
+export function generateContentLine<
+  VCardType extends VCardDefinition | VCardGroupDefinition,
+  Name extends keyof VCardType
+>(propertyKey: string, data: Property | MultiProperty): string {
   if (isMultiProperty(data)) {
     const properties: Property[] = isMultiPropertyList(data)
       ? data

@@ -40,9 +40,9 @@ import {
   MemberProperty,
 } from "../properties";
 import { Kind } from "../propertyValues";
-import { VCardObject, VCardGroupObject } from "../vCard";
+import { VCardDefinition, VCardGroupDefinition } from "../vCard";
 
-export default class VCard implements VCardObject, VCardGroupObject {
+export default class VCard implements VCardDefinition, VCardGroupDefinition {
   private _kind: KindProperty<Kind>;
   private _fullName: FullNameProperty;
   private _begin?: BeginProperty;
@@ -82,7 +82,7 @@ export default class VCard implements VCardObject, VCardGroupObject {
   private _calendarUri?: CalendarUriProperty;
   private _member?: MemberProperty;
 
-  public static fromVCardObject(vCardObject: VCardObject | VCardGroupObject): VCard {
+  public static fromVCardObject(vCardObject: VCardDefinition | VCardGroupDefinition): VCard {
     const vCard = new VCard(vCardObject.kind, vCardObject.fullName);
 
     if (vCardObject.begin) vCard.setBegin(vCardObject.begin);
@@ -364,8 +364,8 @@ export default class VCard implements VCardObject, VCardGroupObject {
     this._member = member;
   }
 
-  public toVCardObject(): VCardObject | VCardGroupObject {
-    const vCard: VCardObject | VCardGroupObject = {
+  public toVCardObject(): VCardDefinition | VCardGroupDefinition {
+    const vCard: VCardDefinition | VCardGroupDefinition = {
       kind: this._kind,
       fullName: this._fullName,
     };
@@ -408,7 +408,7 @@ export default class VCard implements VCardObject, VCardGroupObject {
     if (this.fbUrl) vCard.fbUrl = this.fbUrl;
     if (this.calendarAddressUri) vCard.calendarAddressUri = this.calendarAddressUri;
     if (this.calendarUri) vCard.calendarUri = this.calendarUri;
-    if (this.member) (vCard as VCardGroupObject).member = this.member;
+    if (this.member) (vCard as VCardGroupDefinition).member = this.member;
 
     return vCard;
   }

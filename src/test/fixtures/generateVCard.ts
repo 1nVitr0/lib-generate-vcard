@@ -1,9 +1,9 @@
 import { Gender, Kind } from "../../model/propertyValues";
-import { VCardObject, VCardGroupObject, VCardList } from "../../model/vCard";
+import { VCardDefinition, VCardGroupDefinition, VCardList } from "../../model/vCard";
 
 export const vCardDescriptorFixtures: {
   name: string;
-  fixture: VCardObject | VCardGroupObject | VCardList;
+  fixture: VCardDefinition | VCardGroupDefinition | VCardList;
   expected: string[];
 }[] = [
   {

@@ -1,8 +1,8 @@
-import { VCardObject, VCardGroupObject, VCardList } from "../model/vCard";
+import { VCardDefinition, VCardGroupDefinition, VCardList } from "../model/vCard";
 import { generateContentLine } from "./contentLine";
 import { PropertyName } from "../model/propertyNames";
 
-export function generateVCard(vCard: VCardObject | VCardGroupObject | VCardList): string {
+export function generateVCard(vCard: VCardDefinition | VCardGroupDefinition | VCardList): string {
   const entries =
     vCard instanceof Array
       ? vCard.map(
