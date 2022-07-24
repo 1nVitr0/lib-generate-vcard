@@ -7,7 +7,6 @@ import {
   TimeStamp,
   Uri,
   UtcOffset,
-  ValueType,
 } from "../model/datatypes";
 import {
   NamePropertyValue,
@@ -39,6 +38,7 @@ import { escapeParameterValue } from "./escape";
 import { propertyNames, PropertyName } from "../model/propertyNames";
 import { Property, PropertyValue, RecordedPropertyValue } from "../model/properties";
 import { defaultPropertyTypes } from "../model/propertyTypes";
+import { ValueType } from "../model/parameters";
 
 function componentList(list: (string | string[])[]): string {
   return list

@@ -37,19 +37,3 @@ export type LanguageTag = string;
 export type Text = string;
 
 export type Uri = `${string}:${string}`;
-
-export type ValueType =
-  | "text"
-  | "uri"
-  | "date"
-  | "time"
-  | "date-time"
-  | "date-and-or-time"
-  | "timestamp"
-  | "boolean"
-  | "integer"
-  | "float"
-  | "utc-offset"
-  | "language-tag"
-  | XName
-  | IanaToken;

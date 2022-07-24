@@ -1,4 +1,3 @@
-import { ValueType } from "../model/datatypes";
 import {
   AltIdParameter,
   CalscaleParameter,
@@ -13,6 +12,7 @@ import {
   TimezoneParameter,
   TypeParameter,
   ValueParameter,
+  ValueType,
 } from "../model/parameters";
 
 export function isValueParameter(parameters: {}): parameters is ValueParameter<ValueType> {

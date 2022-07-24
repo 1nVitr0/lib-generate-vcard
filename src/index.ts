@@ -5,6 +5,7 @@ export * from "./model/datatypes";
 export * from "./model/properties";
 export * from "./model/propertyValues";
 export * from "./model/parameters";
+export { PropertyName } from "./model/propertyNames";
 export * from "./model/propertyParameters";
 export * from "./model/vCard";
 

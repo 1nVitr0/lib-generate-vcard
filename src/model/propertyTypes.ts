@@ -1,5 +1,5 @@
+import { ValueType } from "./parameters";
 import { PropertyName } from "./propertyNames";
-import { ValueType } from "./datatypes";
 
 export const defaultPropertyTypes: Record<PropertyName, ValueType | null> = {
   ADR: "text",

@@ -1,4 +1,4 @@
-import { LanguageTag, IanaToken, XName, ValueType } from "./datatypes";
+import { LanguageTag, IanaToken, XName } from "./datatypes";
 
 export enum TelType {
   Text = "text",
@@ -33,6 +33,24 @@ export enum RelationType {
   Emergency = "emergency",
 }
 
+export type ValueType =
+  | "text"
+  | "uri"
+  | "date"
+  | "time"
+  | "date-time"
+  | "date-and-or-time"
+  | "timestamp"
+  | "boolean"
+  | "integer"
+  | "float"
+  | "utc-offset"
+  | "language-tag"
+  | XName
+  | IanaToken;
+
+export type TypeType<AdditionalTypes extends string = never> = "work" | "home" | AdditionalTypes;
+
 export interface LanguageParameter {
   language?: LanguageTag;
 }
@@ -53,8 +71,8 @@ export interface PIdParameter {
   pId?: number | number[];
 }
 
-export interface TypeParameter<Value extends string = never> {
-  type?: "work" | "home" | Value | ("work" | "home" | Value)[];
+export interface TypeParameter<AdditionalTypes extends string = never> {
+  type?: TypeType<AdditionalTypes> | TypeType<AdditionalTypes>[];
 }
 
 export interface MediaTypeParameter {

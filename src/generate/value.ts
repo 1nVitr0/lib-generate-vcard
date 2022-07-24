@@ -10,8 +10,8 @@ import {
   TimeString,
   Uri,
   UtcOffset,
-  ValueType,
 } from "../model/datatypes";
+import { ValueType } from "../model/parameters";
 import { Kind } from "../model/propertyValues";
 import { escapeValue } from "./escape";
 
