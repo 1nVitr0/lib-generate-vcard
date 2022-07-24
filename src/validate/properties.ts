@@ -3,7 +3,7 @@ import { MultiProperty, Property, PropertyValue, RecordedPropertyValue } from ".
 export function isPropertyObject(
   property: Property
 ): property is { value: PropertyValue | RecordedPropertyValue; parameters?: {} } {
-  return typeof property == "object" && "value" in property;
+  return typeof property == "object" && !(property instanceof Array) && "value" in property;
 }
 
 export function isMultiPropertyList(property: Property | MultiProperty): property is Extract<MultiProperty, any[]> {

@@ -48,7 +48,7 @@ function parsePartialDateTime(dateTimeString: TimeString | DateAndOrTimeString |
 
   if (timePart) {
     result.hasTime = true;
-    const [time, timezone] = timePart.split("Z");
+    const [time, timezone] = timePart.split(/[+\-Z]/);
 
     const [hour, minute, second] = time.split(":");
     if (hour !== "*") result.hour = parseInt(hour, 10);
@@ -61,6 +61,7 @@ function parsePartialDateTime(dateTimeString: TimeString | DateAndOrTimeString |
     } else if (timezone) {
       result.hasTz = true;
       const [tzHour, tzMinute] = timezone.split(":");
+      result.tzOperator = timePart.indexOf("+") !== -1 ? "+" : "-";
       result.tzHour = parseInt(tzHour, 10);
       if (tzMinute) result.tzMinute = parseInt(tzMinute, 10);
     }
@@ -90,29 +91,36 @@ function dateToPartialDateTime(date: Date | number): PartialDate {
   return result;
 }
 
-function toUtcOffsetString(partialDate: PartialDate): string {
-  const { tzOperator, tzHour, tzMinute } = partialDate;
-  return `${tzOperator}${tzHour ? tzHour.toFixed(0).padStart(2, "0") : "00"}${
-    tzMinute ? tzMinute.toFixed(0).padStart(2, "0") : ""
-  }`;
+function toUtcOffsetString(partialDate: PartialDate | UtcOffset): string {
+  if (typeof partialDate === "string") {
+    const [_, tzOperator, tzHour, tzMinute] = partialDate.match(/([+-])(\d+):?(\d+)?/)!;
+    return `${tzOperator}${parseInt(tzHour).toFixed(0).padStart(2, "0")}${
+      tzMinute ? parseInt(tzMinute).toFixed(0).padStart(2, "0") : ""
+    }`;
+  } else {
+    const { tzOperator, tzHour = 0, tzMinute = 0 } = partialDate;
+    return `${tzOperator}${Math.abs(tzHour).toFixed(0).padStart(2, "0")}${
+      tzMinute ? tzMinute.toFixed(0).padStart(2, "0") : ""
+    }`;
+  }
 }
 
-function toTimeString(partialDate: PartialDate, full = false, hasDate = false): string {
+function toTimeString(partialDate: PartialDate, full = false, noTrunc = false): string {
   let result = "";
   const { hasTz } = partialDate;
 
   const { hour, minute, second } = partialDate;
   if (full) {
-    result += `${hour ? hour.toFixed(0).padStart(2, "0") : "-"}${minute ? minute.toFixed(0).padStart(2, "0") : "-"}${
-      second ? second.toFixed(0).padStart(2, "0") : ""
-    }`;
-  } else if (hasDate) {
-    result += `T${hour?.toFixed(0).padStart(2, "0")}${minute ? minute.toFixed(0).padStart(2, "0") : ""}${
+    result += `${hour!.toFixed(0).padStart(2, "0")}${minute!.toFixed(0).padStart(2, "0")}${second!
+      .toFixed(0)
+      .padStart(2, "0")}`;
+  } else if (noTrunc) {
+    result += `${hour?.toFixed(0).padStart(2, "0")}${minute ? minute.toFixed(0).padStart(2, "0") : ""}${
       second ? second.toFixed(0).padStart(2, "0") : ""
     }`;
   } else {
     result += `${hour ? hour.toFixed(0).padStart(2, "0") : "-"}${
-      minute ? minute.toFixed(0).padStart(2, "0") : second !== undefined ? "-" : ""
+      minute ? minute.toFixed(0).padStart(2, "0") : second ? "-" : ""
     }${second ? second.toFixed(0).padStart(2, "0") : ""}`;
   }
 
@@ -124,9 +132,9 @@ function toTimeString(partialDate: PartialDate, full = false, hasDate = false): 
   return result;
 }
 
-function toDateString(partialDate: PartialDate, full = false, hasTime = false): string {
+function toDateString(partialDate: PartialDate, full = false, noTrunc = false): string {
   const { year, month, day } = partialDate;
-  if (hasTime || full) {
+  if (noTrunc || full) {
     return `${year ? year.toFixed(0).padStart(4, "0") : "--"}${month ? month.toFixed(0).padStart(2, "0") : "-"}${day
       ?.toFixed(0)
       .padStart(2, "0")}`;
@@ -137,16 +145,16 @@ function toDateString(partialDate: PartialDate, full = false, hasTime = false): 
   }
 }
 
-function toPartialDateAndOrTimeString(partialDate: PartialDate, full = false): string {
+function toPartialDateAndOrTimeString(partialDate: PartialDate, full = false, noTrunc = false): string {
   let result = "";
   const { hasDate, hasTime } = partialDate;
 
   if (hasDate) {
-    result += toDateString(partialDate, full, hasTime);
+    result += toDateString(partialDate, full, hasTime || noTrunc);
   }
 
   if (hasTime) {
-    result += toTimeString(partialDate, full, hasDate);
+    result += `T${toTimeString(partialDate, full, hasDate || noTrunc)}`;
   }
 
   return result;
@@ -175,7 +183,7 @@ export function generateTimeValue(value: TimeOnly | TimeOnly[], separator: strin
       ? dateToPartialDateTime(time)
       : parsePartialDateTime(time as DateAndOrTimeString)
   );
-  return times.map((time) => toTimeString(time, true)).join(separator);
+  return times.map((time) => toTimeString(time)).join(separator);
 }
 
 export function generateDateAndOrTimeValue(value: DateAndOrTime | DateAndOrTime[], separator: string = ","): string {
@@ -193,11 +201,14 @@ export function generateDateTimeValue(value: DateTime | DateTime[], separator: s
       ? dateToPartialDateTime(date)
       : parsePartialDateTime(date as DateAndOrTimeString)
   );
-  return dates.map((date) => toPartialDateAndOrTimeString(date, true)).join(separator);
+  return dates.map((date) => toPartialDateAndOrTimeString(date, false, true)).join(separator);
 }
 
 export function generateTimeStampValue(value: TimeStamp | TimeStamp[], separator: string = ","): string {
-  return generateDateTimeValue(value as DateTime | DateTime[], separator);
+  const dates = (value instanceof Array ? value : [value]).map((date) =>
+    typeof date == "number" ? dateToPartialDateTime(date) : parsePartialDateTime(date as DateAndOrTimeString)
+  );
+  return dates.map((date) => toPartialDateAndOrTimeString(date, true, true)).join(separator);
 }
 
 export function generateUtcOffsetValue(value: UtcOffset | UtcOffset[], separator: string = ","): string {
@@ -225,7 +236,7 @@ export function generateBooleanValue(value: boolean | boolean[], separator: stri
 }
 
 export function generateIntegerValue(value: number | number[], separator: string = ","): string {
-  return value instanceof Array ? value.join(separator) : value.toString();
+  return value instanceof Array ? value.map((n) => n.toFixed(0)).join(separator) : value.toFixed(0);
 }
 
 export function generateFloatValue(value: number | number[], separator: string = ","): string {

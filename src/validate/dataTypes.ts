@@ -30,8 +30,7 @@ export function isDateOnly(value: any): value is DateOnly {
 
 export function isDateAndOrTime(value: any): value is DateAndOrTime {
   return (
-    (typeof value === "string" && value.includes("-")) ||
-    value.includes(":") ||
+    (typeof value === "string" && (value.includes("-") || value.includes(":"))) ||
     typeof value === "number" ||
     value instanceof Date
   );
@@ -54,23 +53,23 @@ export function isTimeStamp(value: any): value is TimeStamp {
 }
 
 export function isUtcOffset(value: any): value is UtcOffset {
-  return typeof value === "string" && (value.startsWith("+") || value.startsWith("-")) && value.includes(":");
+  return typeof value === "string" && /^[+\-]\d+(:\d+)?$/.test(value);
 }
 
 export function isLanguageTag(value: any): value is LanguageTag {
-  return typeof value === "string" && /[a-z]{2}(\-\w+)*/.test(value);
+  return typeof value === "string" && /^[a-z]{2}(\-[a-zA-Z0-9]+)*$/.test(value);
 }
 
 export function isUri(value: any): value is Uri {
-  return typeof value === "string" && value.includes(":") && /[:\/?#\[\]@!$&'()*+,;=¸-\._\~a-zA-Z0-9%]/.test(value);
+  return typeof value === "string" && value.includes(":") && /[:\/?#\[\]@!$&'()*+,;=\-\._\~a-zA-Z0-9%]/.test(value);
 }
 
 export function isKind(value: any): value is Kind {
-  return typeof value === "string" && value in Kind;
+  return typeof value === "string" && Object.values(Kind).includes(value as Kind);
 }
 
 export function isGender(value: any): value is Gender {
-  return typeof value === "string" && value in Gender;
+  return typeof value === "string" && Object.values(Gender).includes(value as Gender);
 }
 
 export function ianaIsUtf8(value: any): boolean {

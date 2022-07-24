@@ -9,8 +9,5 @@ export function vCardProperty<Value extends string | number | Date, Parameters e
   value: Value,
   parameters?: Parameters
 ) {
-  return {
-    value,
-    parameters,
-  };
+  return parameters ? { value, parameters } : { value };
 }

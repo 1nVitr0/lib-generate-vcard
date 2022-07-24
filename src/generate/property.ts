@@ -17,7 +17,7 @@ import {
   Kind,
 } from "../model/propertyValues";
 import { VCard, VCardGroup } from "../model/vCard";
-import { ianaIsUtf8, isUri, isUtcOffset } from "../validate/dataTypes";
+import { ianaIsUtf8, isUri, isUtcOffset, isDateAndOrTime } from "../validate/dataTypes";
 import { isValueParameter } from "../validate/parameters";
 import {
   generateBooleanValue,
@@ -38,6 +38,7 @@ import { generateKindValue } from "./value";
 import { escapeParameterValue } from "./escape";
 import { propertyNames, PropertyName } from "../model/propertyNames";
 import { Property, PropertyValue, RecordedPropertyValue } from "../model/properties";
+import { defaultPropertyTypes } from "../model/propertyTypes";
 
 function componentList(list: (string | string[])[]): string {
   return list
@@ -86,8 +87,7 @@ export function generateProperty(
   data: Property<PropertyValue | RecordedPropertyValue, any>
 ): PropertyDescriptor {
   const value = typeof data == "object" && "value" in data ? data.value : data;
-  const parameterDict: any =
-    typeof data == "object" && "parameters" in data && data.parameters ? { ...data.parameters } : {};
+  const parameterDict = typeof data == "object" && "parameters" in data ? { ...data.parameters } : {};
 
   if (data instanceof Array ? data.some((s) => ianaIsUtf8(s)) : ianaIsUtf8(data)) {
     parameterDict.charset = "UTF-8";
@@ -96,12 +96,21 @@ export function generateProperty(
   const property = (
     propertyKey in propertyNames ? propertyNames[propertyKey as keyof VCard | keyof VCardGroup] : propertyKey
   ) as PropertyName;
-  const parameters = generateParameters(parameterDict);
+  let parameters = generateParameters(
+    parameterDict,
+    defaultPropertyTypes[property] === parameterDict.value ? ["value"] : []
+  );
   let components: (string | string[])[] = [];
 
-  if (isValueParameter(parameterDict) && typeof value !== "object") {
-    // TODO: value is not array?
-    return valueTypedProperty(propertyKey, value, parameterDict.value as ValueType, parameters);
+  const resetPropertyValueType = (type: ValueType) => {
+    if (defaultPropertyTypes[property] && defaultPropertyTypes[property] !== type) {
+      parameterDict.value = type;
+      parameters = generateParameters(parameterDict);
+    }
+  };
+
+  if (isValueParameter(parameterDict) && (typeof value !== "object" || value instanceof Array)) {
+    return valueTypedProperty(property, value, parameterDict.value as ValueType, parameters);
   }
 
   switch (property) {
@@ -117,7 +126,7 @@ export function generateProperty(
       return { property, value: value as "4.0", parameters: [] };
     case "KIND":
       return { property, value: generateKindValue(value as Kind | Kind[]), parameters };
-    case "LANGUAGE":
+    case "LANG":
       return { property, value: generateLanguageTagValue(value as LanguageTag | LanguageTag[]), parameters };
     case "REV":
       return { property, value: generateTimeStampValue(value as TimeStamp | TimeStamp[]), parameters };
@@ -150,9 +159,6 @@ export function generateProperty(
       } = value as AddressPropertyValue;
       components = [poBox, extended, street, locality, region, postalCode, country];
       return { property, value: componentList(components), parameters };
-    case "ANNIVERSARY":
-    case "BDAY":
-      return { property, value: generateDateAndOrTimeValue(value as DateAndOrTime | DateAndOrTime[]), parameters };
     case "GENDER":
       if (value instanceof Array) {
         const [sex, genderIdentity] = (value as [string, string]).map(escapeParameterValue);
@@ -161,7 +167,7 @@ export function generateProperty(
         const { sex, genderIdentity } = value as GenderPropertyValue & RecordedPropertyValue;
         return {
           property,
-          value: `${escapeParameterValue(sex)}${genderIdentity ? `;${escapeParameterValue(genderIdentity)}` : ""}`,
+          value: `${sex}${genderIdentity ? `;${escapeParameterValue(genderIdentity)}` : ""}`,
           parameters,
         };
       } else {
@@ -171,13 +177,21 @@ export function generateProperty(
       return { property, value: generateTextValue(value as string | string[], ";"), parameters };
     case "CLIENTPIDMAP":
       // TODO: handle ClientPIdMapParameters
+      /* istanbul ignore next */
       return { property, value: "TODO", parameters };
 
     // Properties with multiple possible value types
     case "TZ": // Also Uri | Text
       if (isUtcOffset(value)) {
+        resetPropertyValueType("utc-offset");
         return { property, value: generateUtcOffsetValue(value as UtcOffset | UtcOffset[]), parameters };
       } // otherwise match other value types
+    case "ANNIVERSARY": // Also Text
+    case "BDAY": // Also Text
+      if (isDateAndOrTime(value)) {
+        resetPropertyValueType("date-and-or-time");
+        return { property, value: generateDateAndOrTimeValue(value as DateAndOrTime | DateAndOrTime[]), parameters };
+      }
     case "PHOTO":
     case "SOURCE":
     case "IMPP":
@@ -194,6 +208,7 @@ export function generateProperty(
     case "UID": // Also Text
     case "KEY": // Also Text
       if (isUri(value)) {
+        resetPropertyValueType("uri");
         return { property, value: generateUriValue(value as Uri | Uri[]), parameters };
       } // otherwise match other value types
     case "XML":
@@ -206,6 +221,7 @@ export function generateProperty(
     case "NOTE":
     case "PRODID":
     default: // Default to normal text value type
+      resetPropertyValueType("text");
       return { property, value: generateTextValue(value as string | string[]), parameters };
   }
 }

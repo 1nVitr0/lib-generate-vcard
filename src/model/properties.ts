@@ -39,7 +39,7 @@ import {
   XmlPropertyParameters,
 } from "./propertyParameters";
 
-export type PropertyValue = Text | number | Date | (Text | number | Date)[];
+export type PropertyValue = Text | number | boolean | Date | (Text | number | boolean | Date)[];
 export type RecordedPropertyValue = Record<string, PropertyValue>;
 
 export type Property<

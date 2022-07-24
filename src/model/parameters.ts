@@ -100,4 +100,5 @@ export interface NamedParameters
     SortAsParameter,
     GeoParameter,
     TimezoneParameter,
-    LabelParameter {}
+    LabelParameter,
+    IanaCharsetParameter {}

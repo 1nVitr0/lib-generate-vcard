@@ -18,7 +18,7 @@ export type PropertyName =
   | "IMPP"
   | "KEY"
   | "KIND"
-  | "LANGUAGE"
+  | "LANG"
   | "LOGO"
   | "MEMBER"
   | "N"
@@ -58,7 +58,7 @@ export const propertyNames: Record<keyof VCard | keyof VCardGroup, PropertyName>
   impp: "IMPP",
   key: "KEY",
   kind: "KIND",
-  language: "LANGUAGE",
+  language: "LANG",
   logo: "LOGO",
   member: "MEMBER",
   name: "N",

@@ -1,5 +1,5 @@
-import { generateVCard } from "../generate/vCard";
-import { vCardDescriptorFixtures } from "./fixtures/generateVCard.fixture";
+import { generateVCard } from "../../generate/vCard";
+import { vCardDescriptorFixtures } from "../fixtures/generateVCard";
 
 for (const entry of vCardDescriptorFixtures) {
   const { name, fixture, expected } = entry;

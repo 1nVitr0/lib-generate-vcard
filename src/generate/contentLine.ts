@@ -11,11 +11,12 @@ export function generateContentLine<VCardType extends VCard | VCardGroup, Name e
   if (isMultiProperty(data)) {
     const properties: Property[] = isMultiPropertyList(data)
       ? data
-      : data.values.map(mergeParameters.bind(data.commonParameters));
+      : data.values.map((v) => mergeParameters(data.commonParameters, v));
 
     return properties.map((entry) => generateContentLine(propertyKey, entry)).join("\r\n");
   }
 
   const { property, value, parameters, group } = generateProperty(propertyKey, data);
+  /* istanbul ignore next */
   return `${group ? `${group}.` : ""}${property}${parameters.length ? `;${parameters.join(";")}` : ""}:${value}`;
 }

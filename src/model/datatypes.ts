@@ -1,6 +1,6 @@
 export type XName = `x-${string}` | `X-${string}`;
 
-export type IanaToken = "IANA";
+export type IanaToken = never;
 
 export type DateString = Exclude<`${number | "*"}-${number | "*"}-${number | "*"}`, "*-*-*">;
 
@@ -9,7 +9,7 @@ export type LocalTimeString = Exclude<
   "*:*:*" | "*:*"
 >;
 
-export type TimezoneString = "Z" | `${"+" | "-"}${number}:${number}` | `${"+" | "-"}${number}:${number}:${number}`;
+export type TimezoneString = "Z" | `${"+" | "-"}${number}` | `${"+" | "-"}${number}:${number}`;
 
 export type UtcOffset = Exclude<TimezoneString, "Z">;
 
@@ -19,7 +19,10 @@ export type DateAndOrTimeString = DateString | TimeString | `${DateString} ${Tim
 
 export type DateTimeString = `${`*-*-${number}` | `*-${number}-${number}` | `${number}-${number}-${number}`} ${
   | number
-  | `${number}:${number}`
+  | `${number}:${number}${"" | TimezoneString}`
+  | `${number}:*${"" | TimezoneString}`
+  | `${number}:${number}:*${"" | TimezoneString}`
+  | `${number}:*:*${"" | TimezoneString}`
   | `${number}:${number}:${number}`}${"" | TimezoneString}`;
 
 export type DateOnly = DateString | Date;

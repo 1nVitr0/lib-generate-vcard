@@ -102,9 +102,9 @@ export type VCardListProperty<
   Name extends PropertyName | XName | IanaToken = PropertyName | XName | IanaToken,
   Prop extends Property | MultiProperty = Property | MultiProperty
 > = Prop extends Property<infer Value, infer Params>
-  ? { property: Name; value: Value; params?: Params }
+  ? { property: Name; value: Value; parameters?: Params }
   : Prop extends MultiProperty<infer Value, infer Params>
-  ? { property: Name; value: Value; params?: Params }
+  ? { property: Name; value: Value; parameters?: Params }
   : never;
 
 export type VCardList = (
@@ -124,7 +124,7 @@ export type VCardList = (
   | VCardListProperty<"TEL", TelProperty>
   | VCardListProperty<"EMAIL", EmailProperty>
   | VCardListProperty<"IMPP", ImppProperty>
-  | VCardListProperty<"LANGUAGE", LanguageProperty>
+  | VCardListProperty<"LANG", LanguageProperty>
   | VCardListProperty<"TZ", TimezoneProperty>
   | VCardListProperty<"GEO", GeoLocationProperty>
   | VCardListProperty<"TITLE", TitleProperty>

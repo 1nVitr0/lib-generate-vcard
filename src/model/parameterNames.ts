@@ -12,7 +12,8 @@ export type ParameterName =
   | "SORT-AS"
   | "TZ"
   | "TYPE"
-  | "VALUE";
+  | "VALUE"
+  | "CHARSET";
 
 export const parameterNames: Record<keyof NamedParameters, ParameterName> = {
   language: "LANGUAGE",
@@ -27,6 +28,7 @@ export const parameterNames: Record<keyof NamedParameters, ParameterName> = {
   tz: "TZ",
   type: "TYPE",
   value: "VALUE",
+  charset: "CHARSET",
 };
 
 export const ignoreParameters: string[] = ["group"];

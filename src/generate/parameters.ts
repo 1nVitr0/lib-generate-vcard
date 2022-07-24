@@ -15,10 +15,13 @@ export function mergeParameters<Params extends {}>(commonParameters: Params | un
 }
 
 export function generateParameters<Parameters extends NamedParameters | AnyParameter>(
-  parameters: Parameters
+  parameters: Parameters,
+  ignore: string[] = []
 ): string[] {
+  ignore.push(...ignoreParameters); // Global ignore parameters
+
   return Object.entries(parameters)
-    .filter(([name]) => ignoreParameters.includes(name) === false)
+    .filter(([name, value]) => value !== null && ignore.includes(name) === false)
     .map(([name, value]) => {
       const parameterName = name in parameterNames ? parameterNames[name as keyof NamedParameters] : name;
       const valueList = value instanceof Array ? value : [value];
