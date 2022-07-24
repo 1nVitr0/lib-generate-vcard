@@ -1,10 +1,10 @@
 import { MultiProperty, Property } from "../model/properties";
-import { VCard, VCardGroup } from "../model/vCard";
+import { VCardObject, VCardGroupObject } from "../model/vCard";
 import { isMultiProperty, isMultiPropertyList } from "../validate/properties";
 import { mergeParameters } from "./parameters";
 import { generateProperty } from "./property";
 
-export function generateContentLine<VCardType extends VCard | VCardGroup, Name extends keyof VCardType>(
+export function generateContentLine<VCardType extends VCardObject | VCardGroupObject, Name extends keyof VCardType>(
   propertyKey: string,
   data: Property | MultiProperty
 ): string {

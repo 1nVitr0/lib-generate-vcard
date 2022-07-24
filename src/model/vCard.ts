@@ -44,7 +44,7 @@ import { Kind } from "./propertyValues";
 import { IanaToken, XName } from "./datatypes";
 import { MultiProperty } from "./properties";
 
-export interface VCard {
+export interface VCardObject {
   // General Properties
   begin?: BeginProperty;
   end?: EndProperty;
@@ -92,7 +92,7 @@ export interface VCard {
   calendarUri?: CalendarUriProperty;
 }
 
-export interface VCardGroup extends VCard {
+export interface VCardGroupObject extends VCardObject {
   kind: KindProperty<Kind.Group>;
   // Organizational Properties
   member?: MemberProperty;
