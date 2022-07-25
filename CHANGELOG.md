@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.0.0...v1.0.1) (2022-07-25)
+
+
+### Bug Fixes
+
+* add typedo documentation ([413797f](https://github.com/1nVitr0/lib-generate-vcard/commit/413797f4c8efaa5463c23c45e68f91a3e9d9e693))
+
 # 1.0.0 (2022-07-25)
 
 
