@@ -8,13 +8,7 @@ import {
   Uri,
   UtcOffset,
 } from "../model/datatypes";
-import {
-  NamePropertyValue,
-  PropertyDescriptor,
-  AddressPropertyValue,
-  GenderPropertyValue,
-  Kind,
-} from "../model/propertyValues";
+import { NamePropertyValue, AddressPropertyValue, GenderPropertyValue, Kind } from "../model/propertyValues";
 import { VCardDefinition, VCardGroupDefinition } from "../model/vCard";
 import { ianaIsUtf8, isUri, isUtcOffset, isDateAndOrTime } from "../validate/dataTypes";
 import { isValueParameter } from "../validate/parameters";
@@ -36,7 +30,7 @@ import { generateParameters } from "./parameters";
 import { generateKindValue } from "./value";
 import { escapeParameterValue } from "./escape";
 import { propertyNames, PropertyName } from "../model/propertyNames";
-import { Property, PropertyValue, RecordedPropertyValue } from "../model/properties";
+import { Property, PropertyDescriptor, PropertyValue, RecordedPropertyValue } from "../model/properties";
 import { defaultPropertyTypes } from "../model/propertyTypes";
 import { ValueType } from "../model/parameters";
 

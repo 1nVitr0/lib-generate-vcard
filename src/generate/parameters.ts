@@ -4,6 +4,9 @@ import { Property } from "../model/properties";
 import { isPropertyObject } from "../validate/properties";
 import { escapeParameterValue } from "./escape";
 
+/**
+ * @internal
+ */
 export function mergeParameters<Params extends {}>(commonParameters: Params | undefined, property: Property): Property {
   if (!commonParameters) return property;
   if (isPropertyObject(property)) {

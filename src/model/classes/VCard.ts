@@ -42,6 +42,11 @@ import {
 import { Kind } from "../propertyValues";
 import { VCardDefinition, VCardGroupDefinition } from "../vCard";
 
+/**
+ * Class representation of a vCard.
+ *
+ * @category Generate
+ */
 export default class VCard implements VCardDefinition, VCardGroupDefinition {
   private _kind: KindProperty<Kind>;
   private _fullName: FullNameProperty;
@@ -82,6 +87,12 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
   private _calendarUri?: CalendarUriProperty;
   private _member?: MemberProperty;
 
+  /**
+   * Generate a vCard instance from a vCard definition object.
+   *
+   * @param vCardObject a vCard Definition in form of an object.
+   * @returns a new VCard instance.
+   */
   public static fromVCardObject(vCardObject: VCardDefinition | VCardGroupDefinition): VCard {
     const vCard = new VCard(vCardObject.kind, vCardObject.fullName);
 
@@ -128,6 +139,18 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
     return vCard;
   }
 
+  /**
+   * Create a new vCard instance.
+   *
+   * @param kind the kind of the vCard.
+   * @param fullName the full name of the vCard contact.
+   *
+   * @example
+   * ```ts
+   * const vCard = new VCard("individual");
+   * vCard.setFullName("John Doe");
+   * ```
+   */
   public constructor(kind: KindProperty = Kind.Individual, fullName: FullNameProperty = "") {
     this._kind = kind;
     this._fullName = fullName;
@@ -248,122 +271,324 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
     return this._member;
   }
 
+  /**
+   * Override the value of the begin property.
+   *
+   * @param begin the begin property value of the vCard.
+   * @deprecated using this method has no effect, it is only here for completeness.
+   */
   public setBegin(begin: BeginProperty) {
     this._begin = begin;
   }
+  /**
+   * Override the value of the end property.
+   *
+   * @param end the end property value of the vCard.
+   * @deprecated using this method has no effect, it is only here for completeness.
+   */
   public setEnd(end: EndProperty) {
     this._end = end;
   }
+  /**
+   * Set the value of the source property.
+   *
+   * @param source the source property value of the vCard.
+   */
   public setSource(source: SourceProperty) {
     this._source = source;
   }
+  /**
+   * Set the value of the kind property.
+   *
+   * @param kind the kind property value of the vCard.
+   */
+  /**
+   * Set the value of the kind property.
+   *
+   * @param kind the kind property value of the vCard.
+   */
   public setKind(kind: KindProperty) {
     this._kind = kind;
   }
+  /**
+   * Set the value of the xml property.
+   *
+   * @param xml the xml property value of the vCard.
+   */
   public setXml(xml: XmlProperty) {
     this._xml = xml;
   }
+  /**
+   * Set the value of the fullName property.
+   *
+   * @param fullName the fullName property value of the vCard.
+   */
   public setFullName(fullName: FullNameProperty) {
     this._fullName = fullName;
   }
+  /**
+   * Set the value of the name property.
+   *
+   * @param name the name property value of the vCard.
+   */
   public setName(name: NameProperty) {
     this._name = name;
   }
+  /**
+   * Set the value of the nickName property.
+   *
+   * @param nickName the nickName property value of the vCard.
+   */
   public setNickName(nickName: NickNameProperty) {
     this._nickName = nickName;
   }
+  /**
+   * Set the value of the photo property.
+   *
+   * @param photo the photo property value of the vCard.
+   */
   public setPhoto(photo: PhotoProperty) {
     this._photo = photo;
   }
+  /**
+   * Set the value of the birthday property.
+   *
+   * @param birthday the birthday property value of the vCard.
+   */
   public setBirthday(birthday: BirthdayProperty) {
     this._birthday = birthday;
   }
+  /**
+   * Set the value of the anniversary property.
+   *
+   * @param anniversary the anniversary property value of the vCard.
+   */
   public setAnniversary(anniversary: AnniversaryProperty) {
     this._anniversary = anniversary;
   }
+  /**
+   * Set the value of the gender property.
+   *
+   * @param gender the gender property value of the vCard.
+   */
   public setGender(gender: GenderProperty) {
     this._gender = gender;
   }
+  /**
+   * Set the value of the address property.
+   *
+   * @param address the address property value of the vCard.
+   */
   public setAddress(address: AddressProperty) {
     this._address = address;
   }
+  /**
+   * Set the value of the tel property.
+   *
+   * @param tel the tel property value of the vCard.
+   */
   public setTel(tel: TelProperty) {
     this._tel = tel;
   }
+  /**
+   * Set the value of the email property.
+   *
+   * @param email the email property value of the vCard.
+   */
   public setEmail(email: EmailProperty) {
     this._email = email;
   }
+  /**
+   * Set the value of the impp property.
+   *
+   * @param impp the impp property value of the vCard.
+   */
   public setImpp(impp: ImppProperty) {
     this._impp = impp;
   }
+  /**
+   * Set the value of the language property.
+   *
+   * @param language the language property value of the vCard.
+   */
   public setLanguage(language: LanguageProperty) {
     this._language = language;
   }
+  /**
+   * Set the value of the timezone property.
+   *
+   * @param timezone the timezone property value of the vCard.
+   */
   public setTimezone(timezone: TimezoneProperty) {
     this._timezone = timezone;
   }
+  /**
+   * Set the value of the geoLocation property.
+   *
+   * @param geoLocation the geoLocation property value of the vCard.
+   */
   public setGeoLocation(geoLocation: GeoLocationProperty) {
     this._geoLocation = geoLocation;
   }
+  /**
+   * Set the value of the title property.
+   *
+   * @param title the title property value of the vCard.
+   */
   public setTitle(title: TitleProperty) {
     this._title = title;
   }
+  /**
+   * Set the value of the role property.
+   *
+   * @param role the role property value of the vCard.
+   */
   public setRole(role: RoleProperty) {
     this._role = role;
   }
+  /**
+   * Set the value of the logo property.
+   *
+   * @param logo the logo property value of the vCard.
+   */
   public setLogo(logo: LogoProperty) {
     this._logo = logo;
   }
+  /**
+   * Set the value of the organization property.
+   *
+   * @param organization the organization property value of the vCard.
+   */
   public setOrganization(organization: OrganizationProperty) {
     this._organization = organization;
   }
+  /**
+   * Set the value of the related property.
+   *
+   * @param related the related property value of the vCard.
+   */
   public setRelated(related: RelatedProperty) {
     this._related = related;
   }
+  /**
+   * Set the value of the categories property.
+   *
+   * @param categories the categories property value of the vCard.
+   */
   public setCategories(categories: CategoriesProperty) {
     this._categories = categories;
   }
+  /**
+   * Set the value of the note property.
+   *
+   * @param note the note property value of the vCard.
+   */
   public setNote(note: NoteProperty) {
     this._note = note;
   }
+  /**
+   * Set the value of the productId property.
+   *
+   * @param productId the productId property value of the vCard.
+   */
   public setProductId(productId: ProductIdProperty) {
     this._productId = productId;
   }
+  /**
+   * Set the value of the revision property.
+   *
+   * @param revision the revision property value of the vCard.
+   */
   public setRevision(revision: RevisionProperty) {
     this._revision = revision;
   }
+  /**
+   * Set the value of the sound property.
+   *
+   * @param sound the sound property value of the vCard.
+   */
   public setSound(sound: SoundProperty) {
     this._sound = sound;
   }
+  /**
+   * Set the value of the uid property.
+   *
+   * @param uid the uid property value of the vCard.
+   */
   public setUid(uid: UidProperty) {
     this._uid = uid;
   }
   /* istanbul ignore next */
+  /**
+   * Set the value of the clientPidMap property.
+   *
+   * @param clientPidMap the clientPidMap property value of the vCard.
+   */
   public setClientPidMap(clientPidMap: ClientPidMapProperty) {
     this._clientPidMap = clientPidMap;
   }
+  /**
+   * Set the value of the url property.
+   *
+   * @param url the url property value of the vCard.
+   */
   public setUrl(url: UrlProperty) {
     this._url = url;
   }
+  /**
+   * Set the value of the version property.
+   *
+   * @param version the version property value of the vCard.
+   */
   public setVersion(version: VersionProperty) {
     this._version = version;
   }
+  /**
+   * Set the value of the key property.
+   *
+   * @param key the key property value of the vCard.
+   */
   public setKey(key: KeyProperty) {
     this._key = key;
   }
+  /**
+   * Set the value of the fbUrl property.
+   *
+   * @param fbUrl the fbUrl property value of the vCard.
+   */
   public setFbUrl(fbUrl: FbUrlProperty) {
     this._fbUrl = fbUrl;
   }
+  /**
+   * Set the value of the calendarAddressUri property.
+   *
+   * @param calendarAddressUri the calendarAddressUri property value of the vCard.
+   */
   public setCalendarAddressUri(calendarAddressUri: CalendarAddressUriProperty) {
     this._calendarAddressUri = calendarAddressUri;
   }
+  /**
+   * Set the value of the calendarUri property.
+   *
+   * @param calendarUri the calendarUri property value of the vCard.
+   */
   public setCalendarUri(calendarUri: CalendarUriProperty) {
     this._calendarUri = calendarUri;
   }
+  /**
+   * Set the value of the member property.
+   *
+   * @param member the member property value of the vCard.
+   */
   public setMember(member: MemberProperty) {
     this._member = member;
   }
 
+  /**
+   * Generates a simplified vCard definition as a dictionary object.
+   *
+   * @returns The simplified vCard definition.
+   */
   public toVCardObject(): VCardDefinition | VCardGroupDefinition {
     const vCard: VCardDefinition | VCardGroupDefinition = {
       kind: this._kind,
@@ -413,6 +638,11 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
     return vCard;
   }
 
+  /**
+   * Generates a string representation of the vCard compatible with RFC 6350.
+   *
+   * @returns the generated vCard string.
+   */
   public toString(): string {
     return generateVCard(this.toVCardObject());
   }

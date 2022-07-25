@@ -160,14 +160,23 @@ function toPartialDateAndOrTimeString(partialDate: PartialDate, full = false, no
   return result;
 }
 
+/**
+ * @internal
+ */
 export function generateTextValue(value: string | string[], separator: string = ","): string {
   return value instanceof Array ? value.map(escapeValue).join(separator) : escapeValue(value);
 }
 
+/**
+ * @internal
+ */
 export function generateUriValue(value: Uri | Uri[], separator: string = ","): string {
   return generateTextValue(value, separator);
 }
 
+/**
+ * @internal
+ */
 export function generateDateOnlyValue(value: DateOnly | DateOnly[], separator: string = ","): string {
   const dates = (value instanceof Array ? value : [value]).map((date) =>
     date instanceof Date || typeof date == "number"
@@ -177,6 +186,9 @@ export function generateDateOnlyValue(value: DateOnly | DateOnly[], separator: s
   return dates.map((date) => toDateString(date, true)).join(separator);
 }
 
+/**
+ * @internal
+ */
 export function generateTimeValue(value: TimeOnly | TimeOnly[], separator: string = ","): string {
   const times = (value instanceof Array ? value : [value]).map((time) =>
     time instanceof Date || typeof time == "number"
@@ -186,6 +198,9 @@ export function generateTimeValue(value: TimeOnly | TimeOnly[], separator: strin
   return times.map((time) => toTimeString(time)).join(separator);
 }
 
+/**
+ * @internal
+ */
 export function generateDateAndOrTimeValue(value: DateAndOrTime | DateAndOrTime[], separator: string = ","): string {
   const dates = (value instanceof Array ? value : [value]).map((date) =>
     date instanceof Date || typeof date == "number"
@@ -195,6 +210,9 @@ export function generateDateAndOrTimeValue(value: DateAndOrTime | DateAndOrTime[
   return dates.map((date) => toPartialDateAndOrTimeString(date)).join(separator);
 }
 
+/**
+ * @internal
+ */
 export function generateDateTimeValue(value: DateTime | DateTime[], separator: string = ","): string {
   const dates = (value instanceof Array ? value : [value]).map((date) =>
     date instanceof Date || typeof date == "number"
@@ -204,6 +222,9 @@ export function generateDateTimeValue(value: DateTime | DateTime[], separator: s
   return dates.map((date) => toPartialDateAndOrTimeString(date, false, true)).join(separator);
 }
 
+/**
+ * @internal
+ */
 export function generateTimeStampValue(value: TimeStamp | TimeStamp[], separator: string = ","): string {
   const dates = (value instanceof Array ? value : [value]).map((date) =>
     typeof date == "number" ? dateToPartialDateTime(date) : parsePartialDateTime(date as DateAndOrTimeString)
@@ -211,34 +232,58 @@ export function generateTimeStampValue(value: TimeStamp | TimeStamp[], separator
   return dates.map((date) => toPartialDateAndOrTimeString(date, true, true)).join(separator);
 }
 
+/**
+ * @internal
+ */
 export function generateUtcOffsetValue(value: UtcOffset | UtcOffset[], separator: string = ","): string {
   return value instanceof Array ? value.map((z) => toUtcOffsetString(z)).join(separator) : toUtcOffsetString(value);
 }
 
+/**
+ * @internal
+ */
 export function generateLanguageTagValue(value: LanguageTag | LanguageTag[], separator: string = ","): string {
   return generateTextValue(value, separator);
 }
 
+/**
+ * @internal
+ */
 export function generateValueValue(value: ValueType | ValueType[], separator: string = ","): string {
   return generateTextValue(value, separator);
 }
 
+/**
+ * @internal
+ */
 export function generateKindValue(value: Kind | Kind[], separator: string = ","): string {
   return value instanceof Array ? value.join(separator) : value;
 }
 
+/**
+ * @internal
+ */
 export function generateTypeValue(value: string | string[], separator: string = ","): string {
   return value instanceof Array ? value.join(separator) : value;
 }
 
+/**
+ * @internal
+ */
 export function generateBooleanValue(value: boolean | boolean[], separator: string = ","): string {
   return value instanceof Array ? value.join(separator) : value ? "true" : "false";
 }
 
+/**
+ * @internal
+ */
 export function generateIntegerValue(value: number | number[], separator: string = ","): string {
   return value instanceof Array ? value.map((n) => n.toFixed(0)).join(separator) : value.toFixed(0);
 }
 
+/**
+ * @internal
+ */
 export function generateFloatValue(value: number | number[], separator: string = ","): string {
   return value instanceof Array ? value.join(separator) : value.toString();
 }

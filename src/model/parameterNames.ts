@@ -1,5 +1,11 @@
 import { NamedParameters } from "./parameters";
 
+/**
+ * Valid vCard parameter names.
+ *
+ * @category Parameters
+ * @see https://datatracker.ietf.org/doc/html/rfc6350#section-10.3.2
+ */
 export type ParameterName =
   | "LANGUAGE"
   | "ALTID"
@@ -15,6 +21,9 @@ export type ParameterName =
   | "VALUE"
   | "CHARSET";
 
+/**
+ * @internal
+ */
 export const parameterNames: Record<keyof NamedParameters, ParameterName> = {
   language: "LANGUAGE",
   altId: "ALTID",
@@ -31,4 +40,7 @@ export const parameterNames: Record<keyof NamedParameters, ParameterName> = {
   charset: "CHARSET",
 };
 
+/**
+ * @internal
+ */
 export const ignoreParameters: string[] = ["group"];

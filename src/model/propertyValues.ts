@@ -1,5 +1,10 @@
 import { Text } from "./datatypes";
 
+/**
+ * Values for the kind property
+ *
+ * @category Properties
+ */
 export enum Kind {
   Individual = "individual",
   Group = "group",
@@ -7,6 +12,11 @@ export enum Kind {
   Location = "location",
 }
 
+/**
+ * Values for the gender property
+ *
+ * @category Properties
+ */
 export enum Gender {
   Female = "F",
   Male = "M",
@@ -15,13 +25,11 @@ export enum Gender {
   Unknown = "U",
 }
 
-export interface PropertyDescriptor {
-  property: Text;
-  value: Text;
-  parameters: Text[];
-  group?: Text;
-}
-
+/**
+ * Dictionary representation of the name property value
+ *
+ * @category Properties
+ */
 export interface NamePropertyValue {
   familyName?: Text | Text[];
   givenName?: Text | Text[];
@@ -30,6 +38,11 @@ export interface NamePropertyValue {
   honorificSuffix?: Text | Text[];
 }
 
+/**
+ * Dictionary representation of the address property value
+ *
+ * @category Properties
+ */
 export interface AddressPropertyValue {
   poBox?: Text | Text[];
   extended?: Text | Text[];
@@ -40,6 +53,11 @@ export interface AddressPropertyValue {
   country?: Text | Text[];
 }
 
+/**
+ * Dictionary representation of the gender property value
+ *
+ * @category Properties
+ */
 export interface GenderPropertyValue {
   sex: Gender;
   genderIdentity?: Text;

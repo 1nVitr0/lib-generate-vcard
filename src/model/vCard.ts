@@ -44,6 +44,27 @@ import { Kind } from "./propertyValues";
 import { IanaToken, XName } from "./datatypes";
 import { MultiProperty } from "./properties";
 
+/**
+ * The definition of a vCard in form of a dictionary of properties.
+ *
+ * @category Generate
+ * @example
+ * ```ts
+ * const vCard = {
+ *   kind: Kind.Individual,
+ *   fullName: "John Doe",
+ *   name: {
+ *     familyName: "Doe",
+ *     givenName: "John",
+ *   },
+ *   email: "john@doe.com"
+ *   phone: [
+ *     { value: "123456789", parameters: { type: "home" } },
+ *     { value: "987654321", parameters: { type: "work" } },
+ *   ]
+ * };
+ * ```
+ */
 export interface VCardDefinition {
   // General Properties
   begin?: BeginProperty;
@@ -92,12 +113,19 @@ export interface VCardDefinition {
   calendarUri?: CalendarUriProperty;
 }
 
+/**
+ * {@inheritDoc VCardDefinition}
+ * @category Generate
+ */
 export interface VCardGroupDefinition extends VCardDefinition {
   kind: KindProperty<Kind.Group>;
   // Organizational Properties
   member?: MemberProperty;
 }
 
+/**
+ * @internal
+ */
 export type VCardListProperty<
   Name extends PropertyName | XName | IanaToken = PropertyName | XName | IanaToken,
   Prop extends Property | MultiProperty = Property | MultiProperty
@@ -107,6 +135,22 @@ export type VCardListProperty<
   ? { property: Name; value: Value; parameters?: Params }
   : never;
 
+/**
+ * vCard definition in form of an array of vCard properties
+ *
+ * @category Generate
+ * @example
+ * ```ts
+ * generateVCard([
+ *   { property: "KIND", value: Kind.Individual },
+ *   { property: "FN", value: "John Doe" },
+ *   { property: "N", value: { familyName: "Doe", name: "John" } },
+ *   { property: "EMAIL", value: "john@doe.com" },
+ *   { property: "TEL", value: "123456789", parameters: { type: "home" } },
+ *   { property: "TEL", value: "987654321", parameters: { type: "work" } },
+ * ]);
+ * ```
+ */
 export type VCardList = (
   | VCardListProperty<"BEGIN", BeginProperty>
   | VCardListProperty<"END", EndProperty>

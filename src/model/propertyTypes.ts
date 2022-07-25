@@ -1,6 +1,9 @@
 import { ValueType } from "./parameters";
 import { PropertyName } from "./propertyNames";
 
+/**
+ * @internal
+ */
 export const defaultPropertyTypes: Record<PropertyName, ValueType | null> = {
   ADR: "text",
   ANNIVERSARY: "date-and-or-time",

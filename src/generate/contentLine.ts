@@ -4,6 +4,9 @@ import { isMultiProperty, isMultiPropertyList } from "../validate/properties";
 import { mergeParameters } from "./parameters";
 import { generateProperty } from "./property";
 
+/**
+ * @internal
+ */
 export function generateContentLine<
   VCardType extends VCardDefinition | VCardGroupDefinition,
   Name extends keyof VCardType

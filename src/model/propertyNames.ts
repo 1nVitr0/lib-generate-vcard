@@ -1,5 +1,11 @@
 import { VCardDefinition, VCardGroupDefinition } from "./vCard";
 
+/**
+ * Valid vCard property names.
+ *
+ * @category Properties
+ * @see https://datatracker.ietf.org/doc/html/rfc6350#section-10.3.1
+ */
 export type PropertyName =
   | "ADR"
   | "ANNIVERSARY"
@@ -40,6 +46,9 @@ export type PropertyName =
   | "VERSION"
   | "XML";
 
+/**
+ * @internal
+ */
 export const propertyNames: Record<keyof VCardDefinition | keyof VCardGroupDefinition, PropertyName> = {
   address: "ADR",
   anniversary: "ANNIVERSARY",

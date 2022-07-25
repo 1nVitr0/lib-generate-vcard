@@ -27,7 +27,7 @@ const vCard = generateVCard({
 });
 ```
 
-> ```vcs
+> ```text
 > BEGIN:VCARD
 > VERSION:4.0
 > KIND:individual
