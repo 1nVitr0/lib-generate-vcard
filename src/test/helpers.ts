@@ -1,5 +1,7 @@
 export function tz() {
   const timeZoneOffset = new Date().getTimezoneOffset();
+  if (!timeZoneOffset) return "";
+
   const tzHours = Math.floor(timeZoneOffset / 60);
   const tzMinutes = timeZoneOffset % 60;
   const tzOperator = tzHours < 0 ? "+" : "-";
