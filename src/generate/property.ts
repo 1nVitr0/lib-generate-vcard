@@ -14,6 +14,7 @@ import { ianaIsUtf8, isUri, isUtcOffset, isDateAndOrTime } from "../validate/dat
 import { isValueParameter } from "../validate/parameters";
 import {
   generateBooleanValue,
+  generateClientPidMapValue,
   generateDateAndOrTimeValue,
   generateDateOnlyValue,
   generateDateTimeValue,
@@ -30,7 +31,14 @@ import { generateParameters } from "./parameters";
 import { generateKindValue } from "./value";
 import { escapeParameterValue } from "./escape";
 import { propertyNames, PropertyName } from "../model/propertyNames";
-import { Property, PropertyDescriptor, PropertyValue, RecordedPropertyValue } from "../model/properties";
+import {
+  ClientPidMapDictionary,
+  ClientPidMapProperty,
+  Property,
+  PropertyDescriptor,
+  PropertyValue,
+  RecordedPropertyValue,
+} from "../model/properties";
 import { defaultPropertyTypes } from "../model/propertyTypes";
 import { ValueType } from "../model/parameters";
 
@@ -172,9 +180,7 @@ export function generateProperty(
     case "ORG":
       return { property, value: generateTextValue(value as string | string[], ";"), parameters };
     case "CLIENTPIDMAP":
-      // TODO: handle ClientPIdMapParameters
-      /* istanbul ignore next */
-      return { property, value: "TODO", parameters };
+      return { property, value: generateClientPidMapValue(value as [Text, Uri] | { pid: Text; uri: Uri }), parameters };
 
     // Properties with multiple possible value types
     case "TZ": // Also Uri | Text

@@ -128,6 +128,13 @@ export type AltProperty<
 > = { value: Value; parameters: Params }[] | { value: Value; parameters: Params } | Value;
 
 /**
+ * Dictionary notation for clientPidMap properties
+ *
+ * @category Properties
+ */
+export type ClientPidMapDictionary = { [pid: Text]: Property<Uri, ClientPIdMapParameters> };
+
+/**
  * Property value for begin properties
  *
  * @category Properties
@@ -321,9 +328,7 @@ export type UidProperty = Property<Uri | Text, UIdPropertyParameters>;
  *
  * @category Properties
  */
-export type ClientPidMapProperty =
-  | MultiOrSingleProperty<[Text, Text] | { pid: Text; uri: Text }, ClientPIdMapParameters>
-  | Record<Text, Property<Text, ClientPIdMapParameters>>;
+export type ClientPidMapProperty = MultiOrSingleProperty<[Text, Uri] | { pid: Text; uri: Uri }, ClientPIdMapParameters>;
 /**
  * Property value for url properties
  *

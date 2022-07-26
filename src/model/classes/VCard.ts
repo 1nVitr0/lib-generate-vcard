@@ -38,6 +38,7 @@ import {
   CalendarAddressUriProperty,
   CalendarUriProperty,
   MemberProperty,
+  ClientPidMapDictionary,
 } from "../properties";
 import { Kind } from "../propertyValues";
 import { VCardDefinition, VCardGroupDefinition } from "../vCard";
@@ -78,7 +79,7 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
   private _revision?: RevisionProperty;
   private _sound?: SoundProperty;
   private _uid?: UidProperty;
-  private _clientPidMap?: ClientPidMapProperty;
+  private _clientPidMap?: ClientPidMapProperty | ClientPidMapDictionary;
   private _url?: UrlProperty;
   private _version?: VersionProperty;
   private _key?: KeyProperty;
@@ -126,7 +127,6 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
     if (vCardObject.revision) vCard.setRevision(vCardObject.revision);
     if (vCardObject.sound) vCard.setSound(vCardObject.sound);
     if (vCardObject.uid) vCard.setUid(vCardObject.uid);
-    /* istanbul ignore next */
     if (vCardObject.clientPidMap) vCard.setClientPidMap(vCardObject.clientPidMap);
     if (vCardObject.url) vCard.setUrl(vCardObject.url);
     if (vCardObject.version) vCard.setVersion(vCardObject.version);
@@ -524,7 +524,7 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
    *
    * @param clientPidMap the clientPidMap property value of the vCard.
    */
-  public setClientPidMap(clientPidMap: ClientPidMapProperty) {
+  public setClientPidMap(clientPidMap: ClientPidMapProperty | ClientPidMapDictionary) {
     this._clientPidMap = clientPidMap;
   }
   /**

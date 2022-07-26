@@ -1,3 +1,4 @@
+import { ClientPidMapProperty } from "../../model/properties";
 import { Gender, Kind } from "../../model/propertyValues";
 import { VCardDefinition, VCardGroupDefinition, VCardList } from "../../model/vCard";
 
@@ -78,6 +79,52 @@ export const vCardDescriptorFixtures: {
       fullName: "Aram Becker",
     },
     expected: ["BEGIN:VCARD", "VERSION:4.0", "KIND:individual", "FN:Aram Becker", "END:VCARD"],
+  },
+  {
+    name: "Client PID Map as a Dictionary",
+    fixture: {
+      kind: Kind.Individual,
+      fullName: "Aram Becker",
+      clientPidMap: {
+        "0": "http://example.com/1",
+        "2": "http://example.com/2",
+        "4": "http://example.com/3",
+      },
+    },
+    expected: [
+      "BEGIN:VCARD",
+      "VERSION:4.0",
+      "KIND:individual",
+      "FN:Aram Becker",
+      "CLIENTPIDMAP:0;http://example.com/1",
+      "CLIENTPIDMAP:2;http://example.com/2",
+      "CLIENTPIDMAP:4;http://example.com/3",
+      "END:VCARD",
+    ],
+  },
+  {
+    name: "Client PID Map as a Array",
+    fixture: {
+      kind: Kind.Individual,
+      fullName: "Aram Becker",
+      clientPidMap: {
+        values: [
+          ["0", "http://example.com/1"],
+          { pid: "2", uri: "http://example.com/2" },
+          ["4", "http://example.com/3"],
+        ],
+      },
+    },
+    expected: [
+      "BEGIN:VCARD",
+      "VERSION:4.0",
+      "KIND:individual",
+      "FN:Aram Becker",
+      "CLIENTPIDMAP:0;http://example.com/1",
+      "CLIENTPIDMAP:2;http://example.com/2",
+      "CLIENTPIDMAP:4;http://example.com/3",
+      "END:VCARD",
+    ],
   },
   {
     name: "All Properties",

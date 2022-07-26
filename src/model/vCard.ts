@@ -6,6 +6,7 @@ import {
   CalendarAddressUriProperty,
   CalendarUriProperty,
   CategoriesProperty,
+  ClientPidMapDictionary,
   ClientPidMapProperty,
   EmailProperty,
   EndProperty,
@@ -43,6 +44,7 @@ import { PropertyName } from "./propertyNames";
 import { Kind } from "./propertyValues";
 import { IanaToken, XName } from "./datatypes";
 import { MultiProperty } from "./properties";
+import { ClientPIdMapParameters } from "./propertyParameters";
 
 /**
  * The definition of a vCard in form of a dictionary of properties.
@@ -103,7 +105,7 @@ export interface VCardDefinition {
   revision?: RevisionProperty;
   sound?: SoundProperty;
   uid?: UidProperty;
-  clientPidMap?: ClientPidMapProperty;
+  clientPidMap?: ClientPidMapProperty | ClientPidMapDictionary;
   url?: UrlProperty;
   version?: VersionProperty;
   // Security Properties
@@ -122,6 +124,8 @@ export interface VCardGroupDefinition extends VCardDefinition {
   // Organizational Properties
   member?: MemberProperty;
 }
+
+export type VCardProperty = Exclude<VCardDefinition[keyof VCardDefinition], undefined> | MemberProperty;
 
 /**
  * @internal
@@ -181,7 +185,8 @@ export type VCardList = (
   | VCardListProperty<"PRODID", ProductIdProperty>
   | VCardListProperty<"REV", RevisionProperty>
   | VCardListProperty<"SOUND", SoundProperty>
-  // TODO: CLIENTPIDMAP
+  | VCardListProperty<"CLIENTPIDMAP", ClientPidMapProperty>
+  | { property: "CLIENTPIDMAP"; value: ClientPidMapDictionary; parameters?: ClientPIdMapParameters }
   | VCardListProperty<"URL", UrlProperty>
   | VCardListProperty<"VERSION", VersionProperty>
   | VCardListProperty<"KEY", KeyProperty>
