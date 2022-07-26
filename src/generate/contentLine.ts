@@ -7,10 +7,7 @@ import { generateProperty } from "./property";
 /**
  * @internal
  */
-export function generateContentLine<
-  VCardType extends VCardDefinition | VCardGroupDefinition,
-  Name extends keyof VCardType
->(propertyKey: string, data: Property | MultiProperty): string {
+export function generateContentLine(propertyKey: string, data: Property | MultiProperty): string {
   if (isMultiProperty(data)) {
     const properties: Property[] = isMultiPropertyList(data)
       ? data
