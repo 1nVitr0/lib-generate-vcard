@@ -14,7 +14,10 @@
 <a href="#generate-vcard" id="generate-vcard" style="color: inherit; text-decoration: none;">
   <h1>Generate vCard</h1>
 </a>
-<p>A simple library for <a href="https://tools.ietf.org/html/rfc6350">vCard</a> generation.</p>
+<p><a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a>
+<a href="https://www.npmjs.com/package/generate-vcard"><img src="https://img.shields.io/npm/v/generate-vcard?logo=npm" alt="npm-version"></a>
+<a href="https://codecov.io/gh/1nVitr0/lib-generate-vcard"><img src="https://img.shields.io/codecov/c/github/1nVitr0/lib-generate-vcard?logo=codecov&token=D1VD9GHM8B" alt="coverage"></a></p>
+<p>A simple library for vCard generation compatible with <a href="https://tools.ietf.org/html/rfc6350">RFC 6350</a>.</p>
 
 <a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
   <h2>Documentation</h2>
@@ -33,7 +36,7 @@
 <pre><code class="language-javascript"><span class="hl-1">import</span><span class="hl-0"> </span><span class="hl-2">generateVCard</span><span class="hl-0">, { </span><span class="hl-2">Kind</span><span class="hl-0"> } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-3">&quot;generate-vcard&quot;</span><span class="hl-0">;</span><br/><br/><span class="hl-4">const</span><span class="hl-0"> </span><span class="hl-5">vCard</span><span class="hl-0"> = </span><span class="hl-6">generateVCard</span><span class="hl-0">({</span><br/><span class="hl-0">  </span><span class="hl-2">kind:</span><span class="hl-0"> </span><span class="hl-2">Kind</span><span class="hl-0">.</span><span class="hl-2">Individual</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">fullName:</span><span class="hl-0"> </span><span class="hl-3">&quot;Aram Becker&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">});</span>
 </code></pre>
 <blockquote>
-<pre><code class="language-vcs">BEGIN:VCARD
+<pre><code class="language-text">BEGIN:VCARD
 VERSION:4.0
 KIND:individual
 FN:Aram Becker
@@ -161,6 +164,7 @@ END:VCARD
 <li class="tsd-kind-type-alias"><a href="types/NickNameProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Nick<wbr/>Name<wbr/>Property</a></li>
 <li class="tsd-kind-type-alias"><a href="types/NoteProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Note<wbr/>Property</a></li>
 <li class="tsd-kind-type-alias"><a href="types/OrganizationProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Organization<wbr/>Property</a></li>
+<li class="tsd-kind-type-alias"><a href="types/ParameterName.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Parameter<wbr/>Name</a></li>
 <li class="tsd-kind-type-alias"><a href="types/PhotoProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Photo<wbr/>Property</a></li>
 <li class="tsd-kind-type-alias"><a href="types/ProductIdProperty.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Product<wbr/>Id<wbr/>Property</a></li>
 <li class="tsd-kind-type-alias"><a href="types/Property.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Property</a></li>
