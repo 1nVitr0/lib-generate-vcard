@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.0.2...v1.0.3) (2022-07-26)
+
+
+### Bug Fixes
+
+* replace token for automatic release ([0f14fe6](https://github.com/1nVitr0/lib-generate-vcard/commit/0f14fe62e80c99a94f7270ca862db5e051d65875))
+
 ## [1.0.2](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.0.1...v1.0.2) (2022-07-26)
 
 
