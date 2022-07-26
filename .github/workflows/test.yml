@@ -13,8 +13,11 @@ jobs:
       - uses: actions/setup-node@v1
       - uses: bahmutov/npm-install@v1
 
-      - name: Test
-        run: npm run test --ci --coverage --maxWorkers=2
-
       - name: Build
         run: npm run build
+
+      - name: Test
+        run: npm run test:coverage
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3

@@ -7,7 +7,7 @@ on:
 
 jobs:
   bump_version:
-    name: Bump version
+    name: Release version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,6 +29,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
 
   update_develop:
     name: Update develop branch
