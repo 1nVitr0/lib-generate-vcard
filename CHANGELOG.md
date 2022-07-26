@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.0.4...v1.1.0) (2022-07-26)
+
+
+### Features
+
+* implement client pid map ([ea99237](https://github.com/1nVitr0/lib-generate-vcard/commit/ea99237d8d1e1de682fc8ed473f0766ae92722f6))
+
 ## [1.0.4](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.0.3...v1.0.4) (2022-07-26)
 
 
