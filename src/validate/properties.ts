@@ -1,4 +1,13 @@
-import { MultiProperty, Property, PropertyValue, RecordedPropertyValue } from "../model/properties";
+import { Uri } from "../model/datatypes";
+import {
+  ClientPidMapDictionary,
+  ClientPidMapProperty,
+  MultiProperty,
+  Property,
+  PropertyValue,
+  RecordedPropertyValue,
+} from "../model/properties";
+import { ClientPIdMapParameters } from "../model/propertyParameters";
 
 /**
  * @internal
@@ -31,4 +40,17 @@ export function isMultiPropertyObject(property: Property | MultiProperty): prope
  */
 export function isMultiProperty(property: Property | MultiProperty): property is MultiProperty {
   return isMultiPropertyList(property) || isMultiPropertyObject(property);
+}
+
+/**
+ * @internal
+ */
+export function isClientPidMapDict(
+  property: Property | MultiProperty | ClientPidMapDictionary
+): property is ClientPidMapDictionary {
+  return (
+    typeof property == "object" &&
+    !(property instanceof Array) &&
+    Object.keys(property).every((key) => parseInt(key).toString() === key)
+  );
 }

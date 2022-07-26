@@ -287,3 +287,14 @@ export function generateIntegerValue(value: number | number[], separator: string
 export function generateFloatValue(value: number | number[], separator: string = ","): string {
   return value instanceof Array ? value.join(separator) : value.toString();
 }
+
+/**
+ * @internal
+ */
+export function generateClientPidMapValue(value: [Text, Uri] | { pid: Text; uri: Uri }): string {
+  if (value instanceof Array) {
+    return `${value[0]};${value[1]}`;
+  } else {
+    return `${value.pid};${value.uri}`;
+  }
+}

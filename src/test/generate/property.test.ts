@@ -1,5 +1,6 @@
 import { generateProperty } from "../../generate/property";
 import { Gender } from "../../model/propertyValues";
+import { ClientPidMapDictionary, ClientPidMapProperty } from "../../model/properties";
 
 test("generates simple property", () => {
   expect(generateProperty("fullName", "test")).toStrictEqual({

@@ -1,6 +1,43 @@
-import { VCardDefinition, VCardGroupDefinition, VCardList } from "../model/vCard";
+import { Text, Uri } from "../model/datatypes";
+import {
+  BeginProperty,
+  ClientPidMapDictionary,
+  ClientPidMapProperty,
+  EndProperty,
+  MultiProperty,
+  Property,
+  VersionProperty,
+} from "../model/properties";
+import { VCardDefinition, VCardGroupDefinition, VCardList, VCardProperty } from "../model/vCard";
+import { isClientPidMapDict } from "../validate/properties";
 import { generateContentLine } from "./contentLine";
-import { PropertyName } from "../model/propertyNames";
+
+type BeginEntry = ["begin", BeginProperty];
+type EndEntry = ["end", EndProperty];
+type VersionEntry = ["version", VersionProperty];
+
+function expandClientPidMap(clientPidMap: ClientPidMapDictionary): [string, ClientPidMapProperty][] {
+  const result: [string, { pid: Text; uri: Uri }][] = [];
+  for (const [pid, uri] of Object.entries(clientPidMap) as [Text, Uri][]) {
+    result.push(["CLIENTPIDMAP", { pid, uri }]);
+  }
+
+  return result;
+}
+
+function expandAllClientPidMaps(entries: [string, VCardProperty][]): [string, Property | MultiProperty][] {
+  const pidMapEntries = [];
+  for (let i = 0; i < entries.length; i++) {
+    const [key, value] = entries[i];
+    if (key === "clientPidMap" && isClientPidMapDict(value)) {
+      pidMapEntries.push(...expandClientPidMap(value));
+      entries.splice(i--, 1);
+    }
+  }
+  entries.push(...pidMapEntries);
+
+  return entries as [string, Property | MultiProperty][];
+}
 
 /**
  * Generate a RFC 6350 compatible vCard string
@@ -39,21 +76,21 @@ import { PropertyName } from "../model/propertyNames";
  * ```
  */
 export function generateVCard(vCard: VCardDefinition | VCardGroupDefinition | VCardList): string {
-  const entries =
+  const entries: [string, VCardProperty][] =
     vCard instanceof Array
-      ? vCard.map(
-          ({ property, value, parameters }) => [property, { value, parameters }] as [PropertyName, VCardList[number]]
-        )
+      ? vCard.map(({ property, value, parameters }) => [property, { value, parameters }])
       : Object.entries(vCard);
 
-  const beginIndex = entries.findIndex(([key]) => key === "begin");
-  const begin = beginIndex > -1 ? entries.splice(beginIndex, 1)[0] : ["begin", "VCARD"];
-  const endIndex = entries.findIndex(([key]) => key === "end");
-  const end = endIndex > -1 ? entries.splice(endIndex, 1)[0] : ["end", "VCARD"];
-  const versionIndex = entries.findIndex(([key]) => key === "version");
-  const version = versionIndex > -1 ? entries.splice(versionIndex, 1)[0] : ["version", "4.0"];
+  let index = entries.findIndex(([prop]) => prop === "begin");
+  const begin = (index > -1 ? entries.splice(index, 1)[0] : ["begin", "VCARD"]) as BeginEntry;
 
-  const contentLines = [begin, version, ...entries, end].map(([key, value]) => generateContentLine(key, value));
+  index = entries.findIndex(([prop]) => prop === "end");
+  const end = (index > -1 ? entries.splice(index, 1)[0] : ["end", "VCARD"]) as EndEntry;
 
-  return contentLines.join("\r\n");
+  index = entries.findIndex(([prop]) => prop === "version");
+  const version = (index > -1 ? entries.splice(index, 1)[0] : ["version", "4.0"]) as VersionEntry;
+
+  return [begin, version, ...expandAllClientPidMaps(entries), end]
+    .map(([property, value]) => generateContentLine(property, value))
+    .join("\r\n");
 }

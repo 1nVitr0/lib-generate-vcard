@@ -21,7 +21,7 @@
     "build:prod": "tsup src/index.ts --dts",
     "build:dev": "tsup src/index.ts src/test/index.ts",
     "build:watch": "build:dev -- --watch",
-    "build:ci": "concurrently npm:test npm:build:prod npm:docs",
+    "build:ci": "concurrently npm:test:coverage npm:build:prod npm:docs",
     "docs": "typedoc src/index.ts"
   },
   "author": "Aram Becker",
