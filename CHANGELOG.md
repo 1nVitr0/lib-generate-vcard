@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.2.1...v1.3.0) (2022-07-28)
+
+
+### Features
+
+* implement extensions by OMA and CAB (RFC 6715) ([5eb4f12](https://github.com/1nVitr0/lib-generate-vcard/commit/5eb4f127c03c7893a68bff487f31e80af3e970f0))
+* implement extensions by RDAP (RFC 8605) ([9e68d4c](https://github.com/1nVitr0/lib-generate-vcard/commit/9e68d4cb00bb203f32f6edab0e1f05fba21a6897))
+* implement group parameter ([f8e1c12](https://github.com/1nVitr0/lib-generate-vcard/commit/f8e1c126253e1535eb46e22cf2e817c444fb2be4))
+
 ## [1.2.1](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.2.0...v1.2.1) (2022-07-28)
 
 
