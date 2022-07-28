@@ -110,7 +110,7 @@ export interface PropertyDescriptor {
   property: Text;
   value: Text;
   parameters: Text[];
-  group?: Text;
+  group: Text | undefined;
 }
 
 /**
@@ -126,7 +126,7 @@ export interface PropertyDescriptor {
 export type Property<
   Value extends PropertyValue | RecordedPropertyValue = PropertyValue | RecordedPropertyValue,
   Params extends PropertyParameters = PropertyParameters
-> = Value | { value: Value; parameters?: Params };
+> = Value | { value: Value; group?: string; parameters?: Params };
 /**
  * Multiple properties in form of an array of properties or an object in the form
  * `{ commonParameters?: {@link Params}; values: {@link Property}[]; }`.
@@ -142,8 +142,8 @@ export type MultiProperty<
   Value extends PropertyValue | RecordedPropertyValue = PropertyValue | RecordedPropertyValue,
   Params extends PropertyParameters = PropertyParameters
 > =
-  | { value: Value; parameters?: Params }[]
-  | { commonParameters?: Params; values: Property<Value, Params>[] }
+  | { value: Value; group?: string; parameters?: Params }[]
+  | { commonParameters?: Params; group?: string; values: Property<Value, Params>[] }
   | (Value extends RecordedPropertyValue ? Value[] : never);
 /**
  * Single property or Multiple properties in form of an array of properties or an object in the form

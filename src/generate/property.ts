@@ -41,39 +41,51 @@ function componentList(list: (string | string[])[]): string {
     .join(";");
 }
 
-function valueTypedProperty(property: string, value: any, type: ValueType, parameters: string[]): PropertyDescriptor {
+function valueTypedProperty(
+  property: string,
+  value: any,
+  type: ValueType,
+  group: string | undefined,
+  parameters: string[]
+): PropertyDescriptor {
   switch (type) {
     case "uri":
-      return { property, value: generateUriValue(value as Uri | Uri[]), parameters };
+      return { property, group, value: generateUriValue(value as Uri | Uri[]), parameters };
     case "date":
-      return { property, value: generateDateOnlyValue(value as DateOnly | DateOnly[]), parameters };
+      return { property, group, value: generateDateOnlyValue(value as DateOnly | DateOnly[]), parameters };
     case "time":
-      return { property, value: generateTimeValue(value as TimeOnly | TimeOnly[]), parameters };
+      return { property, group, value: generateTimeValue(value as TimeOnly | TimeOnly[]), parameters };
     case "date-time":
-      return { property, value: generateDateTimeValue(value as DateTime | DateTime[]), parameters };
+      return { property, group, value: generateDateTimeValue(value as DateTime | DateTime[]), parameters };
     case "date-and-or-time":
-      return { property, value: generateDateAndOrTimeValue(value as DateAndOrTime | DateAndOrTime[]), parameters };
+      return {
+        property,
+        group,
+        value: generateDateAndOrTimeValue(value as DateAndOrTime | DateAndOrTime[]),
+        parameters,
+      };
     case "timestamp":
-      return { property, value: generateTimeStampValue(value as TimeStamp | TimeStamp[]), parameters };
+      return { property, group, value: generateTimeStampValue(value as TimeStamp | TimeStamp[]), parameters };
     case "boolean":
       return {
         property,
+        group,
         value: generateBooleanValue(
           (value as any) instanceof Array ? (value as any).map((v: boolean) => !!v) : !!value
         ),
         parameters,
       };
     case "integer":
-      return { property, value: generateIntegerValue(value as number | number[]), parameters };
+      return { property, group, value: generateIntegerValue(value as number | number[]), parameters };
     case "float":
-      return { property, value: generateFloatValue(value as number | number[]), parameters };
+      return { property, group, value: generateFloatValue(value as number | number[]), parameters };
     case "utc-offset":
-      return { property, value: generateUtcOffsetValue(value as UtcOffset | UtcOffset[]), parameters };
+      return { property, group, value: generateUtcOffsetValue(value as UtcOffset | UtcOffset[]), parameters };
     case "language-tag":
-      return { property, value: generateLanguageTagValue(value as LanguageTag), parameters };
+      return { property, group, value: generateLanguageTagValue(value as LanguageTag), parameters };
     case "text":
     default:
-      return { property, value: generateTextValue(value.toString()), parameters };
+      return { property, group, value: generateTextValue(value.toString()), parameters };
   }
 }
 
@@ -82,6 +94,7 @@ export function generateProperty(
   data: Property<PropertyValue | RecordedPropertyValue, any>
 ): PropertyDescriptor {
   const value = typeof data == "object" && "value" in data ? data.value : data;
+  const group = typeof data == "object" && "group" in data ? (data.group as string) : undefined;
   const parameterDict = typeof data == "object" && "parameters" in data ? { ...data.parameters } : {};
 
   if (data instanceof Array ? data.some((s) => isUtf8(s)) : isUtf8(data)) {
@@ -105,26 +118,26 @@ export function generateProperty(
   };
 
   if (isValueParameter(parameterDict) && (typeof value !== "object" || value instanceof Array)) {
-    return valueTypedProperty(property, value, parameterDict.value as ValueType, parameters);
+    return valueTypedProperty(property, value, parameterDict.value as ValueType, group, parameters);
   }
 
   switch (property) {
     // Properties with single value type
     case "BEGIN":
       // override any other value, no parameters
-      return { property, value: value as "VCARD", parameters: [] };
+      return { property, group, value: value as "VCARD", parameters: [] };
     case "END":
       // override any other value, no parameters
-      return { property, value: value as "VCARD", parameters: [] };
+      return { property, group, value: value as "VCARD", parameters: [] };
     case "VERSION":
       // Allow different versions, but throw type error if not 4.0, no parameters
-      return { property, value: value as "4.0", parameters: [] };
+      return { property, group, value: value as "4.0", parameters: [] };
     case "KIND":
-      return { property, value: generateKindValue(value as Kind | Kind[]), parameters };
+      return { property, group, value: generateKindValue(value as Kind | Kind[]), parameters };
     case "LANG":
-      return { property, value: generateLanguageTagValue(value as LanguageTag | LanguageTag[]), parameters };
+      return { property, group, value: generateLanguageTagValue(value as LanguageTag | LanguageTag[]), parameters };
     case "REV":
-      return { property, value: generateTimeStampValue(value as TimeStamp | TimeStamp[]), parameters };
+      return { property, group, value: generateTimeStampValue(value as TimeStamp | TimeStamp[]), parameters };
     case "N":
       components = ["", "", "", "", ""];
       if (typeof value == "string") {
@@ -141,7 +154,7 @@ export function generateProperty(
         } = value as NamePropertyDict;
         components = [familyName, givenName, additionalNames, honorificPrefix, honorificSuffix];
       }
-      return { property, value: componentList(components), parameters };
+      return { property, group, value: componentList(components), parameters };
     case "ADR":
       const {
         poBox = "",
@@ -153,38 +166,49 @@ export function generateProperty(
         country = "",
       } = value as AddressPropertyDict;
       components = [poBox, extended, street, locality, region, postalCode, country];
-      return { property, value: componentList(components), parameters };
+      return { property, group, value: componentList(components), parameters };
     case "GENDER":
       if (value instanceof Array) {
         const [sex, genderIdentity] = (value as [string, string]).map(escapeParameterValue);
-        return { property, value: `${sex};${genderIdentity}`, parameters };
+        return { property, group, value: `${sex};${genderIdentity}`, parameters };
       } else if (typeof value == "object") {
         const { sex, genderIdentity } = value as GenderPropertyDict & RecordedPropertyValue;
         return {
           property,
+          group,
           value: `${sex}${genderIdentity ? `;${escapeParameterValue(genderIdentity)}` : ""}`,
           parameters,
         };
       } else {
-        return { property, value: generateTextValue(value as string), parameters };
+        return { property, group, value: generateTextValue(value as string), parameters };
       }
     case "ORG":
-      return { property, value: generateTextValue(value as string | string[], ";"), parameters };
+      return { property, group, value: generateTextValue(value as string | string[], ";"), parameters };
     case "CLIENTPIDMAP":
-      return { property, value: generateClientPidMapValue(value as [Text, Uri] | { pid: Text; uri: Uri }), parameters };
+      return {
+        property,
+        group,
+        value: generateClientPidMapValue(value as [Text, Uri] | { pid: Text; uri: Uri }),
+        parameters,
+      };
 
     // Properties with multiple possible value types
     case "TZ": // Also Uri | Text
       if (isUtcOffset(value)) {
         resetPropertyValueType("utc-offset");
-        return { property, value: generateUtcOffsetValue(value as UtcOffset | UtcOffset[]), parameters };
+        return { property, group, value: generateUtcOffsetValue(value as UtcOffset | UtcOffset[]), parameters };
       } // otherwise match other value types
     case "ANNIVERSARY": // Also Text
     case "BDAY": // Also Text
     case "DEATHDATE": // Also Text
       if (isDateAndOrTime(value)) {
         resetPropertyValueType("date-and-or-time");
-        return { property, value: generateDateAndOrTimeValue(value as DateAndOrTime | DateAndOrTime[]), parameters };
+        return {
+          property,
+          group,
+          value: generateDateAndOrTimeValue(value as DateAndOrTime | DateAndOrTime[]),
+          parameters,
+        };
       }
     case "PHOTO":
     case "SOURCE":
@@ -207,7 +231,7 @@ export function generateProperty(
     case "DEATHPLACE": // Also Text
       if (isUri(value) && !["TZ", "ANNIVERSARY", "BDAY", "DEATHDATE"].includes(property)) {
         resetPropertyValueType("uri");
-        return { property, value: generateUriValue(value as Uri | Uri[]), parameters };
+        return { property, group, value: generateUriValue(value as Uri | Uri[]), parameters };
       } // otherwise match other value types
     case "XML":
     case "FN":
@@ -223,6 +247,6 @@ export function generateProperty(
     case "INTEREST":
     default: // Default to normal text value type
       resetPropertyValueType("text");
-      return { property, value: generateTextValue(value as string | string[]), parameters };
+      return { property, group, value: generateTextValue(value as string | string[]), parameters };
   }
 }

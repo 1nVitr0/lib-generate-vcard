@@ -25,6 +25,14 @@ export const vCardDescriptorFixtures: {
     expected: ["BEGIN:VCARD", "VERSION:4.0", "KIND:individual", "FN:Jane Doe", "END:VCARD"],
   },
   {
+    name: "Groups",
+    fixture: {
+      kind: Kind.Individual,
+      fullName: { value: "Jane Doe", group: "PERSONAL" },
+    },
+    expected: ["BEGIN:VCARD", "VERSION:4.0", "KIND:individual", "PERSONAL.FN:Jane Doe", "END:VCARD"],
+  },
+  {
     name: "AltId Properties",
     fixture: {
       kind: Kind.Individual,
