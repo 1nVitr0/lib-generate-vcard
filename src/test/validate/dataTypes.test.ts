@@ -1,4 +1,4 @@
-import { Gender, Kind } from "../../model/propertyValues";
+import { Gender, Kind } from "../../model/propertyDictionaries";
 import {
   ianaIsUtf8,
   isDateAndOrTime,

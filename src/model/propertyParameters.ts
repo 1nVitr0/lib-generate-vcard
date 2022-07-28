@@ -53,6 +53,13 @@ export interface XmlPropertyParameters extends ValueParameter<"text">, AltIdPara
 export interface FullNamePropertyParameters extends ValueParameter<"text">, BaseLangPropertyParameters {}
 
 /**
+ * Valid Parameters for name properties
+ *
+ * @category Parameters
+ */
+export interface NamePropertyParameters extends ValueParameter<"text">, BaseLangPropertyParameters {}
+
+/**
  * Valid Parameters for nickName properties
  *
  * @category Parameters
@@ -137,7 +144,7 @@ export interface EmailPropertyParameters extends ValueParameter<"text">, BaseTyp
  *
  * @category Parameters
  */
-export interface IMPPPropertyParameters
+export interface ImppPropertyParameters
   extends ValueParameter<"uri">,
     MediaTypeParameter,
     BaseTypedPropertyParameters {}
@@ -266,7 +273,7 @@ export interface UIdPropertyParameters extends ValueParameter<"text" | "uri">, A
  *
  * @category Parameters
  */
-export interface ClientPIdMapParameters extends AnyParameter, GroupParameter {}
+export interface ClientPIdMapPropertyParameters extends AnyParameter, GroupParameter {}
 
 /**
  * Valid Parameters for url properties

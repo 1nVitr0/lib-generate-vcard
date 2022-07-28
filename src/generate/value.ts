@@ -12,7 +12,7 @@ import {
   UtcOffset,
 } from "../model/datatypes";
 import { ValueType } from "../model/parameters";
-import { Kind } from "../model/propertyValues";
+import { Kind } from "../model/propertyDictionaries";
 import { escapeValue } from "./escape";
 
 interface PartialDate {
@@ -162,6 +162,7 @@ function toPartialDateAndOrTimeString(partialDate: PartialDate, full = false, no
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateTextValue(value: string | string[], separator: string = ","): string {
   return value instanceof Array ? value.map(escapeValue).join(separator) : escapeValue(value);
@@ -169,6 +170,7 @@ export function generateTextValue(value: string | string[], separator: string = 
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateUriValue(value: Uri | Uri[], separator: string = ","): string {
   return generateTextValue(value, separator);
@@ -176,6 +178,7 @@ export function generateUriValue(value: Uri | Uri[], separator: string = ","): s
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateDateOnlyValue(value: DateOnly | DateOnly[], separator: string = ","): string {
   const dates = (value instanceof Array ? value : [value]).map((date) =>
@@ -188,6 +191,7 @@ export function generateDateOnlyValue(value: DateOnly | DateOnly[], separator: s
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateTimeValue(value: TimeOnly | TimeOnly[], separator: string = ","): string {
   const times = (value instanceof Array ? value : [value]).map((time) =>
@@ -200,6 +204,7 @@ export function generateTimeValue(value: TimeOnly | TimeOnly[], separator: strin
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateDateAndOrTimeValue(value: DateAndOrTime | DateAndOrTime[], separator: string = ","): string {
   const dates = (value instanceof Array ? value : [value]).map((date) =>
@@ -212,6 +217,7 @@ export function generateDateAndOrTimeValue(value: DateAndOrTime | DateAndOrTime[
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateDateTimeValue(value: DateTime | DateTime[], separator: string = ","): string {
   const dates = (value instanceof Array ? value : [value]).map((date) =>
@@ -224,6 +230,7 @@ export function generateDateTimeValue(value: DateTime | DateTime[], separator: s
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateTimeStampValue(value: TimeStamp | TimeStamp[], separator: string = ","): string {
   const dates = (value instanceof Array ? value : [value]).map((date) =>
@@ -234,6 +241,7 @@ export function generateTimeStampValue(value: TimeStamp | TimeStamp[], separator
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateUtcOffsetValue(value: UtcOffset | UtcOffset[], separator: string = ","): string {
   return value instanceof Array ? value.map((z) => toUtcOffsetString(z)).join(separator) : toUtcOffsetString(value);
@@ -241,6 +249,7 @@ export function generateUtcOffsetValue(value: UtcOffset | UtcOffset[], separator
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateLanguageTagValue(value: LanguageTag | LanguageTag[], separator: string = ","): string {
   return generateTextValue(value, separator);
@@ -248,6 +257,7 @@ export function generateLanguageTagValue(value: LanguageTag | LanguageTag[], sep
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateValueValue(value: ValueType | ValueType[], separator: string = ","): string {
   return generateTextValue(value, separator);
@@ -255,6 +265,7 @@ export function generateValueValue(value: ValueType | ValueType[], separator: st
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateKindValue(value: Kind | Kind[], separator: string = ","): string {
   return value instanceof Array ? value.join(separator) : value;
@@ -262,6 +273,7 @@ export function generateKindValue(value: Kind | Kind[], separator: string = ",")
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateTypeValue(value: string | string[], separator: string = ","): string {
   return value instanceof Array ? value.join(separator) : value;
@@ -269,6 +281,7 @@ export function generateTypeValue(value: string | string[], separator: string = 
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateBooleanValue(value: boolean | boolean[], separator: string = ","): string {
   return value instanceof Array ? value.join(separator) : value ? "true" : "false";
@@ -276,6 +289,7 @@ export function generateBooleanValue(value: boolean | boolean[], separator: stri
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateIntegerValue(value: number | number[], separator: string = ","): string {
   return value instanceof Array ? value.map((n) => n.toFixed(0)).join(separator) : value.toFixed(0);
@@ -283,6 +297,7 @@ export function generateIntegerValue(value: number | number[], separator: string
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateFloatValue(value: number | number[], separator: string = ","): string {
   return value instanceof Array ? value.join(separator) : value.toString();
@@ -290,6 +305,7 @@ export function generateFloatValue(value: number | number[], separator: string =
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateClientPidMapValue(value: [Text, Uri] | { pid: Text; uri: Uri }): string {
   if (value instanceof Array) {

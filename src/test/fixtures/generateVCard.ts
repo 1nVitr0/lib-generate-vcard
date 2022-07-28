@@ -1,5 +1,6 @@
 import { ClientPidMapProperty } from "../../model/properties";
-import { Gender, Kind } from "../../model/propertyValues";
+import { Gender, Kind } from "../../model/propertyDictionaries";
+import { PropertyName } from "../../model/propertyNames";
 import { VCardDefinition, VCardGroupDefinition, VCardList } from "../../model/vCard";
 
 export const vCardDescriptorFixtures: {
@@ -11,17 +12,17 @@ export const vCardDescriptorFixtures: {
     name: "Minimal vCard",
     fixture: {
       kind: Kind.Individual,
-      fullName: "Aram Becker",
+      fullName: "Jane Doe",
     },
-    expected: ["BEGIN:VCARD", "VERSION:4.0", "KIND:individual", "FN:Aram Becker", "END:VCARD"],
+    expected: ["BEGIN:VCARD", "VERSION:4.0", "KIND:individual", "FN:Jane Doe", "END:VCARD"],
   },
   {
     name: "Minimal List VCard",
     fixture: [
-      { property: "KIND", value: Kind.Individual },
-      { property: "FN", value: "Aram Becker" },
+      { property: PropertyName.kind, value: Kind.Individual },
+      { property: PropertyName.fullName, value: "Jane Doe" },
     ],
-    expected: ["BEGIN:VCARD", "VERSION:4.0", "KIND:individual", "FN:Aram Becker", "END:VCARD"],
+    expected: ["BEGIN:VCARD", "VERSION:4.0", "KIND:individual", "FN:Jane Doe", "END:VCARD"],
   },
   {
     name: "AltId Properties",
@@ -29,7 +30,7 @@ export const vCardDescriptorFixtures: {
       kind: Kind.Individual,
       fullName: [
         {
-          value: "Aram Becker",
+          value: "Jane Doe",
           parameters: {
             altId: "0",
             language: "de-de",
@@ -48,7 +49,7 @@ export const vCardDescriptorFixtures: {
       "BEGIN:VCARD",
       "VERSION:4.0",
       "KIND:individual",
-      "FN;ALTID=0;LANGUAGE=de-de:Aram Becker",
+      "FN;ALTID=0;LANGUAGE=de-de:Jane Doe",
       "FN;ALTID=1;LANGUAGE=fr-fr:Arám Bèckêr",
       "END:VCARD",
     ],
@@ -56,15 +57,15 @@ export const vCardDescriptorFixtures: {
   {
     name: "AltId List Properties",
     fixture: [
-      { property: "KIND", value: Kind.Individual },
-      { property: "FN", value: "Aram Becker", parameters: { altId: "0", language: "de-de" } },
-      { property: "FN", value: "Arám Bèckêr", parameters: { altId: "1", language: "fr-fr" } },
+      { property: PropertyName.kind, value: Kind.Individual },
+      { property: PropertyName.fullName, value: "Jane Doe", parameters: { altId: "0", language: "de-de" } },
+      { property: PropertyName.fullName, value: "Arám Bèckêr", parameters: { altId: "1", language: "fr-fr" } },
     ],
     expected: [
       "BEGIN:VCARD",
       "VERSION:4.0",
       "KIND:individual",
-      "FN;ALTID=0;LANGUAGE=de-de:Aram Becker",
+      "FN;ALTID=0;LANGUAGE=de-de:Jane Doe",
       "FN;ALTID=1;LANGUAGE=fr-fr:Arám Bèckêr",
       "END:VCARD",
     ],
@@ -76,15 +77,15 @@ export const vCardDescriptorFixtures: {
       end: "VCARD",
       begin: "VCARD",
       kind: Kind.Individual,
-      fullName: "Aram Becker",
+      fullName: "Jane Doe",
     },
-    expected: ["BEGIN:VCARD", "VERSION:4.0", "KIND:individual", "FN:Aram Becker", "END:VCARD"],
+    expected: ["BEGIN:VCARD", "VERSION:4.0", "KIND:individual", "FN:Jane Doe", "END:VCARD"],
   },
   {
     name: "Client PID Map as a Dictionary",
     fixture: {
       kind: Kind.Individual,
-      fullName: "Aram Becker",
+      fullName: "Jane Doe",
       clientPidMap: {
         "0": "http://example.com/1",
         "2": "http://example.com/2",
@@ -95,7 +96,7 @@ export const vCardDescriptorFixtures: {
       "BEGIN:VCARD",
       "VERSION:4.0",
       "KIND:individual",
-      "FN:Aram Becker",
+      "FN:Jane Doe",
       "CLIENTPIDMAP:0;http://example.com/1",
       "CLIENTPIDMAP:2;http://example.com/2",
       "CLIENTPIDMAP:4;http://example.com/3",
@@ -106,7 +107,7 @@ export const vCardDescriptorFixtures: {
     name: "Client PID Map as a Array",
     fixture: {
       kind: Kind.Individual,
-      fullName: "Aram Becker",
+      fullName: "Jane Doe",
       clientPidMap: {
         values: [
           ["0", "http://example.com/1"],
@@ -119,7 +120,7 @@ export const vCardDescriptorFixtures: {
       "BEGIN:VCARD",
       "VERSION:4.0",
       "KIND:individual",
-      "FN:Aram Becker",
+      "FN:Jane Doe",
       "CLIENTPIDMAP:0;http://example.com/1",
       "CLIENTPIDMAP:2;http://example.com/2",
       "CLIENTPIDMAP:4;http://example.com/3",
@@ -130,7 +131,7 @@ export const vCardDescriptorFixtures: {
     name: "All Properties",
     fixture: {
       kind: Kind.Group,
-      fullName: "Aram Becker",
+      fullName: "Jane Doe",
       name: {
         familyName: "Becker",
         givenName: "Aram",
@@ -142,7 +143,7 @@ export const vCardDescriptorFixtures: {
       anniversary: "1955-01-01",
       title: "Dr.",
       role: "Architect",
-      organization: "Aram Becker GmbH",
+      organization: "Jane Doe GmbH",
       xml: "<xml>xml</xml>",
       address: {
         poBox: "123",
@@ -182,13 +183,13 @@ export const vCardDescriptorFixtures: {
       "BEGIN:VCARD",
       "VERSION:4.0",
       "KIND:group",
-      "FN:Aram Becker",
+      "FN:Jane Doe",
       "N:Becker;Aram;Ar;Dr.;Jr.",
       "BDAY:19550101",
       "ANNIVERSARY:19550101",
       "TITLE:Dr.",
       "ROLE:Architect",
-      "ORG:Aram Becker GmbH",
+      "ORG:Jane Doe GmbH",
       "XML:<xml>xml</xml>",
       "ADR:123;Apt. 4;Main St.;Anytown;CA;12345;US",
       "TEL:tel:+1-555-555-5555",
@@ -222,7 +223,7 @@ export const vCardDescriptorFixtures: {
     name: "Duplicate address",
     fixture: {
       kind: Kind.Individual,
-      fullName: "Aram Becker",
+      fullName: "Jane Doe",
       name: {
         familyName: "Becker",
         givenName: "Aram",
@@ -250,7 +251,7 @@ export const vCardDescriptorFixtures: {
       "BEGIN:VCARD",
       "VERSION:4.0",
       "KIND:individual",
-      "FN:Aram Becker",
+      "FN:Jane Doe",
       "N:Becker;Aram;Bero;;",
       "GENDER:M",
       "ADR:;;Jungfernheideweg 49;Berlin;;13629;Germany",

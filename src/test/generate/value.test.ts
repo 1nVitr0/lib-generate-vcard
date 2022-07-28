@@ -15,7 +15,7 @@ import {
   generateTextValue,
   generateUriValue,
 } from "../../generate/value";
-import { Kind } from "../../model/propertyValues";
+import { Kind } from "../../model/propertyDictionaries";
 import { tz } from "../helpers";
 
 test("generate bolean", () => {

@@ -3,6 +3,7 @@ import { PropertyName } from "./propertyNames";
 
 /**
  * @internal
+ * @category Internally Used
  */
 export const defaultPropertyTypes: Record<PropertyName, ValueType | null> = {
   ADR: "text",

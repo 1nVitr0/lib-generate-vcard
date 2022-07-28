@@ -1,3 +1,5 @@
+import { IanaToken, XName } from "./datatypes";
+import { PropertyParameters } from "./parameters";
 import {
   AddressProperty,
   AnniversaryProperty,
@@ -26,7 +28,6 @@ import {
   OrganizationProperty,
   PhotoProperty,
   ProductIdProperty,
-  Property,
   RelatedProperty,
   RevisionProperty,
   RoleProperty,
@@ -40,11 +41,81 @@ import {
   VersionProperty,
   XmlProperty,
 } from "./properties";
+import { Kind } from "./propertyDictionaries";
 import { PropertyName } from "./propertyNames";
-import { Kind } from "./propertyValues";
-import { IanaToken, XName } from "./datatypes";
-import { MultiProperty } from "./properties";
-import { ClientPIdMapParameters } from "./propertyParameters";
+import { NamePropertyParameters } from "./propertyParameters";
+import {
+  AddressPropertyParameters,
+  AnniversaryPropertyParameters,
+  BirthdayPropertyParameters,
+  CalendarAddressUriPropertyParameters,
+  CalendarUriPropertyParameters,
+  CategoriesPropertyParameters,
+  ClientPIdMapPropertyParameters,
+  EmailPropertyParameters,
+  FbUrlPropertyParameters,
+  FullNamePropertyParameters,
+  GenderPropertyParameters,
+  GeoLocationPropertyParameters,
+  ImppPropertyParameters,
+  KeyPropertyParameters,
+  KindPropertyParameters,
+  LanguagePropertyParameters,
+  LogoPropertyParameters,
+  NickNamePropertyParameters,
+  NotePropertyParameters,
+  OrganizationPropertyParameters,
+  PhotoPropertyParameters,
+  ProductIdPropertyParameters,
+  RelatedPropertyParameters,
+  RevisionPropertyParameters,
+  RolePropertyParameters,
+  SoundPropertyParameters,
+  SourcePropertyParameters,
+  TelPropertyParameters,
+  TimezonePropertyParameters,
+  TitlePropertyParameters,
+  UrlPropertyParameters,
+  VersionPropertyParameters,
+  XmlPropertyParameters,
+} from "./propertyParameters";
+import {
+  AddressPropertyValue,
+  AnniversaryPropertyValue,
+  BirthdayPropertyValue,
+  CalendarAddressUriPropertyValue,
+  CalendarUriPropertyValue,
+  CategoriesPropertyValue,
+  ClientPidMapPropertyValue,
+  EmailPropertyValue,
+  FbUrlPropertyValue,
+  FullNamePropertyValue,
+  GenderPropertyValue,
+  GeoLocationPropertyValue,
+  ImppPropertyValue,
+  KeyPropertyValue,
+  KindPropertyValue,
+  LanguagePropertyValue,
+  LogoPropertyValue,
+  NamePropertyValue,
+  NickNamePropertyValue,
+  NotePropertyValue,
+  OrganizationPropertyValue,
+  PhotoPropertyValue,
+  ProductIdPropertyValue,
+  PropertyValue,
+  RecordedPropertyValue,
+  RelatedPropertyValue,
+  RevisionPropertyValue,
+  RolePropertyValue,
+  SoundPropertyValue,
+  TelPropertyValue,
+  TimezonePropertyValue,
+  TitlePropertyValue,
+  UrlPropertyValue,
+  VersionPropertyValue,
+  XmlPropertyValue,
+} from "./propertyValues";
 
 /**
  * The definition of a vCard in form of a dictionary of properties.
@@ -54,7 +125,7 @@ import { ClientPIdMapParameters } from "./propertyParameters";
  * ```ts
  * const vCard = {
  *   kind: Kind.Individual,
- *   fullName: "John Doe",
+ *   fullName: "Jane Doe",
  *   name: {
  *     familyName: "Doe",
  *     givenName: "John",
@@ -129,15 +200,13 @@ export type VCardProperty = Exclude<VCardDefinition[keyof VCardDefinition], unde
 
 /**
  * @internal
+ * @category Internally Used
  */
 export type VCardListProperty<
   Name extends PropertyName | XName | IanaToken = PropertyName | XName | IanaToken,
-  Prop extends Property | MultiProperty = Property | MultiProperty
-> = Prop extends Property<infer Value, infer Params>
-  ? { property: Name; value: Value; parameters?: Params }
-  : Prop extends MultiProperty<infer Value, infer Params>
-  ? { property: Name; value: Value; parameters?: Params }
-  : never;
+  Value extends PropertyValue | RecordedPropertyValue = PropertyValue | RecordedPropertyValue,
+  Parameters extends PropertyParameters = PropertyParameters
+> = { property: Name; value: Value; parameters?: Parameters };
 
 /**
  * vCard definition in form of an array of vCard properties
@@ -146,51 +215,51 @@ export type VCardListProperty<
  * @example
  * ```ts
  * generateVCard([
- *   { property: "KIND", value: Kind.Individual },
- *   { property: "FN", value: "John Doe" },
- *   { property: "N", value: { familyName: "Doe", name: "John" } },
- *   { property: "EMAIL", value: "john@doe.com" },
- *   { property: "TEL", value: "123456789", parameters: { type: "home" } },
- *   { property: "TEL", value: "987654321", parameters: { type: "work" } },
+ *   { property: PropertyName.kind, value: Kind.Individual },
+ *   { property: PropertyName.fullName, value: "Jane Doe" },
+ *   { property: PropertyName.name, value: { familyName: "Doe", name: "John" } },
+ *   { property: PropertyName.email, value: "john@doe.com" },
+ *   { property: PropertyName.tel, value: "123456789", parameters: { type: "home" } },
+ *   { property: PropertyName.tel, value: "987654321", parameters: { type: "work" } },
  * ]);
  * ```
  */
 export type VCardList = (
-  | VCardListProperty<"BEGIN", BeginProperty>
-  | VCardListProperty<"END", EndProperty>
-  | VCardListProperty<"SOURCE", SourceProperty>
-  | VCardListProperty<"KIND", KindProperty>
-  | VCardListProperty<"XML", XmlProperty>
-  | VCardListProperty<"FN", FullNameProperty>
-  | VCardListProperty<"N", NameProperty>
-  | VCardListProperty<"NICKNAME", NickNameProperty>
-  | VCardListProperty<"PHOTO", PhotoProperty>
-  | VCardListProperty<"BDAY", BirthdayProperty>
-  | VCardListProperty<"ANNIVERSARY", AnniversaryProperty>
-  | VCardListProperty<"GENDER", GenderProperty>
-  | VCardListProperty<"ADR", AddressProperty>
-  | VCardListProperty<"TEL", TelProperty>
-  | VCardListProperty<"EMAIL", EmailProperty>
-  | VCardListProperty<"IMPP", ImppProperty>
-  | VCardListProperty<"LANG", LanguageProperty>
-  | VCardListProperty<"TZ", TimezoneProperty>
-  | VCardListProperty<"GEO", GeoLocationProperty>
-  | VCardListProperty<"TITLE", TitleProperty>
-  | VCardListProperty<"ROLE", RoleProperty>
-  | VCardListProperty<"LOGO", LogoProperty>
-  | VCardListProperty<"ORG", OrganizationProperty>
-  | VCardListProperty<"RELATED", RelatedProperty>
-  | VCardListProperty<"CATEGORIES", CategoriesProperty>
-  | VCardListProperty<"NOTE", NoteProperty>
-  | VCardListProperty<"PRODID", ProductIdProperty>
-  | VCardListProperty<"REV", RevisionProperty>
-  | VCardListProperty<"SOUND", SoundProperty>
-  | VCardListProperty<"CLIENTPIDMAP", ClientPidMapProperty>
-  | { property: "CLIENTPIDMAP"; value: ClientPidMapDictionary; parameters?: ClientPIdMapParameters }
-  | VCardListProperty<"URL", UrlProperty>
-  | VCardListProperty<"VERSION", VersionProperty>
-  | VCardListProperty<"KEY", KeyProperty>
-  | VCardListProperty<"FBURL", FbUrlProperty>
-  | VCardListProperty<"CALADRURI", CalendarAddressUriProperty>
-  | VCardListProperty<"CALURI", CalendarUriProperty>
+  | VCardListProperty<PropertyName.begin, "VCARD", {}>
+  | VCardListProperty<PropertyName.end, "VCARD", {}>
+  | VCardListProperty<PropertyName.source, SoundPropertyValue, SourcePropertyParameters>
+  | VCardListProperty<PropertyName.kind, KindPropertyValue, KindPropertyParameters>
+  | VCardListProperty<PropertyName.xml, XmlPropertyValue, XmlPropertyParameters>
+  | VCardListProperty<PropertyName.fullName, FullNamePropertyValue, FullNamePropertyParameters>
+  | VCardListProperty<PropertyName.name, NamePropertyValue, NamePropertyParameters>
+  | VCardListProperty<PropertyName.nickName, NickNamePropertyValue, NickNamePropertyParameters>
+  | VCardListProperty<PropertyName.photo, PhotoPropertyValue, PhotoPropertyParameters>
+  | VCardListProperty<PropertyName.birthday, BirthdayPropertyValue, BirthdayPropertyParameters>
+  | VCardListProperty<PropertyName.anniversary, AnniversaryPropertyValue, AnniversaryPropertyParameters>
+  | VCardListProperty<PropertyName.gender, GenderPropertyValue, GenderPropertyParameters>
+  | VCardListProperty<PropertyName.address, AddressPropertyValue, AddressPropertyParameters>
+  | VCardListProperty<PropertyName.tel, TelPropertyValue, TelPropertyParameters>
+  | VCardListProperty<PropertyName.email, EmailPropertyValue, EmailPropertyParameters>
+  | VCardListProperty<PropertyName.impp, ImppPropertyValue, ImppPropertyParameters>
+  | VCardListProperty<PropertyName.language, LanguagePropertyValue, LanguagePropertyParameters>
+  | VCardListProperty<PropertyName.timezone, TimezonePropertyValue, TimezonePropertyParameters>
+  | VCardListProperty<PropertyName.geoLocation, GeoLocationPropertyValue, GeoLocationPropertyParameters>
+  | VCardListProperty<PropertyName.title, TitlePropertyValue, TitlePropertyParameters>
+  | VCardListProperty<PropertyName.role, RolePropertyValue, RolePropertyParameters>
+  | VCardListProperty<PropertyName.logo, LogoPropertyValue, LogoPropertyParameters>
+  | VCardListProperty<PropertyName.organization, OrganizationPropertyValue, OrganizationPropertyParameters>
+  | VCardListProperty<PropertyName.related, RelatedPropertyValue, RelatedPropertyParameters>
+  | VCardListProperty<PropertyName.categories, CategoriesPropertyValue, CategoriesPropertyParameters>
+  | VCardListProperty<PropertyName.note, NotePropertyValue, NotePropertyParameters>
+  | VCardListProperty<PropertyName.productId, ProductIdPropertyValue, ProductIdPropertyParameters>
+  | VCardListProperty<PropertyName.revision, RevisionPropertyValue, RevisionPropertyParameters>
+  | VCardListProperty<PropertyName.sound, SoundPropertyValue, SoundPropertyParameters>
+  | VCardListProperty<PropertyName.clientPidMap, ClientPidMapPropertyValue, ClientPIdMapPropertyParameters>
+  | { property: PropertyName.clientPidMap; value: ClientPidMapDictionary; parameters?: ClientPIdMapPropertyParameters }
+  | VCardListProperty<PropertyName.url, UrlPropertyValue, UrlPropertyParameters>
+  | VCardListProperty<PropertyName.version, VersionPropertyValue, VersionPropertyParameters>
+  | VCardListProperty<PropertyName.key, KeyPropertyValue, KeyPropertyParameters>
+  | VCardListProperty<PropertyName.fbUrl, FbUrlPropertyValue, FbUrlPropertyParameters>
+  | VCardListProperty<PropertyName.calendarUri, CalendarAddressUriPropertyValue, CalendarAddressUriPropertyParameters>
+  | VCardListProperty<PropertyName.calendarUri, CalendarUriPropertyValue, CalendarUriPropertyParameters>
 )[];

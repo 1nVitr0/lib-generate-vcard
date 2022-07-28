@@ -1,25 +1,20 @@
-import { Uri } from "../model/datatypes";
-import {
-  ClientPidMapDictionary,
-  ClientPidMapProperty,
-  MultiProperty,
-  Property,
-  PropertyValue,
-  RecordedPropertyValue,
-} from "../model/properties";
-import { ClientPIdMapParameters } from "../model/propertyParameters";
+import { PropertyParameters } from "../model/parameters";
+import { ClientPidMapDictionary, MultiProperty, Property } from "../model/properties";
+import { RecordedPropertyValue, PropertyValue } from "../model/propertyValues";
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function isPropertyObject(
   property: Property
-): property is { value: PropertyValue | RecordedPropertyValue; parameters?: {} } {
+): property is { value: PropertyValue | RecordedPropertyValue; parameters?: PropertyParameters } {
   return typeof property == "object" && !(property instanceof Array) && "value" in property;
 }
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function isMultiPropertyList(property: Property | MultiProperty): property is Extract<MultiProperty, any[]> {
   return (
@@ -30,6 +25,7 @@ export function isMultiPropertyList(property: Property | MultiProperty): propert
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function isMultiPropertyObject(property: Property | MultiProperty): property is Exclude<MultiProperty, any[]> {
   return typeof property == "object" && "values" in property && property.values instanceof Array;
@@ -37,6 +33,7 @@ export function isMultiPropertyObject(property: Property | MultiProperty): prope
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function isMultiProperty(property: Property | MultiProperty): property is MultiProperty {
   return isMultiPropertyList(property) || isMultiPropertyObject(property);
@@ -44,6 +41,7 @@ export function isMultiProperty(property: Property | MultiProperty): property is
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function isClientPidMapDict(
   property: Property | MultiProperty | ClientPidMapDictionary
