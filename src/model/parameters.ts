@@ -1,4 +1,4 @@
-import { LanguageTag, IanaToken, XName } from "./datatypes";
+import { LanguageTag, XName } from "./datatypes";
 
 /**
  * Additional type parameter values for the TEL property
@@ -61,8 +61,7 @@ export type ValueType =
   | "float"
   | "utc-offset"
   | "language-tag"
-  | XName
-  | IanaToken;
+  | XName;
 
 /**
  * Basic values for the TYPE parameter
@@ -72,12 +71,19 @@ export type ValueType =
 export type TypeType<AdditionalTypes extends string = never> = "work" | "home" | AdditionalTypes;
 
 /**
+ * Basic Property Parameter dictionary, can be empty
+ *
+ * @category Parameters
+ */
+export interface PropertyParameters {}
+
+/**
  * Language Parameter
  *
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.1
  */
-export interface LanguageParameter {
+export interface LanguageParameter extends PropertyParameters {
   language?: LanguageTag;
 }
 
@@ -88,7 +94,7 @@ export interface LanguageParameter {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.2
  */
-export interface ValueParameter<Type extends ValueType = ValueType> {
+export interface ValueParameter<Type extends ValueType = ValueType> extends PropertyParameters {
   value?: Type;
 }
 
@@ -98,7 +104,7 @@ export interface ValueParameter<Type extends ValueType = ValueType> {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.3
  */
-export interface PrefParameter {
+export interface PrefParameter extends PropertyParameters {
   pref?: number;
 }
 
@@ -109,7 +115,7 @@ export interface PrefParameter {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.4
  */
-export interface AltIdParameter {
+export interface AltIdParameter extends PropertyParameters {
   altId?: number | string;
 }
 
@@ -119,7 +125,7 @@ export interface AltIdParameter {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.5
  */
-export interface PIdParameter {
+export interface PIdParameter extends PropertyParameters {
   pId?: number | number[];
 }
 
@@ -129,7 +135,7 @@ export interface PIdParameter {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.6
  */
-export interface TypeParameter<AdditionalTypes extends string = never> {
+export interface TypeParameter<AdditionalTypes extends string = never> extends PropertyParameters {
   type?: TypeType<AdditionalTypes> | TypeType<AdditionalTypes>[];
 }
 
@@ -139,7 +145,7 @@ export interface TypeParameter<AdditionalTypes extends string = never> {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.7
  */
-export interface MediaTypeParameter {
+export interface MediaTypeParameter extends PropertyParameters {
   mediaType?: `${string}/${string}`;
   mediaTypeAttributes?: Record<string, string>;
 }
@@ -150,8 +156,8 @@ export interface MediaTypeParameter {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.8
  */
-export interface CalscaleParameter {
-  calScale?: "gregorian" | IanaToken | XName;
+export interface CalscaleParameter extends PropertyParameters {
+  calScale?: "gregorian" | XName;
 }
 
 /**
@@ -160,7 +166,7 @@ export interface CalscaleParameter {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.9
  */
-export interface SortAsParameter {
+export interface SortAsParameter extends PropertyParameters {
   sortAs?: string | number | (string | number)[];
 }
 
@@ -170,7 +176,7 @@ export interface SortAsParameter {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.10
  */
-export interface GeoParameter {
+export interface GeoParameter extends PropertyParameters {
   geo?: string;
 }
 
@@ -180,7 +186,7 @@ export interface GeoParameter {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.11
  */
-export interface TimezoneParameter {
+export interface TimezoneParameter extends PropertyParameters {
   tz?: string;
 }
 
@@ -190,7 +196,7 @@ export interface TimezoneParameter {
  * @category Parameters
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-6.3.1
  */
-export interface LabelParameter {
+export interface LabelParameter extends PropertyParameters {
   label?: string;
 }
 
@@ -199,7 +205,7 @@ export interface LabelParameter {
  *
  * @category Parameters
  */
-export interface IanaCharsetParameter {
+export interface CharsetParameter extends PropertyParameters {
   charset?: "UTF-8";
 }
 
@@ -208,7 +214,7 @@ export interface IanaCharsetParameter {
  *
  * @category Parameters
  */
-export interface AnyParameter extends IanaCharsetParameter, Partial<Record<XName, string | string[]>> {}
+export interface AnyParameter extends PropertyParameters, CharsetParameter, Partial<Record<XName, string | string[]>> {}
 
 /**
  * Any named parameter from RFC 6350
@@ -228,4 +234,4 @@ export interface NamedParameters
     GeoParameter,
     TimezoneParameter,
     LabelParameter,
-    IanaCharsetParameter {}
+    CharsetParameter {}

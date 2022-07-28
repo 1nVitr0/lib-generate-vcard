@@ -51,7 +51,7 @@ function expandAllClientPidMaps(entries: [string, VCardProperty][]): [string, Pr
  * ```ts
  * generateVCard({
  *   kind: Kind.Individual,
- *   fullName: "John Doe",
+ *   fullName: "Jane Doe",
  *   name: {
  *    familyName: "Doe",
  *    givenName: "John",
@@ -66,12 +66,12 @@ function expandAllClientPidMaps(entries: [string, VCardProperty][]): [string, Pr
  * @example
  * ```ts
  * generateVCard([
- *   { property: "KIND", value: Kind.Individual },
- *   { property: "FN", value: "John Doe" },
- *   { property: "N", value: { familyName: "Doe", name: "John" } },
- *   { property: "EMAIL", value: "john@doe.com" },
- *   { property: "TEL", value: "123456789", parameters: { type: "home" } },
- *   { property: "TEL", value: "987654321", parameters: { type: "work" } },
+ *   { property: PropertyName.kind, value: Kind.Individual },
+ *   { property: PropertyName.fullName, value: "Jane Doe" },
+ *   { property: PropertyName.name, value: { familyName: "Doe", name: "John" } },
+ *   { property: PropertyName.email, value: "john@doe.com" },
+ *   { property: PropertyName.tel, value: "123456789", parameters: { type: "home" } },
+ *   { property: PropertyName.tel, value: "987654321", parameters: { type: "work" } },
  * ]);
  * ```
  */

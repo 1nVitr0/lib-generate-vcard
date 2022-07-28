@@ -8,12 +8,12 @@ module.exports = {
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     [
-      "@semantic-release/git",
-      { message: "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}" }
-    ],
-    [
       "@semantic-release/npm",
       { tarballDir: "dist" }
+    ],
+    [
+      "@semantic-release/git",
+      { message: "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}" }
     ],
     [
       "@semantic-release/github",

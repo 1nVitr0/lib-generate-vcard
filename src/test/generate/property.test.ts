@@ -1,5 +1,5 @@
 import { generateProperty } from "../../generate/property";
-import { Gender } from "../../model/propertyValues";
+import { Gender } from "../../model/propertyDictionaries";
 import { ClientPidMapDictionary, ClientPidMapProperty } from "../../model/properties";
 
 test("generates simple property", () => {

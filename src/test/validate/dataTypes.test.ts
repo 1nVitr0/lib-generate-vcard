@@ -1,6 +1,6 @@
-import { Gender, Kind } from "../../model/propertyValues";
+import { Gender, Kind } from "../../model/propertyDictionaries";
 import {
-  ianaIsUtf8,
+  isUtf8,
   isDateAndOrTime,
   isDateOnly,
   isDateTime,
@@ -16,8 +16,8 @@ import {
 } from "../../validate/dataTypes";
 
 test("detects utf-8", () => {
-  expect(ianaIsUtf8("😄")).toBeTruthy();
-  expect(ianaIsUtf8("ascii")).toBeFalsy();
+  expect(isUtf8("😄")).toBeTruthy();
+  expect(isUtf8("ascii")).toBeFalsy();
 });
 
 test("detects date and or time", () => {

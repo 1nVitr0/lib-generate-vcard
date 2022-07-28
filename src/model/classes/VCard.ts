@@ -1,55 +1,113 @@
 import { generateVCard } from "../../generate/vCard";
 import {
-  BeginProperty,
-  EndProperty,
-  SourceProperty,
-  KindProperty,
-  XmlProperty,
-  FullNameProperty,
-  NameProperty,
-  NickNameProperty,
-  PhotoProperty,
-  BirthdayProperty,
-  AnniversaryProperty,
-  GenderProperty,
   AddressProperty,
-  TelProperty,
-  EmailProperty,
-  ImppProperty,
-  LanguageProperty,
-  TimezoneProperty,
-  GeoLocationProperty,
-  TitleProperty,
-  RoleProperty,
-  LogoProperty,
-  OrganizationProperty,
-  RelatedProperty,
-  CategoriesProperty,
-  NoteProperty,
-  ProductIdProperty,
-  RevisionProperty,
-  SoundProperty,
-  UidProperty,
-  ClientPidMapProperty,
-  UrlProperty,
-  VersionProperty,
-  KeyProperty,
-  FbUrlProperty,
+  AnniversaryProperty,
+  BeginProperty,
+  BirthdayProperty,
   CalendarAddressUriProperty,
   CalendarUriProperty,
-  MemberProperty,
+  CategoriesProperty,
   ClientPidMapDictionary,
+  ClientPidMapProperty,
+  DeathPlaceProperty,
+  EmailProperty,
+  EndProperty,
+  FbUrlProperty,
+  FullNameProperty,
+  GenderProperty,
+  GeoLocationProperty,
+  ImppProperty,
+  KeyProperty,
+  KindProperty,
+  LanguageProperty,
+  LogoProperty,
+  MemberProperty,
+  NameProperty,
+  NickNameProperty,
+  NoteProperty,
+  OrganizationProperty,
+  PhotoProperty,
+  ProductIdProperty,
+  RelatedProperty,
+  RevisionProperty,
+  RoleProperty,
+  SoundProperty,
+  SourceProperty,
+  TelProperty,
+  TimezoneProperty,
+  TitleProperty,
+  UidProperty,
+  UrlProperty,
+  VersionProperty,
+  XmlProperty,
 } from "../properties";
-import { Kind } from "../propertyValues";
+import { Kind } from "../propertyDictionaries";
 import { VCardDefinition, VCardGroupDefinition } from "../vCard";
+import {
+  SourcePropertyParameters,
+  KeyPropertyParameters,
+  FbUrlPropertyParameters,
+  CalendarAddressUriPropertyParameters,
+  CalendarUriPropertyParameters,
+  MemberPropertyParameters,
+  UrlPropertyParameters,
+  UIdPropertyParameters,
+  SoundPropertyParameters,
+  RevisionPropertyParameters,
+  ProductIdPropertyParameters,
+  NotePropertyParameters,
+  CategoriesPropertyParameters,
+  RelatedPropertyParameters,
+  OrganizationPropertyParameters,
+  LogoPropertyParameters,
+  RolePropertyParameters,
+  TitlePropertyParameters,
+  GeoLocationPropertyParameters,
+  TimezonePropertyParameters,
+  LanguagePropertyParameters,
+  ImppPropertyParameters,
+  EmailPropertyParameters,
+  TelPropertyParameters,
+  AddressPropertyParameters,
+  GenderPropertyParameters,
+  AnniversaryPropertyParameters,
+  BirthdayPropertyParameters,
+  PhotoPropertyParameters,
+  NickNamePropertyParameters,
+  FullNamePropertyParameters,
+  XmlPropertyParameters,
+  NamePropertyParameters,
+  KindPropertyParameters,
+} from "../propertyParameters";
+import {
+  isMultiProperty,
+  isMultiPropertyObject,
+  isPropertyObject,
+  isClientPidMapDict,
+} from "../../validate/properties";
+import { MultiProperty, Property, BirthPlaceProperty, DeathDateProperty } from "../properties";
+import { PropertyParameters } from "../parameters";
+import {
+  ClientPIdMapPropertyParameters,
+  BirthPlacePropertyParameters,
+  DeathDatePropertyParameters,
+  DeathPlacePropertyParameters,
+} from "../propertyParameters";
 
 /**
  * Class representation of a vCard.
  *
  * @category Generate
+ * @example
+ * ```ts
+ * const vCard = new VCard(Kind.Individual);
+ * vCard.setFullName("Jane Doe");
+ *
+ * vCard.toString();
+ * ```
  */
-export default class VCard implements VCardDefinition, VCardGroupDefinition {
-  private _kind: KindProperty<Kind>;
+export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition, "kind"> {
+  private _kind: KindProperty;
   private _fullName: FullNameProperty;
   private _begin?: BeginProperty;
   private _end?: EndProperty;
@@ -87,6 +145,9 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
   private _calendarAddressUri?: CalendarAddressUriProperty;
   private _calendarUri?: CalendarUriProperty;
   private _member?: MemberProperty;
+  private _birthPlace?: BirthPlaceProperty;
+  private _deathPlace?: DeathPlaceProperty;
+  private _deathDate?: DeathDateProperty;
 
   /**
    * Generate a vCard instance from a vCard definition object.
@@ -135,8 +196,37 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
     if (vCardObject.calendarAddressUri) vCard.setCalendarAddressUri(vCardObject.calendarAddressUri);
     if (vCardObject.calendarUri) vCard.setCalendarUri(vCardObject.calendarUri);
     if ("member" in vCardObject && vCardObject.member) vCard.setMember(vCardObject.member);
+    if (vCardObject.birthPlace) vCard.setBirthPlace(vCardObject.birthPlace);
+    if (vCardObject.deathPlace) vCard.setDeathPlace(vCardObject.deathPlace);
+    if (vCardObject.deathDate) vCard.setDeathDate(vCardObject.deathDate);
 
     return vCard;
+  }
+
+  private static asProperty<Prop extends Property | MultiProperty, Params extends PropertyParameters>(
+    value: Prop,
+    parameters?: Params
+  ): Prop {
+    // We can safely cas as unknown here, because this is only used internally
+    if (parameters == undefined) {
+      return value as Prop;
+    } else if (isMultiProperty(value)) {
+      if (isMultiPropertyObject(value)) {
+        return {
+          commonParameters: value.commonParameters ? { ...value.commonParameters, ...parameters } : parameters,
+          values: value.values,
+        } as unknown as Prop;
+      } else {
+        return { commonParameters: parameters, values: value } as unknown as Prop;
+      }
+    } else if (isPropertyObject(value)) {
+      return {
+        value: value.value,
+        parameters: value.parameters ? { ...value.parameters, ...parameters } : parameters,
+      } as unknown as Prop;
+    } else {
+      return { value, parameters } as unknown as Prop;
+    }
   }
 
   /**
@@ -147,8 +237,8 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
    *
    * @example
    * ```ts
-   * const vCard = new VCard("individual");
-   * vCard.setFullName("John Doe");
+   * const vCard = new VCard(Kind.Individual);
+   * vCard.setFullName("Jane Doe");
    * ```
    */
   public constructor(kind: KindProperty = Kind.Individual, fullName: FullNameProperty = "") {
@@ -270,6 +360,15 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
   public get member() {
     return this._member;
   }
+  public get birthPlace() {
+    return this._birthPlace;
+  }
+  public get deathPlace() {
+    return this._deathPlace;
+  }
+  public get deathDate() {
+    return this._deathDate;
+  }
 
   /**
    * Override the value of the begin property.
@@ -294,8 +393,8 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
    *
    * @param source the source property value of the vCard.
    */
-  public setSource(source: SourceProperty) {
-    this._source = source;
+  public setSource(source: SourceProperty, parameters?: SourcePropertyParameters) {
+    this._source = VCard.asProperty(source, parameters);
   }
   /**
    * Set the value of the kind property.
@@ -307,216 +406,216 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
    *
    * @param kind the kind property value of the vCard.
    */
-  public setKind(kind: KindProperty) {
-    this._kind = kind;
+  public setKind(kind: KindProperty, parameters?: KindPropertyParameters) {
+    this._kind = VCard.asProperty(kind, parameters);
   }
   /**
    * Set the value of the xml property.
    *
    * @param xml the xml property value of the vCard.
    */
-  public setXml(xml: XmlProperty) {
-    this._xml = xml;
+  public setXml(xml: XmlProperty, parameters?: XmlPropertyParameters) {
+    this._xml = VCard.asProperty(xml, parameters);
   }
   /**
    * Set the value of the fullName property.
    *
    * @param fullName the fullName property value of the vCard.
    */
-  public setFullName(fullName: FullNameProperty) {
-    this._fullName = fullName;
+  public setFullName(fullName: FullNameProperty, parameters?: FullNamePropertyParameters) {
+    this._fullName = VCard.asProperty(fullName, parameters);
   }
   /**
    * Set the value of the name property.
    *
    * @param name the name property value of the vCard.
    */
-  public setName(name: NameProperty) {
-    this._name = name;
+  public setName(name: NameProperty, parameters?: NamePropertyParameters) {
+    this._name = VCard.asProperty(name, parameters);
   }
   /**
    * Set the value of the nickName property.
    *
    * @param nickName the nickName property value of the vCard.
    */
-  public setNickName(nickName: NickNameProperty) {
-    this._nickName = nickName;
+  public setNickName(nickName: NickNameProperty, parameters?: NickNamePropertyParameters) {
+    this._nickName = VCard.asProperty(nickName, parameters);
   }
   /**
    * Set the value of the photo property.
    *
    * @param photo the photo property value of the vCard.
    */
-  public setPhoto(photo: PhotoProperty) {
-    this._photo = photo;
+  public setPhoto(photo: PhotoProperty, parameters?: PhotoPropertyParameters) {
+    this._photo = VCard.asProperty(photo, parameters);
   }
   /**
    * Set the value of the birthday property.
    *
    * @param birthday the birthday property value of the vCard.
    */
-  public setBirthday(birthday: BirthdayProperty) {
-    this._birthday = birthday;
+  public setBirthday(birthday: BirthdayProperty, parameters?: BirthdayPropertyParameters) {
+    this._birthday = VCard.asProperty(birthday, parameters);
   }
   /**
    * Set the value of the anniversary property.
    *
    * @param anniversary the anniversary property value of the vCard.
    */
-  public setAnniversary(anniversary: AnniversaryProperty) {
-    this._anniversary = anniversary;
+  public setAnniversary(anniversary: AnniversaryProperty, parameters?: AnniversaryPropertyParameters) {
+    this._anniversary = VCard.asProperty(anniversary, parameters);
   }
   /**
    * Set the value of the gender property.
    *
    * @param gender the gender property value of the vCard.
    */
-  public setGender(gender: GenderProperty) {
-    this._gender = gender;
+  public setGender(gender: GenderProperty, parameters?: GenderPropertyParameters) {
+    this._gender = VCard.asProperty(gender, parameters);
   }
   /**
    * Set the value of the address property.
    *
    * @param address the address property value of the vCard.
    */
-  public setAddress(address: AddressProperty) {
-    this._address = address;
+  public setAddress(address: AddressProperty, parameters?: AddressPropertyParameters) {
+    this._address = VCard.asProperty(address, parameters);
   }
   /**
    * Set the value of the tel property.
    *
    * @param tel the tel property value of the vCard.
    */
-  public setTel(tel: TelProperty) {
-    this._tel = tel;
+  public setTel(tel: TelProperty, parameters?: TelPropertyParameters) {
+    this._tel = VCard.asProperty(tel, parameters);
   }
   /**
    * Set the value of the email property.
    *
    * @param email the email property value of the vCard.
    */
-  public setEmail(email: EmailProperty) {
-    this._email = email;
+  public setEmail(email: EmailProperty, parameters?: EmailPropertyParameters) {
+    this._email = VCard.asProperty(email, parameters);
   }
   /**
    * Set the value of the impp property.
    *
    * @param impp the impp property value of the vCard.
    */
-  public setImpp(impp: ImppProperty) {
-    this._impp = impp;
+  public setImpp(impp: ImppProperty, parameters?: ImppPropertyParameters) {
+    this._impp = VCard.asProperty(impp, parameters);
   }
   /**
    * Set the value of the language property.
    *
    * @param language the language property value of the vCard.
    */
-  public setLanguage(language: LanguageProperty) {
-    this._language = language;
+  public setLanguage(language: LanguageProperty, parameters?: LanguagePropertyParameters) {
+    this._language = VCard.asProperty(language, parameters);
   }
   /**
    * Set the value of the timezone property.
    *
    * @param timezone the timezone property value of the vCard.
    */
-  public setTimezone(timezone: TimezoneProperty) {
-    this._timezone = timezone;
+  public setTimezone(timezone: TimezoneProperty, parameters?: TimezonePropertyParameters) {
+    this._timezone = VCard.asProperty(timezone, parameters);
   }
   /**
    * Set the value of the geoLocation property.
    *
    * @param geoLocation the geoLocation property value of the vCard.
    */
-  public setGeoLocation(geoLocation: GeoLocationProperty) {
-    this._geoLocation = geoLocation;
+  public setGeoLocation(geoLocation: GeoLocationProperty, parameters?: GeoLocationPropertyParameters) {
+    this._geoLocation = VCard.asProperty(geoLocation, parameters);
   }
   /**
    * Set the value of the title property.
    *
    * @param title the title property value of the vCard.
    */
-  public setTitle(title: TitleProperty) {
-    this._title = title;
+  public setTitle(title: TitleProperty, parameters?: TitlePropertyParameters) {
+    this._title = VCard.asProperty(title, parameters);
   }
   /**
    * Set the value of the role property.
    *
    * @param role the role property value of the vCard.
    */
-  public setRole(role: RoleProperty) {
-    this._role = role;
+  public setRole(role: RoleProperty, parameters?: RolePropertyParameters) {
+    this._role = VCard.asProperty(role, parameters);
   }
   /**
    * Set the value of the logo property.
    *
    * @param logo the logo property value of the vCard.
    */
-  public setLogo(logo: LogoProperty) {
-    this._logo = logo;
+  public setLogo(logo: LogoProperty, parameters?: LogoPropertyParameters) {
+    this._logo = VCard.asProperty(logo, parameters);
   }
   /**
    * Set the value of the organization property.
    *
    * @param organization the organization property value of the vCard.
    */
-  public setOrganization(organization: OrganizationProperty) {
-    this._organization = organization;
+  public setOrganization(organization: OrganizationProperty, parameters?: OrganizationPropertyParameters) {
+    this._organization = VCard.asProperty(organization, parameters);
   }
   /**
    * Set the value of the related property.
    *
    * @param related the related property value of the vCard.
    */
-  public setRelated(related: RelatedProperty) {
-    this._related = related;
+  public setRelated(related: RelatedProperty, parameters?: RelatedPropertyParameters) {
+    this._related = VCard.asProperty(related, parameters);
   }
   /**
    * Set the value of the categories property.
    *
    * @param categories the categories property value of the vCard.
    */
-  public setCategories(categories: CategoriesProperty) {
-    this._categories = categories;
+  public setCategories(categories: CategoriesProperty, parameters?: CategoriesPropertyParameters) {
+    this._categories = VCard.asProperty(categories, parameters);
   }
   /**
    * Set the value of the note property.
    *
    * @param note the note property value of the vCard.
    */
-  public setNote(note: NoteProperty) {
-    this._note = note;
+  public setNote(note: NoteProperty, parameters?: NotePropertyParameters) {
+    this._note = VCard.asProperty(note, parameters);
   }
   /**
    * Set the value of the productId property.
    *
    * @param productId the productId property value of the vCard.
    */
-  public setProductId(productId: ProductIdProperty) {
-    this._productId = productId;
+  public setProductId(productId: ProductIdProperty, parameters?: ProductIdPropertyParameters) {
+    this._productId = VCard.asProperty(productId, parameters);
   }
   /**
    * Set the value of the revision property.
    *
    * @param revision the revision property value of the vCard.
    */
-  public setRevision(revision: RevisionProperty) {
-    this._revision = revision;
+  public setRevision(revision: RevisionProperty, parameters?: RevisionPropertyParameters) {
+    this._revision = VCard.asProperty(revision, parameters);
   }
   /**
    * Set the value of the sound property.
    *
    * @param sound the sound property value of the vCard.
    */
-  public setSound(sound: SoundProperty) {
-    this._sound = sound;
+  public setSound(sound: SoundProperty, parameters?: SoundPropertyParameters) {
+    this._sound = VCard.asProperty(sound, parameters);
   }
   /**
    * Set the value of the uid property.
    *
    * @param uid the uid property value of the vCard.
    */
-  public setUid(uid: UidProperty) {
-    this._uid = uid;
+  public setUid(uid: UidProperty, parameters?: UIdPropertyParameters) {
+    this._uid = VCard.asProperty(uid, parameters);
   }
   /* istanbul ignore next */
   /**
@@ -524,16 +623,26 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
    *
    * @param clientPidMap the clientPidMap property value of the vCard.
    */
-  public setClientPidMap(clientPidMap: ClientPidMapProperty | ClientPidMapDictionary) {
-    this._clientPidMap = clientPidMap;
+  public setClientPidMap(clientPidMap: ClientPidMapProperty, parameters?: ClientPIdMapPropertyParameters): void;
+  public setClientPidMap(clientPidMap: ClientPidMapProperty | ClientPidMapDictionary): void;
+  public setClientPidMap(
+    clientPidMap: ClientPidMapProperty | ClientPidMapDictionary,
+    parameters?: ClientPIdMapPropertyParameters
+  ) {
+    if (isClientPidMapDict(clientPidMap)) {
+      if (parameters) throw new Error("Cannot set parameters for a ClientPidMapDictionary");
+      else this._clientPidMap = clientPidMap;
+    } else {
+      this._clientPidMap = VCard.asProperty(clientPidMap, parameters);
+    }
   }
   /**
    * Set the value of the url property.
    *
    * @param url the url property value of the vCard.
    */
-  public setUrl(url: UrlProperty) {
-    this._url = url;
+  public setUrl(url: UrlProperty, parameters?: UrlPropertyParameters) {
+    this._url = VCard.asProperty(url, parameters);
   }
   /**
    * Set the value of the version property.
@@ -548,40 +657,67 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
    *
    * @param key the key property value of the vCard.
    */
-  public setKey(key: KeyProperty) {
-    this._key = key;
+  public setKey(key: KeyProperty, parameters?: KeyPropertyParameters) {
+    this._key = VCard.asProperty(key, parameters);
   }
   /**
    * Set the value of the fbUrl property.
    *
    * @param fbUrl the fbUrl property value of the vCard.
    */
-  public setFbUrl(fbUrl: FbUrlProperty) {
-    this._fbUrl = fbUrl;
+  public setFbUrl(fbUrl: FbUrlProperty, parameters?: FbUrlPropertyParameters) {
+    this._fbUrl = VCard.asProperty(fbUrl, parameters);
   }
   /**
    * Set the value of the calendarAddressUri property.
    *
    * @param calendarAddressUri the calendarAddressUri property value of the vCard.
    */
-  public setCalendarAddressUri(calendarAddressUri: CalendarAddressUriProperty) {
-    this._calendarAddressUri = calendarAddressUri;
+  public setCalendarAddressUri(
+    calendarAddressUri: CalendarAddressUriProperty,
+    parameters?: CalendarAddressUriPropertyParameters
+  ) {
+    this._calendarAddressUri = VCard.asProperty(calendarAddressUri, parameters);
   }
   /**
    * Set the value of the calendarUri property.
    *
    * @param calendarUri the calendarUri property value of the vCard.
    */
-  public setCalendarUri(calendarUri: CalendarUriProperty) {
-    this._calendarUri = calendarUri;
+  public setCalendarUri(calendarUri: CalendarUriProperty, parameters?: CalendarUriPropertyParameters) {
+    this._calendarUri = VCard.asProperty(calendarUri, parameters);
   }
   /**
    * Set the value of the member property.
    *
    * @param member the member property value of the vCard.
    */
-  public setMember(member: MemberProperty) {
-    this._member = member;
+  public setMember(member: MemberProperty, parameters?: MemberPropertyParameters) {
+    this._member = VCard.asProperty(member, parameters);
+  }
+  /**
+   * Set the value of the birth place property.
+   *
+   * @param birthPlace the birth place property value of the vCard.
+   */
+  public setBirthPlace(birthPlace: BirthPlaceProperty, parameters?: BirthPlacePropertyParameters) {
+    this._birthPlace = VCard.asProperty(birthPlace, parameters);
+  }
+  /**
+   * Set the value of the death place property.
+   *
+   * @param deathPlace the death place property value of the vCard.
+   */
+  public setDeathPlace(deathPlace: DeathPlaceProperty, parameters?: DeathPlacePropertyParameters) {
+    this._deathPlace = VCard.asProperty(deathPlace, parameters);
+  }
+  /**
+   * Set the value of the death date property.
+   *
+   * @param deathDate the death date property value of the vCard.
+   */
+  public setDeathDate(deathDate: DeathDateProperty, parameters?: DeathDatePropertyParameters) {
+    this._deathDate = VCard.asProperty(deathDate, parameters);
   }
 
   /**
@@ -634,6 +770,9 @@ export default class VCard implements VCardDefinition, VCardGroupDefinition {
     if (this.calendarAddressUri) vCard.calendarAddressUri = this.calendarAddressUri;
     if (this.calendarUri) vCard.calendarUri = this.calendarUri;
     if (this.member) (vCard as VCardGroupDefinition).member = this.member;
+    if (this.birthPlace) vCard.birthPlace = this.birthPlace;
+    if (this.deathPlace) vCard.deathPlace = this.deathPlace;
+    if (this.deathDate) vCard.deathDate = this.deathDate;
 
     return vCard;
   }

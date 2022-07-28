@@ -6,6 +6,7 @@ import { generateProperty } from "./property";
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function generateContentLine(propertyKey: string, data: Property | MultiProperty): string {
   if (isMultiProperty(data)) {

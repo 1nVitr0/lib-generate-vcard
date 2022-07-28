@@ -1,13 +1,17 @@
-import { ignoreParameters, parameterNames } from "../model/parameterNames";
-import { AnyParameter, NamedParameters } from "../model/parameters";
+import { ignoreParameters, ParameterName } from "../model/parameterNames";
+import { AnyParameter, NamedParameters, PropertyParameters } from "../model/parameters";
 import { Property } from "../model/properties";
 import { isPropertyObject } from "../validate/properties";
 import { escapeParameterValue } from "./escape";
 
 /**
  * @internal
+ * @category Internally Used
  */
-export function mergeParameters<Params extends {}>(commonParameters: Params | undefined, property: Property): Property {
+export function mergeParameters<Params extends PropertyParameters>(
+  commonParameters: Params | undefined,
+  property: Property
+): Property {
   if (!commonParameters) return property;
   if (isPropertyObject(property)) {
     const { value, parameters = {} } = property;
@@ -26,7 +30,7 @@ export function generateParameters<Parameters extends NamedParameters | AnyParam
   return Object.entries(parameters)
     .filter(([name, value]) => value !== null && ignore.includes(name) === false)
     .map(([name, value]) => {
-      const parameterName = name in parameterNames ? parameterNames[name as keyof NamedParameters] : name;
+      const parameterName = name in ParameterName ? ParameterName[name as keyof typeof ParameterName] : name;
       const valueList = value instanceof Array ? value : [value];
       const escapedValues = valueList.map((value) => escapeParameterValue(value));
 

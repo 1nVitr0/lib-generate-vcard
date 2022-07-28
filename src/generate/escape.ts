@@ -2,6 +2,7 @@ import { Text } from "../model/datatypes";
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function escapeParameterValue(value: Text | string): string {
   return value.toString().replace("\\", "\\\\").replace(",", "\\,").replace(";", "\\;");
@@ -9,6 +10,7 @@ export function escapeParameterValue(value: Text | string): string {
 
 /**
  * @internal
+ * @category Internally Used
  */
 export function escapeValue(value: Text | string): string {
   return value.toString().replace("\\", "\\\\").replace(",", "\\,").replace(";", "\\;");

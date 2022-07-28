@@ -8,10 +8,17 @@ import {
   Uri,
   UtcOffset,
 } from "../model/datatypes";
-import { NamePropertyValue, AddressPropertyValue, GenderPropertyValue, Kind } from "../model/propertyValues";
+import { ValueType } from "../model/parameters";
+import { Property, PropertyDescriptor } from "../model/properties";
+import { AddressPropertyDict, GenderPropertyDict, Kind, NamePropertyDict } from "../model/propertyDictionaries";
+import { PropertyName } from "../model/propertyNames";
+import { defaultPropertyTypes } from "../model/propertyTypes";
 import { VCardDefinition, VCardGroupDefinition } from "../model/vCard";
-import { ianaIsUtf8, isUri, isUtcOffset, isDateAndOrTime } from "../validate/dataTypes";
+import { isUtf8, isDateAndOrTime, isUri, isUtcOffset } from "../validate/dataTypes";
 import { isValueParameter } from "../validate/parameters";
+import { escapeParameterValue } from "./escape";
+import { generateParameters } from "./parameters";
+import { PropertyValue, RecordedPropertyValue } from "../model/propertyValues";
 import {
   generateBooleanValue,
   generateClientPidMapValue,
@@ -20,6 +27,7 @@ import {
   generateDateTimeValue,
   generateFloatValue,
   generateIntegerValue,
+  generateKindValue,
   generateLanguageTagValue,
   generateTextValue,
   generateTimeStampValue,
@@ -27,20 +35,6 @@ import {
   generateUriValue,
   generateUtcOffsetValue,
 } from "./value";
-import { generateParameters } from "./parameters";
-import { generateKindValue } from "./value";
-import { escapeParameterValue } from "./escape";
-import { propertyNames, PropertyName } from "../model/propertyNames";
-import {
-  ClientPidMapDictionary,
-  ClientPidMapProperty,
-  Property,
-  PropertyDescriptor,
-  PropertyValue,
-  RecordedPropertyValue,
-} from "../model/properties";
-import { defaultPropertyTypes } from "../model/propertyTypes";
-import { ValueType } from "../model/parameters";
 
 function componentList(list: (string | string[])[]): string {
   return list
@@ -91,14 +85,12 @@ export function generateProperty(
   const value = typeof data == "object" && "value" in data ? data.value : data;
   const parameterDict = typeof data == "object" && "parameters" in data ? { ...data.parameters } : {};
 
-  if (data instanceof Array ? data.some((s) => ianaIsUtf8(s)) : ianaIsUtf8(data)) {
+  if (data instanceof Array ? data.some((s) => isUtf8(s)) : isUtf8(data)) {
     parameterDict.charset = "UTF-8";
   }
 
   const property = (
-    propertyKey in propertyNames
-      ? propertyNames[propertyKey as keyof VCardDefinition | keyof VCardGroupDefinition]
-      : propertyKey
+    propertyKey in PropertyName ? PropertyName[propertyKey as keyof typeof PropertyName] : propertyKey
   ) as PropertyName;
   let parameters = generateParameters(
     parameterDict,
@@ -147,7 +139,7 @@ export function generateProperty(
           additionalNames = "",
           honorificPrefix = "",
           honorificSuffix = "",
-        } = value as NamePropertyValue;
+        } = value as NamePropertyDict;
         components = [familyName, givenName, additionalNames, honorificPrefix, honorificSuffix];
       }
       return { property, value: componentList(components), parameters };
@@ -160,7 +152,7 @@ export function generateProperty(
         region = "",
         postalCode = "",
         country = "",
-      } = value as AddressPropertyValue;
+      } = value as AddressPropertyDict;
       components = [poBox, extended, street, locality, region, postalCode, country];
       return { property, value: componentList(components), parameters };
     case "GENDER":
@@ -168,7 +160,7 @@ export function generateProperty(
         const [sex, genderIdentity] = (value as [string, string]).map(escapeParameterValue);
         return { property, value: `${sex};${genderIdentity}`, parameters };
       } else if (typeof value == "object") {
-        const { sex, genderIdentity } = value as GenderPropertyValue & RecordedPropertyValue;
+        const { sex, genderIdentity } = value as GenderPropertyDict & RecordedPropertyValue;
         return {
           property,
           value: `${sex}${genderIdentity ? `;${escapeParameterValue(genderIdentity)}` : ""}`,
@@ -190,6 +182,7 @@ export function generateProperty(
       } // otherwise match other value types
     case "ANNIVERSARY": // Also Text
     case "BDAY": // Also Text
+    case "DEATHDATE": // Also Text
       if (isDateAndOrTime(value)) {
         resetPropertyValueType("date-and-or-time");
         return { property, value: generateDateAndOrTimeValue(value as DateAndOrTime | DateAndOrTime[]), parameters };
@@ -209,7 +202,9 @@ export function generateProperty(
     case "RELATED": // Also Text
     case "UID": // Also Text
     case "KEY": // Also Text
-      if (isUri(value)) {
+    case "BIRTHPLACE": // Also Text
+    case "DEATHPLACE": // Also Text
+      if (isUri(value) && !["TZ", "ANNIVERSARY", "BDAY", "DEATHDATE"].includes(property)) {
         resetPropertyValueType("uri");
         return { property, value: generateUriValue(value as Uri | Uri[]), parameters };
       } // otherwise match other value types
