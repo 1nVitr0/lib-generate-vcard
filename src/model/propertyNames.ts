@@ -5,6 +5,7 @@
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-10.3.1
  */
 export enum PropertyName {
+  // vCard 4.0 as specified in RFC 6350
   address = "ADR",
   anniversary = "ANNIVERSARY",
   begin = "BEGIN",
@@ -43,4 +44,8 @@ export enum PropertyName {
   url = "URL",
   version = "VERSION",
   xml = "XML",
+  // vCard Format Extensions: Place of Birth, Place and Date of Death as specified in RFC 6474
+  birthPlace = "BIRTHPLACE",
+  deathPlace = "DEATHPLACE",
+  deathDate = "DEATHDATE",
 }

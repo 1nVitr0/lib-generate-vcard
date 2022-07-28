@@ -1,4 +1,4 @@
-import { LanguageTag, IanaToken, XName } from "./datatypes";
+import { LanguageTag, XName } from "./datatypes";
 
 /**
  * Additional type parameter values for the TEL property
@@ -61,8 +61,7 @@ export type ValueType =
   | "float"
   | "utc-offset"
   | "language-tag"
-  | XName
-  | IanaToken;
+  | XName;
 
 /**
  * Basic values for the TYPE parameter
@@ -158,7 +157,7 @@ export interface MediaTypeParameter extends PropertyParameters {
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-5.8
  */
 export interface CalscaleParameter extends PropertyParameters {
-  calScale?: "gregorian" | IanaToken | XName;
+  calScale?: "gregorian" | XName;
 }
 
 /**
@@ -206,7 +205,7 @@ export interface LabelParameter extends PropertyParameters {
  *
  * @category Parameters
  */
-export interface IanaCharsetParameter extends PropertyParameters {
+export interface CharsetParameter extends PropertyParameters {
   charset?: "UTF-8";
 }
 
@@ -215,10 +214,7 @@ export interface IanaCharsetParameter extends PropertyParameters {
  *
  * @category Parameters
  */
-export interface AnyParameter
-  extends PropertyParameters,
-    IanaCharsetParameter,
-    Partial<Record<XName, string | string[]>> {}
+export interface AnyParameter extends PropertyParameters, CharsetParameter, Partial<Record<XName, string | string[]>> {}
 
 /**
  * Any named parameter from RFC 6350
@@ -238,4 +234,4 @@ export interface NamedParameters
     GeoParameter,
     TimezoneParameter,
     LabelParameter,
-    IanaCharsetParameter {}
+    CharsetParameter {}

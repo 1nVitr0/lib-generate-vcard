@@ -124,6 +124,6 @@ export function isGender(value: any): value is Gender {
  * @internal
  * @category Internally Used
  */
-export function ianaIsUtf8(value: any): boolean {
+export function isUtf8(value: any): boolean {
   return typeof value === "string" && !/^[\x00-\xFF]*$/.test(value);
 }

@@ -1,4 +1,4 @@
-import { DateAndOrTime, IanaToken, LanguageTag, Text, TimeStamp, TimezoneString, Uri, XName } from "./datatypes";
+import { DateAndOrTime, LanguageTag, Text, TimeStamp, TimezoneString, Uri, XName } from "./datatypes";
 import { AddressPropertyDict, Gender, GenderPropertyDict, Kind, NamePropertyDict } from "./propertyDictionaries";
 
 /**
@@ -35,7 +35,7 @@ export type SourcePropertyValue = Uri;
  *
  * @category Properties
  */
-export type KindPropertyValue<K extends Kind = Kind> = K | XName | IanaToken;
+export type KindPropertyValue<K extends Kind = Kind> = K | XName;
 /**
  * Property value for xml properties
  *
@@ -240,3 +240,21 @@ export type CalendarUriPropertyValue = Uri;
  * @category Properties
  */
 export type MemberPropertyValue = Uri;
+/**
+ * Property value for birth place properties
+ *
+ * @category Properties
+ */
+export type BirthPlacePropertyValue = Text | Uri;
+/**
+ * Property value for death place properties
+ *
+ * @category Properties
+ */
+export type DeathPlacePropertyValue = Text | Uri;
+/**
+ * Property value for death date properties
+ *
+ * @category Properties
+ */
+export type DeathDatePropertyValue = DateAndOrTime | Text;

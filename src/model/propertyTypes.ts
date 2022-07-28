@@ -44,4 +44,7 @@ export const defaultPropertyTypes: Record<PropertyName, ValueType | null> = {
   URL: "uri",
   VERSION: "text",
   XML: "text",
+  BIRTHPLACE: "text",
+  DEATHPLACE: "text",
+  DEATHDATE: "date-and-or-time",
 };

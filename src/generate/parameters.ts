@@ -30,7 +30,7 @@ export function generateParameters<Parameters extends NamedParameters | AnyParam
   return Object.entries(parameters)
     .filter(([name, value]) => value !== null && ignore.includes(name) === false)
     .map(([name, value]) => {
-      const parameterName = name in ParameterName ? ParameterName[name as keyof NamedParameters] : name;
+      const parameterName = name in ParameterName ? ParameterName[name as keyof typeof ParameterName] : name;
       const valueList = value instanceof Array ? value : [value];
       const escapedValues = valueList.map((value) => escapeParameterValue(value));
 

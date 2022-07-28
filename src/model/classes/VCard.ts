@@ -9,6 +9,7 @@ import {
   CategoriesProperty,
   ClientPidMapDictionary,
   ClientPidMapProperty,
+  DeathPlaceProperty,
   EmailProperty,
   EndProperty,
   FbUrlProperty,
@@ -84,9 +85,14 @@ import {
   isPropertyObject,
   isClientPidMapDict,
 } from "../../validate/properties";
-import { MultiProperty, Property } from "../properties";
+import { MultiProperty, Property, BirthPlaceProperty, DeathDateProperty } from "../properties";
 import { PropertyParameters } from "../parameters";
-import { ClientPIdMapPropertyParameters } from "../propertyParameters";
+import {
+  ClientPIdMapPropertyParameters,
+  BirthPlacePropertyParameters,
+  DeathDatePropertyParameters,
+  DeathPlacePropertyParameters,
+} from "../propertyParameters";
 
 /**
  * Class representation of a vCard.
@@ -139,6 +145,9 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   private _calendarAddressUri?: CalendarAddressUriProperty;
   private _calendarUri?: CalendarUriProperty;
   private _member?: MemberProperty;
+  private _birthPlace?: BirthPlaceProperty;
+  private _deathPlace?: DeathPlaceProperty;
+  private _deathDate?: DeathDateProperty;
 
   /**
    * Generate a vCard instance from a vCard definition object.
@@ -187,6 +196,9 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
     if (vCardObject.calendarAddressUri) vCard.setCalendarAddressUri(vCardObject.calendarAddressUri);
     if (vCardObject.calendarUri) vCard.setCalendarUri(vCardObject.calendarUri);
     if ("member" in vCardObject && vCardObject.member) vCard.setMember(vCardObject.member);
+    if (vCardObject.birthPlace) vCard.setBirthPlace(vCardObject.birthPlace);
+    if (vCardObject.deathPlace) vCard.setDeathPlace(vCardObject.deathPlace);
+    if (vCardObject.deathDate) vCard.setDeathDate(vCardObject.deathDate);
 
     return vCard;
   }
@@ -347,6 +359,15 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   }
   public get member() {
     return this._member;
+  }
+  public get birthPlace() {
+    return this._birthPlace;
+  }
+  public get deathPlace() {
+    return this._deathPlace;
+  }
+  public get deathDate() {
+    return this._deathDate;
   }
 
   /**
@@ -674,6 +695,30 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   public setMember(member: MemberProperty, parameters?: MemberPropertyParameters) {
     this._member = VCard.asProperty(member, parameters);
   }
+  /**
+   * Set the value of the birth place property.
+   *
+   * @param birthPlace the birth place property value of the vCard.
+   */
+  public setBirthPlace(birthPlace: BirthPlaceProperty, parameters?: BirthPlacePropertyParameters) {
+    this._birthPlace = VCard.asProperty(birthPlace, parameters);
+  }
+  /**
+   * Set the value of the death place property.
+   *
+   * @param deathPlace the death place property value of the vCard.
+   */
+  public setDeathPlace(deathPlace: DeathPlaceProperty, parameters?: DeathPlacePropertyParameters) {
+    this._deathPlace = VCard.asProperty(deathPlace, parameters);
+  }
+  /**
+   * Set the value of the death date property.
+   *
+   * @param deathDate the death date property value of the vCard.
+   */
+  public setDeathDate(deathDate: DeathDateProperty, parameters?: DeathDatePropertyParameters) {
+    this._deathDate = VCard.asProperty(deathDate, parameters);
+  }
 
   /**
    * Generates a simplified vCard definition as a dictionary object.
@@ -725,6 +770,9 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
     if (this.calendarAddressUri) vCard.calendarAddressUri = this.calendarAddressUri;
     if (this.calendarUri) vCard.calendarUri = this.calendarUri;
     if (this.member) (vCard as VCardGroupDefinition).member = this.member;
+    if (this.birthPlace) vCard.birthPlace = this.birthPlace;
+    if (this.deathPlace) vCard.deathPlace = this.deathPlace;
+    if (this.deathDate) vCard.deathDate = this.deathDate;
 
     return vCard;
   }

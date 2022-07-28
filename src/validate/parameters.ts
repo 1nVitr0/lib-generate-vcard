@@ -2,7 +2,7 @@ import {
   AltIdParameter,
   CalscaleParameter,
   GeoParameter,
-  IanaCharsetParameter,
+  CharsetParameter,
   LabelParameter,
   LanguageParameter,
   MediaTypeParameter,
@@ -116,6 +116,6 @@ export function isLabelParameter(parameters: PropertyParameters): parameters is 
  * @internal
  * @category Internally Used
  */
-export function isIanaCharsetParameter(parameters: PropertyParameters): parameters is IanaCharsetParameter {
+export function isIanaCharsetParameter(parameters: PropertyParameters): parameters is CharsetParameter {
   return "charset" in parameters;
 }

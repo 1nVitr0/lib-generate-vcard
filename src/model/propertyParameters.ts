@@ -1,4 +1,4 @@
-import { IanaToken, XName } from "./datatypes";
+import { XName } from "./datatypes";
 import {
   AltIdParameter,
   AnyParameter,
@@ -21,7 +21,7 @@ interface GroupParameter {
   group?: string;
 }
 interface BasePropertyParameters extends PIdParameter, PrefParameter, AltIdParameter, AnyParameter, GroupParameter {}
-interface BaseTypedPropertyParameters extends BasePropertyParameters, TypeParameter<IanaToken | XName> {}
+interface BaseTypedPropertyParameters extends BasePropertyParameters, TypeParameter<XName> {}
 interface BaseLangPropertyParameters extends BaseTypedPropertyParameters, LanguageParameter {}
 
 /**
@@ -72,6 +72,27 @@ export interface NickNamePropertyParameters extends ValueParameter<"text">, Base
  * @category Parameters
  */
 export interface PhotoPropertyParameters extends ValueParameter<"uri">, BaseTypedPropertyParameters {}
+
+/**
+ * Valid Parameters for birthday properties
+ *
+ * @category Parameters
+ */
+export interface BirthPlacePropertyParameters extends ValueParameter<"text">, LanguageParameter {}
+
+/**
+ * Valid Parameters for birthday properties
+ *
+ * @category Parameters
+ */
+export interface DeathPlacePropertyParameters extends ValueParameter<"text">, LanguageParameter {}
+
+/**
+ * Valid Parameters for birthday properties
+ *
+ * @category Parameters
+ */
+export interface DeathDatePropertyParameters extends ValueParameter<"text">, LanguageParameter, CalscaleParameter {}
 
 /**
  * Valid Parameters for key properties
@@ -129,7 +150,7 @@ export interface AddressPropertyParameters
 export interface TelPropertyParameters
   extends ValueParameter<"text" | "uri">,
     MediaTypeParameter,
-    TypeParameter<TelType | IanaToken | XName>,
+    TypeParameter<TelType | XName>,
     BasePropertyParameters {}
 
 /**

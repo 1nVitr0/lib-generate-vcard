@@ -1,60 +1,17 @@
-import { IanaToken, LanguageTag, Text, TimezoneString, Uri, XName, DateAndOrTime, TimeStamp } from "./datatypes";
+import { Text, Uri } from "./datatypes";
 import { AltIdParameter, PropertyParameters } from "./parameters";
-import { AddressPropertyDict, GenderPropertyDict, NamePropertyDict, Kind, Gender } from "./propertyDictionaries";
-import { NamePropertyParameters } from "./propertyParameters";
-import {
-  LogoPropertyValue,
-  OrganizationPropertyValue,
-  RelatedPropertyValue,
-  CategoriesPropertyValue,
-  NotePropertyValue,
-  ProductIdPropertyValue,
-  RevisionPropertyValue,
-  SoundPropertyValue,
-  UidPropertyValue,
-  ClientPidMapPropertyValue,
-  UrlPropertyValue,
-  VersionPropertyValue,
-  FbUrlPropertyValue,
-  CalendarAddressUriPropertyValue,
-  CalendarUriPropertyValue,
-  MemberPropertyValue,
-} from "./propertyValues";
-import {
-  LanguagePropertyValue,
-  TimezonePropertyValue,
-  GeoLocationPropertyValue,
-  TitlePropertyValue,
-  RolePropertyValue,
-} from "./propertyValues";
-import {
-  GenderPropertyValue,
-  AddressPropertyValue,
-  TelPropertyValue,
-  EmailPropertyValue,
-  ImppPropertyValue,
-} from "./propertyValues";
-import {
-  NickNamePropertyValue,
-  PhotoPropertyValue,
-  BirthdayPropertyValue,
-  AnniversaryPropertyValue,
-} from "./propertyValues";
-import {
-  KeyPropertyValue,
-  KindPropertyValue,
-  XmlPropertyValue,
-  FullNamePropertyValue,
-  NamePropertyValue,
-} from "./propertyValues";
+import { Kind } from "./propertyDictionaries";
 import {
   AddressPropertyParameters,
   AnniversaryPropertyParameters,
   BirthdayPropertyParameters,
+  BirthPlacePropertyParameters,
   CalendarAddressUriPropertyParameters,
   CalendarUriPropertyParameters,
   CategoriesPropertyParameters,
   ClientPIdMapPropertyParameters,
+  DeathDatePropertyParameters,
+  DeathPlacePropertyParameters,
   EmailPropertyParameters,
   FbUrlPropertyParameters,
   FullNamePropertyParameters,
@@ -66,6 +23,7 @@ import {
   LanguagePropertyParameters,
   LogoPropertyParameters,
   MemberPropertyParameters,
+  NamePropertyParameters,
   NickNamePropertyParameters,
   NotePropertyParameters,
   OrganizationPropertyParameters,
@@ -85,11 +43,49 @@ import {
   XmlPropertyParameters,
 } from "./propertyParameters";
 import {
+  AddressPropertyValue,
+  AnniversaryPropertyValue,
   BeginPropertyValue,
+  BirthdayPropertyValue,
+  BirthPlacePropertyValue,
+  CalendarAddressUriPropertyValue,
+  CalendarUriPropertyValue,
+  CategoriesPropertyValue,
+  ClientPidMapPropertyValue,
+  DeathDatePropertyValue,
+  DeathPlacePropertyValue,
+  EmailPropertyValue,
   EndPropertyValue,
+  FbUrlPropertyValue,
+  FullNamePropertyValue,
+  GenderPropertyValue,
+  GeoLocationPropertyValue,
+  ImppPropertyValue,
+  KeyPropertyValue,
+  KindPropertyValue,
+  LanguagePropertyValue,
+  LogoPropertyValue,
+  MemberPropertyValue,
+  NamePropertyValue,
+  NickNamePropertyValue,
+  NotePropertyValue,
+  OrganizationPropertyValue,
+  PhotoPropertyValue,
+  ProductIdPropertyValue,
   PropertyValue,
   RecordedPropertyValue,
+  RelatedPropertyValue,
+  RevisionPropertyValue,
+  RolePropertyValue,
+  SoundPropertyValue,
   SourcePropertyValue,
+  TelPropertyValue,
+  TimezonePropertyValue,
+  TitlePropertyValue,
+  UidPropertyValue,
+  UrlPropertyValue,
+  VersionPropertyValue,
+  XmlPropertyValue,
 } from "./propertyValues";
 
 /**
@@ -415,3 +411,21 @@ export type CalendarUriProperty = MultiOrSingleProperty<CalendarUriPropertyValue
  * @category Properties
  */
 export type MemberProperty = MultiOrSingleProperty<MemberPropertyValue, MemberPropertyParameters>;
+/**
+ * Property value for birth place properties
+ *
+ * @category Properties
+ */
+export type BirthPlaceProperty = Property<BirthPlacePropertyValue, BirthPlacePropertyParameters>;
+/**
+ * Property value for death place properties
+ *
+ * @category Properties
+ */
+export type DeathPlaceProperty = Property<DeathPlacePropertyValue, DeathPlacePropertyParameters>;
+/**
+ * Property value for death date properties
+ *
+ * @category Properties
+ */
+export type DeathDateProperty = Property<DeathDatePropertyValue, DeathDatePropertyParameters>;

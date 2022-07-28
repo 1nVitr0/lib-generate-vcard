@@ -3,17 +3,10 @@
  * X-names are experimental data types and should not be used in production.
  *
  * @category DataType
- * @category DataType
+ * @experimantal
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-3.3
  */
 export type XName = `x-${string}` | `X-${string}`;
-
-/**
- * IANA token data type.
- *
- * @experimental
- */
-export type IanaToken = never;
 
 /**
  * A string representation of a date.

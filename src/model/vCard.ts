@@ -1,4 +1,4 @@
-import { IanaToken, XName } from "./datatypes";
+import { XName } from "./datatypes";
 import { PropertyParameters } from "./parameters";
 import {
   AddressProperty,
@@ -43,7 +43,13 @@ import {
 } from "./properties";
 import { Kind } from "./propertyDictionaries";
 import { PropertyName } from "./propertyNames";
-import { NamePropertyParameters } from "./propertyParameters";
+import {
+  NamePropertyParameters,
+  BirthPlacePropertyParameters,
+  DeathDatePropertyParameters,
+} from "./propertyParameters";
+import { BirthPlaceProperty, DeathPlaceProperty, DeathDateProperty } from "./properties";
+import { BirthPlacePropertyValue, DeathPlacePropertyValue, DeathDatePropertyValue } from "./propertyValues";
 import {
   AddressPropertyParameters,
   AnniversaryPropertyParameters,
@@ -184,6 +190,10 @@ export interface VCardDefinition {
   fbUrl?: FbUrlProperty;
   calendarAddressUri?: CalendarAddressUriProperty;
   calendarUri?: CalendarUriProperty;
+  // vCard Format Extensions: Place of Birth, Place and Date of Death RFC 6474
+  birthPlace?: BirthPlaceProperty;
+  deathPlace?: DeathPlaceProperty;
+  deathDate?: DeathDateProperty;
 }
 
 /**
@@ -203,7 +213,7 @@ export type VCardProperty = Exclude<VCardDefinition[keyof VCardDefinition], unde
  * @category Internally Used
  */
 export type VCardListProperty<
-  Name extends PropertyName | XName | IanaToken = PropertyName | XName | IanaToken,
+  Name extends PropertyName | XName = PropertyName | XName,
   Value extends PropertyValue | RecordedPropertyValue = PropertyValue | RecordedPropertyValue,
   Parameters extends PropertyParameters = PropertyParameters
 > = { property: Name; value: Value; parameters?: Parameters };
@@ -262,4 +272,7 @@ export type VCardList = (
   | VCardListProperty<PropertyName.fbUrl, FbUrlPropertyValue, FbUrlPropertyParameters>
   | VCardListProperty<PropertyName.calendarUri, CalendarAddressUriPropertyValue, CalendarAddressUriPropertyParameters>
   | VCardListProperty<PropertyName.calendarUri, CalendarUriPropertyValue, CalendarUriPropertyParameters>
+  | VCardListProperty<PropertyName.birthPlace, BirthPlacePropertyValue, BirthPlacePropertyParameters>
+  | VCardListProperty<PropertyName.deathPlace, DeathPlacePropertyValue, DeathDatePropertyParameters>
+  | VCardListProperty<PropertyName.deathDate, DeathDatePropertyValue, DeathDatePropertyParameters>
 )[];

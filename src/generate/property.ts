@@ -14,7 +14,7 @@ import { AddressPropertyDict, GenderPropertyDict, Kind, NamePropertyDict } from 
 import { PropertyName } from "../model/propertyNames";
 import { defaultPropertyTypes } from "../model/propertyTypes";
 import { VCardDefinition, VCardGroupDefinition } from "../model/vCard";
-import { ianaIsUtf8, isDateAndOrTime, isUri, isUtcOffset } from "../validate/dataTypes";
+import { isUtf8, isDateAndOrTime, isUri, isUtcOffset } from "../validate/dataTypes";
 import { isValueParameter } from "../validate/parameters";
 import { escapeParameterValue } from "./escape";
 import { generateParameters } from "./parameters";
@@ -85,14 +85,12 @@ export function generateProperty(
   const value = typeof data == "object" && "value" in data ? data.value : data;
   const parameterDict = typeof data == "object" && "parameters" in data ? { ...data.parameters } : {};
 
-  if (data instanceof Array ? data.some((s) => ianaIsUtf8(s)) : ianaIsUtf8(data)) {
+  if (data instanceof Array ? data.some((s) => isUtf8(s)) : isUtf8(data)) {
     parameterDict.charset = "UTF-8";
   }
 
   const property = (
-    propertyKey in PropertyName
-      ? PropertyName[propertyKey as keyof VCardDefinition | keyof VCardGroupDefinition]
-      : propertyKey
+    propertyKey in PropertyName ? PropertyName[propertyKey as keyof typeof PropertyName] : propertyKey
   ) as PropertyName;
   let parameters = generateParameters(
     parameterDict,
@@ -184,6 +182,7 @@ export function generateProperty(
       } // otherwise match other value types
     case "ANNIVERSARY": // Also Text
     case "BDAY": // Also Text
+    case "DEATHDATE": // Also Text
       if (isDateAndOrTime(value)) {
         resetPropertyValueType("date-and-or-time");
         return { property, value: generateDateAndOrTimeValue(value as DateAndOrTime | DateAndOrTime[]), parameters };
@@ -203,7 +202,9 @@ export function generateProperty(
     case "RELATED": // Also Text
     case "UID": // Also Text
     case "KEY": // Also Text
-      if (isUri(value)) {
+    case "BIRTHPLACE": // Also Text
+    case "DEATHPLACE": // Also Text
+      if (isUri(value) && !["TZ", "ANNIVERSARY", "BDAY", "DEATHDATE"].includes(property)) {
         resetPropertyValueType("uri");
         return { property, value: generateUriValue(value as Uri | Uri[]), parameters };
       } // otherwise match other value types
