@@ -1,4 +1,5 @@
 import { XName } from "./datatypes";
+import { LevelParameter, IndexParameter } from "./parameters";
 import {
   AltIdParameter,
   AnyParameter,
@@ -333,3 +334,33 @@ export interface CalendarAddressUriPropertyParameters extends FbUrlPropertyParam
  * @category Parameters
  */
 export interface CalendarUriPropertyParameters extends FbUrlPropertyParameters {}
+
+/**
+ * Valid Parameters for expertise properties
+ *
+ * @category Parameters
+ */
+export interface ExpertisePropertyParameters
+  extends LevelParameter<"beginner" | "average" | "expert">,
+    IndexParameter {}
+
+/**
+ * Valid Parameters for hobby properties
+ *
+ * @category Parameters
+ */
+export interface HobbyPropertyParameters extends LevelParameter, IndexParameter {}
+
+/**
+ * Valid Parameters for interest properties
+ *
+ * @category Parameters
+ */
+export interface InterestPropertyParameters extends LevelParameter, IndexParameter {}
+
+/**
+ * Valid Parameters for org directory properties
+ *
+ * @category Parameters
+ */
+export interface OrgDirectoryPropertyParameters extends PrefParameter, IndexParameter {}

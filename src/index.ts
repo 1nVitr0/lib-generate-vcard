@@ -1,5 +1,5 @@
 /**
- * A simple library for vCard generation compatible with [RFC 6350](https://tools.ietf.org/html/rfc6350).
+ * A simple library for vCard generation compatible with [RFC 6350](https://tools.ietf.org/html/rfc6350), [RFC 6474](https://tools.ietf.org/html/rfc6474) and [RFC 6715](https://tools.ietf.org/html/rfc6715).
  *
  * @example Functional / Object based
  * ```ts

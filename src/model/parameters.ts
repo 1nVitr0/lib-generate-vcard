@@ -217,6 +217,26 @@ export interface CharsetParameter extends PropertyParameters {
 export interface AnyParameter extends PropertyParameters, CharsetParameter, Partial<Record<XName, string | string[]>> {}
 
 /**
+ * Level Parameter to indicate expertise level in skill properties
+ *
+ * @category Parameters
+ */
+export interface LevelParameter<Levels extends string = "high" | "medium" | "low"> extends PropertyParameters {
+  level: Levels;
+}
+
+/**
+ * Index Parameter to indicate the order of a property in a list
+ *
+ * @category Parameters
+ */
+export interface IndexParameter extends PropertyParameters {
+  index: number;
+}
+
+export type IndexPropertyValue = number;
+
+/**
  * Any named parameter from RFC 6350
  *
  * @category Parameters

@@ -2,6 +2,18 @@ import { Text, Uri } from "./datatypes";
 import { AltIdParameter, PropertyParameters } from "./parameters";
 import { Kind } from "./propertyDictionaries";
 import {
+  ExpertisePropertyValue,
+  HobbyPropertyValue,
+  OrgDirectoryPropertyValue,
+  InterestPropertyValue,
+} from "./propertyValues";
+import {
+  ExpertisePropertyParameters,
+  HobbyPropertyParameters,
+  InterestPropertyParameters,
+  OrgDirectoryPropertyParameters,
+} from "./propertyParameters";
+import {
   AddressPropertyParameters,
   AnniversaryPropertyParameters,
   BirthdayPropertyParameters,
@@ -429,3 +441,27 @@ export type DeathPlaceProperty = Property<DeathPlacePropertyValue, DeathPlacePro
  * @category Properties
  */
 export type DeathDateProperty = Property<DeathDatePropertyValue, DeathDatePropertyParameters>;
+/**
+ * Property value for expertise properties
+ *
+ * @category Properties
+ */
+export type ExpertiseProperty = MultiOrSingleProperty<ExpertisePropertyValue, ExpertisePropertyParameters>;
+/**
+ * Property value for hobby properties
+ *
+ * @category Properties
+ */
+export type HobbyProperty = MultiOrSingleProperty<HobbyPropertyValue, HobbyPropertyParameters>;
+/**
+ * Property value for interest properties
+ *
+ * @category Properties
+ */
+export type InterestProperty = MultiOrSingleProperty<InterestPropertyValue, InterestPropertyParameters>;
+/**
+ * Property value for org directory properties
+ *
+ * @category Properties
+ */
+export type OrgDirectoryProperty = MultiOrSingleProperty<OrgDirectoryPropertyValue, OrgDirectoryPropertyParameters>;

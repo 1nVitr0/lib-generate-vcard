@@ -47,4 +47,8 @@ export const defaultPropertyTypes: Record<PropertyName, ValueType | null> = {
   BIRTHPLACE: "text",
   DEATHPLACE: "text",
   DEATHDATE: "date-and-or-time",
+  EXPERTISE: "text",
+  HOBBY: "text",
+  INTEREST: "text",
+  "ORG-DIRECTORY": "uri",
 };

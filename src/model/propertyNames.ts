@@ -48,4 +48,9 @@ export enum PropertyName {
   birthPlace = "BIRTHPLACE",
   deathPlace = "DEATHPLACE",
   deathDate = "DEATHDATE",
+  // Extensions defined by OMA and CAB in RFC 6715
+  expertise = "EXPERTISE",
+  hobby = "HOBBY",
+  interest = "INTEREST",
+  orgDirectory = "ORG-DIRECTORY",
 }

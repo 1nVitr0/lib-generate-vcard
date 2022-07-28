@@ -48,8 +48,30 @@ import {
   BirthPlacePropertyParameters,
   DeathDatePropertyParameters,
 } from "./propertyParameters";
-import { BirthPlaceProperty, DeathPlaceProperty, DeathDateProperty } from "./properties";
-import { BirthPlacePropertyValue, DeathPlacePropertyValue, DeathDatePropertyValue } from "./propertyValues";
+import {
+  BirthPlaceProperty,
+  DeathPlaceProperty,
+  DeathDateProperty,
+  ExpertiseProperty,
+  HobbyProperty,
+  InterestProperty,
+  OrgDirectoryProperty,
+} from "./properties";
+import {
+  BirthPlacePropertyValue,
+  DeathPlacePropertyValue,
+  DeathDatePropertyValue,
+  ExpertisePropertyValue,
+  HobbyPropertyValue,
+  InterestPropertyValue,
+  OrgDirectoryPropertyValue,
+} from "./propertyValues";
+import {
+  ExpertisePropertyParameters,
+  HobbyPropertyParameters,
+  InterestPropertyParameters,
+  OrgDirectoryPropertyParameters,
+} from "./propertyParameters";
 import {
   AddressPropertyParameters,
   AnniversaryPropertyParameters,
@@ -194,6 +216,11 @@ export interface VCardDefinition {
   birthPlace?: BirthPlaceProperty;
   deathPlace?: DeathPlaceProperty;
   deathDate?: DeathDateProperty;
+  // Extensions defined by OMA and CAB in RFC 6715
+  expertise?: ExpertiseProperty;
+  hobby?: HobbyProperty;
+  interest?: InterestProperty;
+  orgDirectory?: OrgDirectoryProperty;
 }
 
 /**
@@ -275,4 +302,8 @@ export type VCardList = (
   | VCardListProperty<PropertyName.birthPlace, BirthPlacePropertyValue, BirthPlacePropertyParameters>
   | VCardListProperty<PropertyName.deathPlace, DeathPlacePropertyValue, DeathDatePropertyParameters>
   | VCardListProperty<PropertyName.deathDate, DeathDatePropertyValue, DeathDatePropertyParameters>
+  | VCardListProperty<PropertyName.expertise, ExpertisePropertyValue, ExpertisePropertyParameters>
+  | VCardListProperty<PropertyName.hobby, HobbyPropertyValue, HobbyPropertyParameters>
+  | VCardListProperty<PropertyName.interest, InterestPropertyValue, InterestPropertyParameters>
+  | VCardListProperty<PropertyName.orgDirectory, OrgDirectoryPropertyValue, OrgDirectoryPropertyParameters>
 )[];

@@ -18,6 +18,8 @@ export enum ParameterName {
   type = "TYPE",
   value = "VALUE",
   charset = "CHARSET",
+  level = "LEVEL",
+  index = "INDEX",
 }
 
 /**

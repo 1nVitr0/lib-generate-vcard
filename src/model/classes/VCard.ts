@@ -85,8 +85,23 @@ import {
   isPropertyObject,
   isClientPidMapDict,
 } from "../../validate/properties";
-import { MultiProperty, Property, BirthPlaceProperty, DeathDateProperty } from "../properties";
+import {
+  MultiProperty,
+  Property,
+  BirthPlaceProperty,
+  DeathDateProperty,
+  ExpertiseProperty,
+  HobbyProperty,
+  InterestProperty,
+  OrgDirectoryProperty,
+} from "../properties";
 import { PropertyParameters } from "../parameters";
+import {
+  ExpertisePropertyParameters,
+  HobbyPropertyParameters,
+  InterestPropertyParameters,
+  OrgDirectoryPropertyParameters,
+} from "../propertyParameters";
 import {
   ClientPIdMapPropertyParameters,
   BirthPlacePropertyParameters,
@@ -148,6 +163,10 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   private _birthPlace?: BirthPlaceProperty;
   private _deathPlace?: DeathPlaceProperty;
   private _deathDate?: DeathDateProperty;
+  private _expertise?: ExpertiseProperty;
+  private _hobby?: HobbyProperty;
+  private _interest?: InterestProperty;
+  private _orgDirectory?: OrgDirectoryProperty;
 
   /**
    * Generate a vCard instance from a vCard definition object.
@@ -199,6 +218,10 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
     if (vCardObject.birthPlace) vCard.setBirthPlace(vCardObject.birthPlace);
     if (vCardObject.deathPlace) vCard.setDeathPlace(vCardObject.deathPlace);
     if (vCardObject.deathDate) vCard.setDeathDate(vCardObject.deathDate);
+    if (vCardObject.expertise) vCard.setExpertise(vCardObject.expertise);
+    if (vCardObject.hobby) vCard.setHobby(vCardObject.hobby);
+    if (vCardObject.interest) vCard.setInterest(vCardObject.interest);
+    if (vCardObject.orgDirectory) vCard.setOrgDirectory(vCardObject.orgDirectory);
 
     return vCard;
   }
@@ -368,6 +391,18 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   }
   public get deathDate() {
     return this._deathDate;
+  }
+  public get expertise() {
+    return this._expertise;
+  }
+  public get hobby() {
+    return this._hobby;
+  }
+  public get interest() {
+    return this._interest;
+  }
+  public get orgDirectory() {
+    return this._orgDirectory;
   }
 
   /**
@@ -719,6 +754,38 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   public setDeathDate(deathDate: DeathDateProperty, parameters?: DeathDatePropertyParameters) {
     this._deathDate = VCard.asProperty(deathDate, parameters);
   }
+  /**
+   * Set the value of the expertise property.
+   *
+   * @param expertise the expertise property value of the vCard.
+   */
+  public setExpertise(expertise: ExpertiseProperty, parameters?: ExpertisePropertyParameters) {
+    this._expertise = VCard.asProperty(expertise, parameters);
+  }
+  /**
+   * Set the value of the hobby property.
+   *
+   * @param hobby the hobby property value of the vCard.
+   */
+  public setHobby(hobby: HobbyProperty, parameters?: HobbyPropertyParameters) {
+    this._hobby = VCard.asProperty(hobby, parameters);
+  }
+  /**
+   * Set the value of the interest property.
+   *
+   * @param interest the interest property value of the vCard.
+   */
+  public setInterest(interest: InterestProperty, parameters?: InterestPropertyParameters) {
+    this._interest = VCard.asProperty(interest, parameters);
+  }
+  /**
+   * Set the value of the osrgDirectory property.
+   *
+   * @param orgDirectory the orgDirectory property value of the vCard.
+   */
+  public setOrgDirectory(orgDirectory: OrgDirectoryProperty, parameters?: OrgDirectoryPropertyParameters) {
+    this._orgDirectory = VCard.asProperty(orgDirectory, parameters);
+  }
 
   /**
    * Generates a simplified vCard definition as a dictionary object.
@@ -773,6 +840,10 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
     if (this.birthPlace) vCard.birthPlace = this.birthPlace;
     if (this.deathPlace) vCard.deathPlace = this.deathPlace;
     if (this.deathDate) vCard.deathDate = this.deathDate;
+    if (this.expertise) vCard.expertise = this.expertise;
+    if (this.hobby) vCard.hobby = this.hobby;
+    if (this.interest) vCard.interest = this.interest;
+    if (this.orgDirectory) vCard.orgDirectory = this.orgDirectory;
 
     return vCard;
   }

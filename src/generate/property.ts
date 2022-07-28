@@ -13,7 +13,6 @@ import { Property, PropertyDescriptor } from "../model/properties";
 import { AddressPropertyDict, GenderPropertyDict, Kind, NamePropertyDict } from "../model/propertyDictionaries";
 import { PropertyName } from "../model/propertyNames";
 import { defaultPropertyTypes } from "../model/propertyTypes";
-import { VCardDefinition, VCardGroupDefinition } from "../model/vCard";
 import { isUtf8, isDateAndOrTime, isUri, isUtcOffset } from "../validate/dataTypes";
 import { isValueParameter } from "../validate/parameters";
 import { escapeParameterValue } from "./escape";
@@ -198,6 +197,7 @@ export function generateProperty(
     case "CALADRURI":
     case "CALURI":
     case "MEMBER":
+    case "ORG-DIRECTORY":
     case "TEL": // Also Text
     case "RELATED": // Also Text
     case "UID": // Also Text
@@ -217,6 +217,9 @@ export function generateProperty(
     case "CATEGORIES":
     case "NOTE":
     case "PRODID":
+    case "EXPERTISE":
+    case "HOBBY":
+    case "INTEREST":
     default: // Default to normal text value type
       resetPropertyValueType("text");
       return { property, value: generateTextValue(value as string | string[]), parameters };

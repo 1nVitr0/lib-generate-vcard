@@ -258,3 +258,27 @@ export type DeathPlacePropertyValue = Text | Uri;
  * @category Properties
  */
 export type DeathDatePropertyValue = DateAndOrTime | Text;
+/**
+ * Property value for expertiese properties
+ *
+ * @category Properties
+ */
+export type ExpertisePropertyValue = Text;
+/**
+ * Property value for hobby properties
+ *
+ * @category Properties
+ */
+export type HobbyPropertyValue = Text;
+/**
+ * Property value for interest properties
+ *
+ * @category Properties
+ */
+export type InterestPropertyValue = Text;
+/**
+ * Property value for org directory properties
+ *
+ * @category Properties
+ */
+export type OrgDirectoryPropertyValue = Text;

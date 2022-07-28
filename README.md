@@ -4,7 +4,7 @@
 [![npm-version](https://img.shields.io/npm/v/generate-vcard?logo=npm)](https://www.npmjs.com/package/generate-vcard)
 [![coverage](https://img.shields.io/codecov/c/github/1nVitr0/lib-generate-vcard?logo=codecov&token=D1VD9GHM8B)](https://codecov.io/gh/1nVitr0/lib-generate-vcard)
 
-A simple library for vCard generation compatible with [RFC 6350](https://tools.ietf.org/html/rfc6350) and [RFC 6474](https://tools.ietf.org/html/rfc6474).
+A simple library for vCard generation compatible with [RFC 6350](https://tools.ietf.org/html/rfc6350), [RFC 6474](https://tools.ietf.org/html/rfc6474) and [RFC 6715](https://tools.ietf.org/html/rfc6715).
 
 ## Documentation
 
