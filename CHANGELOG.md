@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.2.0...v1.2.1) (2022-07-28)
+
+
+### Bug Fixes
+
+* add package description ([ccddc62](https://github.com/1nVitr0/lib-generate-vcard/commit/ccddc627500a255ad7608e70395e59ca1c461493))
+
 # [1.2.0](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.1.0...v1.2.0) (2022-07-28)
 
 
