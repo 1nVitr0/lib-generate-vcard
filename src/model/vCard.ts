@@ -43,6 +43,9 @@ import {
 } from "./properties";
 import { Kind } from "./propertyDictionaries";
 import { PropertyName } from "./propertyNames";
+import { ContactUriProperty } from "./properties";
+import { ContactUriPropertyValue } from "./propertyValues";
+import { ContactUriPropertyParameters } from "./propertyParameters";
 import {
   NamePropertyParameters,
   BirthPlacePropertyParameters,
@@ -221,6 +224,8 @@ export interface VCardDefinition {
   hobby?: HobbyProperty;
   interest?: InterestProperty;
   orgDirectory?: OrgDirectoryProperty;
+  // Extensions defined by RDAP in RFC 8605
+  contactUri?: ContactUriProperty;
 }
 
 /**
@@ -306,4 +311,5 @@ export type VCardList = (
   | VCardListProperty<PropertyName.hobby, HobbyPropertyValue, HobbyPropertyParameters>
   | VCardListProperty<PropertyName.interest, InterestPropertyValue, InterestPropertyParameters>
   | VCardListProperty<PropertyName.orgDirectory, OrgDirectoryPropertyValue, OrgDirectoryPropertyParameters>
+  | VCardListProperty<PropertyName.contactUri, ContactUriPropertyValue, ContactUriPropertyParameters>
 )[];

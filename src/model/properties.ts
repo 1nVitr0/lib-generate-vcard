@@ -1,6 +1,8 @@
 import { Text, Uri } from "./datatypes";
 import { AltIdParameter, PropertyParameters } from "./parameters";
 import { Kind } from "./propertyDictionaries";
+import { ContactUriPropertyValue } from "./propertyValues";
+import { ContactUriPropertyParameters } from "./propertyParameters";
 import {
   ExpertisePropertyValue,
   HobbyPropertyValue,
@@ -465,3 +467,9 @@ export type InterestProperty = MultiOrSingleProperty<InterestPropertyValue, Inte
  * @category Properties
  */
 export type OrgDirectoryProperty = MultiOrSingleProperty<OrgDirectoryPropertyValue, OrgDirectoryPropertyParameters>;
+/**
+ * Property value for contact uri properties
+ *
+ * @category Properties
+ */
+export type ContactUriProperty = MultiOrSingleProperty<ContactUriPropertyValue, ContactUriPropertyParameters>;

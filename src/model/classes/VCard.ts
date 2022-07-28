@@ -96,6 +96,8 @@ import {
   OrgDirectoryProperty,
 } from "../properties";
 import { PropertyParameters } from "../parameters";
+import { ContactUriProperty } from "../properties";
+import { ContactUriPropertyParameters } from "../propertyParameters";
 import {
   ExpertisePropertyParameters,
   HobbyPropertyParameters,
@@ -167,6 +169,7 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   private _hobby?: HobbyProperty;
   private _interest?: InterestProperty;
   private _orgDirectory?: OrgDirectoryProperty;
+  private _contactUri?: ContactUriProperty;
 
   /**
    * Generate a vCard instance from a vCard definition object.
@@ -222,6 +225,7 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
     if (vCardObject.hobby) vCard.setHobby(vCardObject.hobby);
     if (vCardObject.interest) vCard.setInterest(vCardObject.interest);
     if (vCardObject.orgDirectory) vCard.setOrgDirectory(vCardObject.orgDirectory);
+    if (vCardObject.contactUri) vCard.setContactUri(vCardObject.contactUri);
 
     return vCard;
   }
@@ -403,6 +407,9 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   }
   public get orgDirectory() {
     return this._orgDirectory;
+  }
+  public get contactUri() {
+    return this._contactUri;
   }
 
   /**
@@ -786,6 +793,14 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   public setOrgDirectory(orgDirectory: OrgDirectoryProperty, parameters?: OrgDirectoryPropertyParameters) {
     this._orgDirectory = VCard.asProperty(orgDirectory, parameters);
   }
+  /**
+   * Set the value of the contact uri property.
+   *
+   * @param contactUri the contactUri property value of the vCard.
+   */
+  public setContactUri(contactUri: ContactUriProperty, parameters?: ContactUriPropertyParameters) {
+    this._contactUri = VCard.asProperty(contactUri, parameters);
+  }
 
   /**
    * Generates a simplified vCard definition as a dictionary object.
@@ -844,6 +859,7 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
     if (this.hobby) vCard.hobby = this.hobby;
     if (this.interest) vCard.interest = this.interest;
     if (this.orgDirectory) vCard.orgDirectory = this.orgDirectory;
+    if (this.contactUri) vCard.contactUri = this.contactUri;
 
     return vCard;
   }

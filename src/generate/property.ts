@@ -198,6 +198,7 @@ export function generateProperty(
     case "CALURI":
     case "MEMBER":
     case "ORG-DIRECTORY":
+    case "CONTACT-URI":
     case "TEL": // Also Text
     case "RELATED": // Also Text
     case "UID": // Also Text

@@ -51,4 +51,5 @@ export const defaultPropertyTypes: Record<PropertyName, ValueType | null> = {
   HOBBY: "text",
   INTEREST: "text",
   "ORG-DIRECTORY": "uri",
+  "CONTACT-URI": "uri",
 };

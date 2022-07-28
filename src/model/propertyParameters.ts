@@ -349,18 +349,23 @@ export interface ExpertisePropertyParameters
  *
  * @category Parameters
  */
-export interface HobbyPropertyParameters extends LevelParameter, IndexParameter {}
+export interface HobbyPropertyParameters extends ValueParameter<"text">, LevelParameter, IndexParameter {}
 
 /**
  * Valid Parameters for interest properties
  *
  * @category Parameters
  */
-export interface InterestPropertyParameters extends LevelParameter, IndexParameter {}
+export interface InterestPropertyParameters extends ValueParameter<"text">, LevelParameter, IndexParameter {}
 
 /**
  * Valid Parameters for org directory properties
  *
  * @category Parameters
  */
-export interface OrgDirectoryPropertyParameters extends PrefParameter, IndexParameter {}
+export interface OrgDirectoryPropertyParameters extends ValueParameter<"uri">, PrefParameter, IndexParameter {}
+
+/**
+ * Valid Parameters for org contact uri properties
+ */
+export interface ContactUriPropertyParameters extends ValueParameter<"uri">, PrefParameter {}

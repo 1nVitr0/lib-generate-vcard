@@ -282,3 +282,9 @@ export type InterestPropertyValue = Text;
  * @category Properties
  */
 export type OrgDirectoryPropertyValue = Text;
+/**
+ * Property value for contact uri properties
+ *
+ * @category Properties
+ */
+export type ContactUriPropertyValue = Uri;

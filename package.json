@@ -1,7 +1,7 @@
 {
   "name": "generate-vcard",
   "version": "1.2.1",
-  "description": "A simple library for vCard generation compatible with RFC 6350, RFC 6474 and RFC 6715",
+  "description": "A simple library for vCard generation compatible with RFC 6350, 6474, 6715 and 8605",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

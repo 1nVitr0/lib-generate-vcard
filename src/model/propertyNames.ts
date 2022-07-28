@@ -53,4 +53,6 @@ export enum PropertyName {
   hobby = "HOBBY",
   interest = "INTEREST",
   orgDirectory = "ORG-DIRECTORY",
+  // Extensions by RDAP in RFC 8605
+  contactUri = "CONTACT-URI",
 }
