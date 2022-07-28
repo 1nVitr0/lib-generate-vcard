@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.1.0...v1.2.0) (2022-07-28)
+
+
+### Features
+
+* allow providing parameters in VCard setters ([f62c7da](https://github.com/1nVitr0/lib-generate-vcard/commit/f62c7daf52dca3dcb8c6c4a0a366e6848732dce6))
+* export Property values and parameters separately ([292af6c](https://github.com/1nVitr0/lib-generate-vcard/commit/292af6caa0abac3b5cae1cd4fb5a0e043327c0d8))
+* support birth / death additions (RFC 6474) ([c90f6f6](https://github.com/1nVitr0/lib-generate-vcard/commit/c90f6f68b85e3ff937ed6062d2a7cd113f052daf))
+
 # [1.1.0](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.0.4...v1.1.0) (2022-07-26)
 
 
