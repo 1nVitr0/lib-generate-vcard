@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.4.0...v1.4.1) (2022-07-31)
+
+
+### Bug Fixes
+
+* export draft properties in experimental ([2e7f629](https://github.com/1nVitr0/lib-generate-vcard/commit/2e7f6297074b51e5af0f0b5836e61c18736dce4e))
+
 # [1.4.0](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.3.0...v1.4.0) (2022-07-31)
 
 
