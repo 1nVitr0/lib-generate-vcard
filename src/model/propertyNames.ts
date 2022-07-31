@@ -55,4 +55,11 @@ export enum PropertyName {
   orgDirectory = "ORG-DIRECTORY",
   // Extensions by RDAP in RFC 8605
   contactUri = "CONTACT-URI",
+  // Experimental extensions
+  socialProfile = "X-SOCIALPROFILE",
+  openId = "X-OPENID",
+  album = "X-ALBUM",
+  depiction = "X-DEPICTION",
+  socialCode = "X-SOCIALCODE",
+  abLabel = "X-ABLabel",
 }

@@ -288,3 +288,108 @@ export type OrgDirectoryPropertyValue = Text;
  * @category Properties
  */
 export type ContactUriPropertyValue = Uri;
+/**
+ * Property value for social profile properties
+ *
+ * @category Properties
+ * @experimental
+ */
+export type SocialProfilePropertyValue = Uri;
+/**
+ * Property value for open ID properties
+ *
+ * @category Properties
+ * @experimental
+ */
+export type OpenIdPropertyValue = Uri;
+/**
+ * Property value for album properties
+ *
+ * @category Properties
+ * @experimental
+ */
+export type AlbumPropertyValue = Uri;
+/**
+ * Property value for depiction properties
+ *
+ * @category Properties
+ * @experimental
+ */
+export type DepictionPropertyValue = Text | Uri;
+/**
+ * Property value for social code / geek Code properties
+ *
+ * @category Properties
+ * @experimental
+ */
+export type SocialCodePropertyValue = Text;
+/**
+ * Property value for ABLabel properties
+ *
+ * @category Properties
+ * @experimental
+ */
+export type ABLabelPropertyValue = Text;
+
+import { ValueType } from "./parameters";
+import { PropertyName } from "./propertyNames";
+
+/**
+ * @internal
+ * @category Internally Used
+ */
+export const defaultPropertyValueTypes: Record<PropertyName, ValueType | null> = {
+  ADR: "text",
+  ANNIVERSARY: "date-and-or-time",
+  BEGIN: null,
+  BDAY: "date-and-or-time",
+  CALADRURI: "uri",
+  CALURI: "uri",
+  CATEGORIES: "text",
+  CLIENTPIDMAP: null,
+  EMAIL: "text",
+  END: null,
+  FBURL: "uri",
+  FN: "text",
+  GENDER: "text",
+  GEO: "uri",
+  IMPP: "uri",
+  KEY: "uri",
+  KIND: "text",
+  LANG: "language-tag",
+  LOGO: "uri",
+  MEMBER: "uri",
+  N: "text",
+  NICKNAME: "text",
+  NOTE: "text",
+  ORG: "text",
+  PHOTO: "uri",
+  PRODID: "text",
+  RELATED: "uri",
+  REV: "timestamp",
+  ROLE: "text",
+  SOUND: "uri",
+  SOURCE: "uri",
+  TEL: "uri",
+  TZ: "text",
+  TITLE: "text",
+  UID: "uri",
+  URL: "uri",
+  VERSION: "text",
+  XML: "text",
+  BIRTHPLACE: "text",
+  DEATHPLACE: "text",
+  DEATHDATE: "date-and-or-time",
+  EXPERTISE: "text",
+  HOBBY: "text",
+  INTEREST: "text",
+  "ORG-DIRECTORY": "uri",
+  "CONTACT-URI": "uri",
+  // Experimental Properties
+  "X-SOCIALPROFILE": "uri",
+  "X-OPENID": "uri",
+  "X-ALBUM": "uri",
+  "X-DEPICTION": "text", // Default is a binary value
+  "X-SOCIALCODE": "text",
+  "X-ABLabel": "text",
+};

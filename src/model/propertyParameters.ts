@@ -1,5 +1,6 @@
 import { XName } from "./datatypes";
 import { LevelParameter, IndexParameter } from "./parameters";
+import { ServiceTypeParameter } from "../experimental/model/parameters";
 import {
   AltIdParameter,
   AnyParameter,
@@ -169,7 +170,8 @@ export interface EmailPropertyParameters extends ValueParameter<"text">, BaseTyp
 export interface ImppPropertyParameters
   extends ValueParameter<"uri">,
     MediaTypeParameter,
-    BaseTypedPropertyParameters {}
+    BaseTypedPropertyParameters,
+    ServiceTypeParameter {}
 
 /**
  * Valid Parameters for language properties
