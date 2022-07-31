@@ -18,7 +18,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "build": "tsup src/index.ts",
-    "build:prod": "tsup src/index.ts --dts",
+    "build:prod": "tsup src/index.ts --dts && tsup src/experimental/index.ts -d dist/experimental --dts-only",
     "build:dev": "tsup src/index.ts src/test/index.ts",
     "build:watch": "build:dev -- --watch",
     "build:ci": "concurrently npm:test:coverage npm:build:prod npm:docs",

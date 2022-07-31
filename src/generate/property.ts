@@ -12,12 +12,11 @@ import { ValueType } from "../model/parameters";
 import { Property, PropertyDescriptor } from "../model/properties";
 import { AddressPropertyDict, GenderPropertyDict, Kind, NamePropertyDict } from "../model/propertyDictionaries";
 import { PropertyName } from "../model/propertyNames";
-import { defaultPropertyTypes } from "../model/propertyTypes";
 import { isUtf8, isDateAndOrTime, isUri, isUtcOffset } from "../validate/dataTypes";
 import { isValueParameter } from "../validate/parameters";
 import { escapeParameterValue } from "./escape";
 import { generateParameters } from "./parameters";
-import { PropertyValue, RecordedPropertyValue } from "../model/propertyValues";
+import { defaultPropertyValueTypes, PropertyValue, RecordedPropertyValue } from "../model/propertyValues";
 import {
   generateBooleanValue,
   generateClientPidMapValue,
@@ -106,12 +105,12 @@ export function generateProperty(
   ) as PropertyName;
   let parameters = generateParameters(
     parameterDict,
-    defaultPropertyTypes[property] === parameterDict.value ? ["value"] : []
+    defaultPropertyValueTypes[property] === parameterDict.value ? ["value"] : []
   );
   let components: (string | string[])[] = [];
 
   const resetPropertyValueType = (type: ValueType) => {
-    if (defaultPropertyTypes[property] && defaultPropertyTypes[property] !== type) {
+    if (defaultPropertyValueTypes[property] && defaultPropertyValueTypes[property] !== type) {
       parameterDict.value = type;
       parameters = generateParameters(parameterDict);
     }
@@ -223,12 +222,16 @@ export function generateProperty(
     case "MEMBER":
     case "ORG-DIRECTORY":
     case "CONTACT-URI":
+    case "X-SOCIALPROFILE":
+    case "X-OPENID":
+    case "X-ALBUM":
     case "TEL": // Also Text
     case "RELATED": // Also Text
     case "UID": // Also Text
     case "KEY": // Also Text
     case "BIRTHPLACE": // Also Text
     case "DEATHPLACE": // Also Text
+    case "X-DEPICTION": // Also Text / Binary
       if (isUri(value) && !["TZ", "ANNIVERSARY", "BDAY", "DEATHDATE"].includes(property)) {
         resetPropertyValueType("uri");
         return { property, group, value: generateUriValue(value as Uri | Uri[]), parameters };
@@ -245,6 +248,8 @@ export function generateProperty(
     case "EXPERTISE":
     case "HOBBY":
     case "INTEREST":
+    case "X-DEPICTION":
+    case "X-ABLabel":
     default: // Default to normal text value type
       resetPropertyValueType("text");
       return { property, group, value: generateTextValue(value as string | string[]), parameters };
