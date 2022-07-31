@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.3.0...v1.4.0) (2022-07-31)
+
+
+### Features
+
+* add common X-Name properties and parameters ([c5f7ff6](https://github.com/1nVitr0/lib-generate-vcard/commit/c5f7ff644923107ff266bfa5c4a2a71e67b31fab))
+
 # [1.3.0](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.2.1...v1.3.0) (2022-07-28)
 
 
