@@ -48,6 +48,8 @@ const pages = getPages(pagesDir);
 module.exports = {
   includeVersion: true,
   categorizeByGroup: false,
+  entryPoints: ["src/index.ts", "src/experimental/index.ts"],
+  categoryOrder: ["Generate", "Properties", "Parameters", "Data Types", "Other", "*", "Internally Used"],
   pluginPages: {
     source: pagesDir,
     pages: pages instanceof Array ? pages : [pages],

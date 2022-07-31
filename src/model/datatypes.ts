@@ -2,7 +2,7 @@
  * X-name data type.
  * X-names are experimental data types and should not be used in production.
  *
- * @category DataType
+ * @category Data Types
  * @experimantal
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-3.3
  */
@@ -12,7 +12,7 @@ export type XName = `x-${string}` | `X-${string}`;
  * A string representation of a date.
  * `*` can be used to indicate an undisclosed date part.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -27,7 +27,7 @@ export type DateString = Exclude<`${number | "*"}-${number | "*"}-${number | "*"
  * A string representation of a time. The seconds part is optional.
  * `*` can be used to indicate an undisclosed time part.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -45,7 +45,7 @@ export type LocalTimeString = Exclude<
  * A string representation of a timezone. The minutes part is optional.
  * Can either be the UTC declarator `Z` or a timezone offset.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -59,7 +59,7 @@ export type TimezoneString = "Z" | `${"+" | "-"}${number}${`:${number}` | ""}`;
 /**
  * A string representation of a utc offset. The minutes part is optional.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -73,7 +73,7 @@ export type UtcOffset = Exclude<TimezoneString, "Z">;
  * A full string representation of a time. Can be combined with a timezone.
  * `*` can be used to indicate an undisclosed time part.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -88,7 +88,7 @@ export type TimeString = LocalTimeString | `${LocalTimeString}${TimezoneString}`
  * A string representation of a date, time or a date-time.
  * `*` can be used to indicate an undisclosed date-time part.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -104,7 +104,7 @@ export type DateAndOrTimeString = DateString | TimeString | `${DateString} ${Tim
  * A full string representation of a date-time.
  * `*` can be used to indicate an undisclosed date-time part.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -122,7 +122,7 @@ export type DateTimeString = `${`*-${number | "*"}-${number}` | `${number | "*"}
  * A date in string representation or as a Date object.
  * `*` can be used to indicate an undisclosed date part.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -137,7 +137,7 @@ export type DateOnly = DateString | Date;
  * A time in string representation or as a Date object.
  * `*` can be used to indicate an undisclosed time part.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -154,7 +154,7 @@ export type TimeOnly = TimeString | Date;
  * `*` can be used to indicate an undisclosed date-time part.
  * When a date or unix timestamp is used, the result will be a date-time.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -171,7 +171,7 @@ export type DateAndOrTime = number | DateAndOrTimeString | Date;
  * A full date-time in string representation, unix timestamp or as a Date object.
  * `*` can be used to indicate an undisclosed date-time part.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -187,7 +187,7 @@ export type DateTime = number | DateTimeString | Date;
  * A full date-time in string representation, unix timestamp or as a Date object.
  * All parts must be disclosed. Timezone is optional.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -204,7 +204,7 @@ export type TimeStamp =
 /**
  * A language Tag as defined in RFC 5646.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc5646#section-2.1
  * @example
  * ```ts
@@ -218,7 +218,7 @@ export type LanguageTag = string;
 /**
  * A text value
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc6350#section-4
  * @example
  * ```ts
@@ -230,7 +230,7 @@ export type Text = string;
 /**
  * A Uri without any restrictions on the scheme.
  *
- * @category DataType
+ * @category Data Types
  * @see https://datatracker.ietf.org/doc/html/rfc3986#section-3
  * @example
  * ```ts
