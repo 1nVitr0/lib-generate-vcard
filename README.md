@@ -14,7 +14,7 @@ as well as the `X-ABLabel` property used by GMail and iOs for URL labelling, as 
 
 ## Documentation
 
-For more documentation see [https://1nvitr0.github.io/lib-generate-vcard/](https://1nvitr0.github.io/lib-generate-vcard/modules.html).
+For more documentation see [https://1nvitr0.github.io/lib-generate-vcard/](https://1nvitr0.github.io/lib-generate-vcard/modules/generate_vcard.html).
 
 ## Installation
 
@@ -55,7 +55,12 @@ Alternative usages:
 import { VCard, Kind } from "generate-vcard";
 
 const vCard = new VCard(Kind.Individual);
-vCard.setFullName("Jane Doe"),
+vCard.setFullName("Jane Doe");
+vCard.setName({ honorificPrefix: "Dr.", familyName: "Doe", givenName: "Jane"  });
+vCard.setSocialProfile([
+  { value: "https://instagram.com/", parameters: { type: "instagram" } },
+  { value: "https://twitter.com/", parameters: { type: "twitter" } },
+]);
 
 vCard.toString();
 ```
@@ -66,5 +71,19 @@ import generateVCard, { Kind, PropertyName } from "generate-vcard";
 const vCard = generateVCard([
   { property: PropertyName.kind, value: Kind.Individual },
   { property: PropertyName.fullName, value: "Jane Doe" },
+  { 
+    property: Property.name,
+    value: { honorificPrefix: "Dr.", familyName: "Doe", givenName: "Jane"  }
+  },
+  {
+    property: Property.socialProfile,
+    value: "https://instagram.com/",
+    parameters: { type: "instagram" }
+  },
+  {
+    property: Property.socialProfile,
+    value: "https://twitter.com/",
+    parameters: { type: "twitter" }
+  }
 ]);
 ```
