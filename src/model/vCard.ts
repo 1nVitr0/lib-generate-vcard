@@ -66,7 +66,7 @@ import {
   DepictionPropertyValue,
   SocialCodePropertyValue,
   ABLabelPropertyValue,
-} from "./propertyValues";
+} from "../experimental/model/propertyValues";
 import {
   SocialProfilePropertyParameters,
   OpenIdPropertyParameters,

@@ -22,7 +22,7 @@
     "build:dev": "tsup src/index.ts src/test/index.ts",
     "build:watch": "build:dev -- --watch",
     "build:ci": "concurrently npm:test:coverage npm:build:prod npm:docs",
-    "docs": "typedoc src/index.ts"
+    "docs": "typedoc"
   },
   "author": "Aram Becker",
   "license": "MIT",
