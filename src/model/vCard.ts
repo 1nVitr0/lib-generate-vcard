@@ -1,3 +1,11 @@
+import {
+  ABLabelProperty,
+  AlbumProperty,
+  DepictionProperty,
+  OpenIdProperty,
+  SocialCodeProperty,
+  SocialProfileProperty,
+} from "../experimental/model/properties";
 import { XName } from "./datatypes";
 import { PropertyParameters } from "./parameters";
 import {
@@ -5,18 +13,25 @@ import {
   AnniversaryProperty,
   BeginProperty,
   BirthdayProperty,
+  BirthPlaceProperty,
   CalendarAddressUriProperty,
   CalendarUriProperty,
   CategoriesProperty,
   ClientPidMapDictionary,
   ClientPidMapProperty,
+  ContactUriProperty,
+  DeathDateProperty,
+  DeathPlaceProperty,
   EmailProperty,
   EndProperty,
+  ExpertiseProperty,
   FbUrlProperty,
   FullNameProperty,
   GenderProperty,
   GeoLocationProperty,
+  HobbyProperty,
   ImppProperty,
+  InterestProperty,
   KeyProperty,
   KindProperty,
   LanguageProperty,
@@ -26,6 +41,7 @@ import {
   NickNameProperty,
   NoteProperty,
   OrganizationProperty,
+  OrgDirectoryProperty,
   PhotoProperty,
   ProductIdProperty,
   RelatedProperty,
@@ -43,59 +59,51 @@ import {
 } from "./properties";
 import { Kind } from "./propertyDictionaries";
 import { PropertyName } from "./propertyNames";
-import { ContactUriProperty } from "./properties";
-import { ContactUriPropertyValue } from "./propertyValues";
-import { ContactUriPropertyParameters } from "./propertyParameters";
 import {
-  NamePropertyParameters,
-  BirthPlacePropertyParameters,
-  DeathDatePropertyParameters,
-} from "./propertyParameters";
-import {
-  BirthPlaceProperty,
-  DeathPlaceProperty,
-  DeathDateProperty,
-  ExpertiseProperty,
-  HobbyProperty,
-  InterestProperty,
-  OrgDirectoryProperty,
-} from "./properties";
-import {
-  BirthPlacePropertyValue,
-  DeathPlacePropertyValue,
-  DeathDatePropertyValue,
-  ExpertisePropertyValue,
-  HobbyPropertyValue,
-  InterestPropertyValue,
-  OrgDirectoryPropertyValue,
+  SocialProfilePropertyValue,
+  OpenIdPropertyValue,
+  AlbumPropertyValue,
+  DepictionPropertyValue,
+  SocialCodePropertyValue,
+  ABLabelPropertyValue,
 } from "./propertyValues";
 import {
-  ExpertisePropertyParameters,
-  HobbyPropertyParameters,
-  InterestPropertyParameters,
-  OrgDirectoryPropertyParameters,
-} from "./propertyParameters";
+  SocialProfilePropertyParameters,
+  OpenIdPropertyParameters,
+  AlbumPropertyParameters,
+  DepictionPropertyParameters,
+  SocialCodePropertyParameters,
+  ABLabelPropertyParameters,
+} from "../experimental/model/propertyParameters";
 import {
   AddressPropertyParameters,
   AnniversaryPropertyParameters,
   BirthdayPropertyParameters,
+  BirthPlacePropertyParameters,
   CalendarAddressUriPropertyParameters,
   CalendarUriPropertyParameters,
   CategoriesPropertyParameters,
   ClientPIdMapPropertyParameters,
+  ContactUriPropertyParameters,
+  DeathDatePropertyParameters,
   EmailPropertyParameters,
+  ExpertisePropertyParameters,
   FbUrlPropertyParameters,
   FullNamePropertyParameters,
   GenderPropertyParameters,
   GeoLocationPropertyParameters,
+  HobbyPropertyParameters,
   ImppPropertyParameters,
+  InterestPropertyParameters,
   KeyPropertyParameters,
   KindPropertyParameters,
   LanguagePropertyParameters,
   LogoPropertyParameters,
+  NamePropertyParameters,
   NickNamePropertyParameters,
   NotePropertyParameters,
   OrganizationPropertyParameters,
+  OrgDirectoryPropertyParameters,
   PhotoPropertyParameters,
   ProductIdPropertyParameters,
   RelatedPropertyParameters,
@@ -114,16 +122,23 @@ import {
   AddressPropertyValue,
   AnniversaryPropertyValue,
   BirthdayPropertyValue,
+  BirthPlacePropertyValue,
   CalendarAddressUriPropertyValue,
   CalendarUriPropertyValue,
   CategoriesPropertyValue,
   ClientPidMapPropertyValue,
+  ContactUriPropertyValue,
+  DeathDatePropertyValue,
+  DeathPlacePropertyValue,
   EmailPropertyValue,
+  ExpertisePropertyValue,
   FbUrlPropertyValue,
   FullNamePropertyValue,
   GenderPropertyValue,
   GeoLocationPropertyValue,
+  HobbyPropertyValue,
   ImppPropertyValue,
+  InterestPropertyValue,
   KeyPropertyValue,
   KindPropertyValue,
   LanguagePropertyValue,
@@ -132,6 +147,7 @@ import {
   NickNamePropertyValue,
   NotePropertyValue,
   OrganizationPropertyValue,
+  OrgDirectoryPropertyValue,
   PhotoPropertyValue,
   ProductIdPropertyValue,
   PropertyValue,
@@ -226,6 +242,19 @@ export interface VCardDefinition {
   orgDirectory?: OrgDirectoryProperty;
   // Extensions defined by RDAP in RFC 8605
   contactUri?: ContactUriProperty;
+  // Experimental Properties
+  /** @experimental */
+  socialProfile?: SocialProfileProperty;
+  /** @experimental */
+  openId?: OpenIdProperty;
+  /** @experimental */
+  album?: AlbumProperty;
+  /** @experimental */
+  depiction?: DepictionProperty;
+  /** @experimental */
+  socialCode?: SocialCodeProperty;
+  /** @experimental */
+  abLabel?: ABLabelProperty;
 }
 
 /**
@@ -312,4 +341,11 @@ export type VCardList = (
   | VCardListProperty<PropertyName.interest, InterestPropertyValue, InterestPropertyParameters>
   | VCardListProperty<PropertyName.orgDirectory, OrgDirectoryPropertyValue, OrgDirectoryPropertyParameters>
   | VCardListProperty<PropertyName.contactUri, ContactUriPropertyValue, ContactUriPropertyParameters>
+  | VCardListProperty<XName, PropertyValue, PropertyParameters>
+  | VCardListProperty<PropertyName.socialProfile, SocialProfilePropertyValue, SocialProfilePropertyParameters>
+  | VCardListProperty<PropertyName.openId, OpenIdPropertyValue, OpenIdPropertyParameters>
+  | VCardListProperty<PropertyName.album, AlbumPropertyValue, AlbumPropertyParameters>
+  | VCardListProperty<PropertyName.depiction, DepictionPropertyValue, DepictionPropertyParameters>
+  | VCardListProperty<PropertyName.socialCode, SocialCodePropertyValue, SocialCodePropertyParameters>
+  | VCardListProperty<PropertyName.abLabel, ABLabelPropertyValue, ABLabelPropertyParameters>
 )[];

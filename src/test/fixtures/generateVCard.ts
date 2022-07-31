@@ -284,4 +284,74 @@ export const vCardDescriptorFixtures: {
       "END:VCARD",
     ],
   },
+  {
+    name: "Experimental draft-george-vcarddav-vcard-extension-02",
+    fixture: {
+      kind: Kind.Individual,
+      fullName: "Jane Doe",
+      socialProfile: {
+        value: "https://instagram.com/example",
+        parameters: { type: "instagram" },
+      },
+      openId: "https://openid.example.com",
+      album: "https://example.com/album",
+      depiction: "https://example.com/depiction",
+      socialCode: "s: a--",
+    },
+    expected: [
+      "BEGIN:VCARD",
+      "VERSION:4.0",
+      "KIND:individual",
+      "FN:Jane Doe",
+      "X-SOCIALPROFILE;TYPE=instagram:https://instagram.com/example",
+      "X-OPENID:https://openid.example.com",
+      "X-ALBUM:https://example.com/album",
+      "X-DEPICTION;VALUE=uri:https://example.com/depiction",
+      "X-SOCIALCODE:s: a--",
+      "END:VCARD",
+    ],
+  },
+  {
+    name: "Experimental draft-daboo-vcard-service-type",
+    fixture: {
+      kind: Kind.Individual,
+      fullName: "Jane Doe",
+      impp: {
+        value: "https://twitter.com/example",
+        parameters: { serviceType: "Twitter" },
+      },
+    },
+    expected: [
+      "BEGIN:VCARD",
+      "VERSION:4.0",
+      "KIND:individual",
+      "FN:Jane Doe",
+      "IMPP;X-SERVICE-TYPE=Twitter:https://twitter.com/example",
+      "END:VCARD",
+    ],
+  },
+  {
+    name: "Experimental ABLabel",
+    fixture: {
+      kind: Kind.Individual,
+      fullName: "Jane Doe",
+      url: {
+        value: "https://example.com",
+        group: "blogUrl",
+      },
+      abLabel: {
+        value: "_$!<HomePage>!$_",
+        group: "blogUrl",
+      },
+    },
+    expected: [
+      "BEGIN:VCARD",
+      "VERSION:4.0",
+      "KIND:individual",
+      "FN:Jane Doe",
+      "blogUrl.URL:https://example.com",
+      "blogUrl.X-ABLabel:_$!<HomePage>!$_",
+      "END:VCARD",
+    ],
+  },
 ];

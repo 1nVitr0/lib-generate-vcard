@@ -98,6 +98,22 @@ import {
 import { PropertyParameters } from "../parameters";
 import { ContactUriProperty } from "../properties";
 import { ContactUriPropertyParameters } from "../propertyParameters";
+import { DepictionProperty } from "../../experimental/model/properties";
+import { DepictionPropertyParameters } from "../../experimental/model/propertyParameters";
+import {
+  SocialProfilePropertyParameters,
+  OpenIdPropertyParameters,
+  AlbumPropertyParameters,
+  SocialCodePropertyParameters,
+  ABLabelPropertyParameters,
+} from "../../experimental/model/propertyParameters";
+import {
+  SocialProfileProperty,
+  OpenIdProperty,
+  AlbumProperty,
+  SocialCodeProperty,
+  ABLabelProperty,
+} from "../../experimental/model/properties";
 import {
   ExpertisePropertyParameters,
   HobbyPropertyParameters,
@@ -170,6 +186,12 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   private _interest?: InterestProperty;
   private _orgDirectory?: OrgDirectoryProperty;
   private _contactUri?: ContactUriProperty;
+  private _socialProfile?: SocialProfileProperty;
+  private _openId?: OpenIdProperty;
+  private _album?: AlbumProperty;
+  private _depiction?: DepictionProperty;
+  private _socialCode?: SocialCodeProperty;
+  private _abLabel?: ABLabelProperty;
 
   /**
    * Generate a vCard instance from a vCard definition object.
@@ -226,6 +248,12 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
     if (vCardObject.interest) vCard.setInterest(vCardObject.interest);
     if (vCardObject.orgDirectory) vCard.setOrgDirectory(vCardObject.orgDirectory);
     if (vCardObject.contactUri) vCard.setContactUri(vCardObject.contactUri);
+    if (vCardObject.socialProfile) vCard.setSocialProfile(vCardObject.socialProfile);
+    if (vCardObject.openId) vCard.setOpenId(vCardObject.openId);
+    if (vCardObject.album) vCard.setAlbum(vCardObject.album);
+    if (vCardObject.depiction) vCard.setDepiction(vCardObject.depiction);
+    if (vCardObject.socialCode) vCard.setSocialCode(vCardObject.socialCode);
+    if (vCardObject.abLabel) vCard.setABLabel(vCardObject.abLabel);
 
     return vCard;
   }
@@ -410,6 +438,24 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   }
   public get contactUri() {
     return this._contactUri;
+  }
+  public get socialProfile() {
+    return this._socialProfile;
+  }
+  public get openId() {
+    return this._openId;
+  }
+  public get album() {
+    return this._album;
+  }
+  public get depiction() {
+    return this._depiction;
+  }
+  public get socialCode() {
+    return this._socialCode;
+  }
+  public get abLabel() {
+    return this._abLabel;
   }
 
   /**
@@ -801,6 +847,60 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   public setContactUri(contactUri: ContactUriProperty, parameters?: ContactUriPropertyParameters) {
     this._contactUri = VCard.asProperty(contactUri, parameters);
   }
+  /**
+   * Set the value of the social profile property.
+   *
+   * @param socialProfile the socialProfile property value of the vCard.
+   * @experimental
+   */
+  public setSocialProfile(socialProfile: SocialProfileProperty, parameters?: SocialProfilePropertyParameters) {
+    this._socialProfile = VCard.asProperty(socialProfile, parameters);
+  }
+  /**
+   * Set the value of the open ID property.
+   *
+   * @param openId the open ID property value of the vCard.
+   * @experimental
+   */
+  public setOpenId(openId: OpenIdProperty, parameters?: OpenIdPropertyParameters) {
+    this._openId = VCard.asProperty(openId, parameters);
+  }
+  /**
+   * Set the value of the album property.
+   *
+   * @param album the album property value of the vCard.
+   * @experimental
+   */
+  public setAlbum(album: AlbumProperty, parameters?: AlbumPropertyParameters) {
+    this._album = VCard.asProperty(album, parameters);
+  }
+  /**
+   * Set the value of the depiction property.
+   *
+   * @param depiction the depiction property value of the vCard.
+   * @experimental
+   */
+  public setDepiction(depiction: DepictionProperty, parameters?: DepictionPropertyParameters) {
+    this._depiction = VCard.asProperty(depiction, parameters);
+  }
+  /**
+   * Set the value of the social code property.
+   *
+   * @param socialCode the social code property value of the vCard.
+   * @experimental
+   */
+  public setSocialCode(socialCode: SocialCodeProperty, parameters?: SocialCodePropertyParameters) {
+    this._socialCode = VCard.asProperty(socialCode, parameters);
+  }
+  /**
+   * Set the value of the ABLabel property.
+   *
+   * @param abLabel the ABLabel property value of the vCard.
+   * @experimental
+   */
+  public setABLabel(abLabel: ABLabelProperty, parameters?: ABLabelPropertyParameters) {
+    this._abLabel = VCard.asProperty(abLabel, parameters);
+  }
 
   /**
    * Generates a simplified vCard definition as a dictionary object.
@@ -860,6 +960,12 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
     if (this.interest) vCard.interest = this.interest;
     if (this.orgDirectory) vCard.orgDirectory = this.orgDirectory;
     if (this.contactUri) vCard.contactUri = this.contactUri;
+    if (this.socialProfile) vCard.socialProfile = this.socialProfile;
+    if (this.openId) vCard.openId = this.openId;
+    if (this.album) vCard.album = this.album;
+    if (this.depiction) vCard.depiction = this.depiction;
+    if (this.socialCode) vCard.socialCode = this.socialCode;
+    if (this.abLabel) vCard.abLabel = this.abLabel;
 
     return vCard;
   }

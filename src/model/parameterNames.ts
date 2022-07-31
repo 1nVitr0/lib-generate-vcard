@@ -20,6 +20,8 @@ export enum ParameterName {
   charset = "CHARSET",
   level = "LEVEL",
   index = "INDEX",
+  /** @experimantal */
+  serviceType = "X-SERVICE-TYPE",
 }
 
 /**

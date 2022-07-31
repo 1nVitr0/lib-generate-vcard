@@ -1,0 +1,26 @@
+name: Upload develop base coverage data
+
+on:
+  push:
+    branches:
+      - "develop"
+
+jobs:
+  test:
+    name: Generate and upload coverage
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: { node-version: 16 }
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm run test:coverage
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
