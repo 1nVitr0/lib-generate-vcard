@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.4.1...v1.5.0) (2022-08-03)
+
+
+### Features
+
+* fold lines to 75 octets ([b283daa](https://github.com/1nVitr0/lib-generate-vcard/commit/b283daac584ed53752718ef2a92f25038b2a579d))
+
 ## [1.4.1](https://github.com/1nVitr0/lib-generate-vcard/compare/v1.4.0...v1.4.1) (2022-07-31)
 
 
