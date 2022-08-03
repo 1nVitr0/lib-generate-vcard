@@ -1,8 +1,27 @@
 import { MultiProperty, Property } from "../model/properties";
-import { VCardDefinition, VCardGroupDefinition } from "../model/vCard";
 import { isMultiProperty, isMultiPropertyList } from "../validate/properties";
 import { mergeParameters } from "./parameters";
 import { generateProperty } from "./property";
+
+function foldLine(line: string, maxLength = 75): string {
+  const encoder = new TextEncoder();
+  const lines: string[] = [];
+  let remaining = line;
+
+  while (encoder.encode(remaining).length > maxLength) {
+    let lineEnd = maxLength;
+    let part = remaining.slice(0, lineEnd);
+    while (encoder.encode(part).length > maxLength) {
+      part = remaining.slice(0, --lineEnd);
+    }
+    lines.push(part);
+    remaining = remaining.slice(lineEnd);
+  }
+
+  lines.push(remaining);
+
+  return lines.join("\r\n ");
+}
 
 /**
  * @internal
@@ -18,6 +37,7 @@ export function generateContentLine(propertyKey: string, data: Property | MultiP
   }
 
   const { property, value, parameters, group } = generateProperty(propertyKey, data);
-  /* istanbul ignore next */
-  return `${group ? `${group}.` : ""}${property}${parameters.length ? `;${parameters.join(";")}` : ""}:${value}`;
+  return foldLine(
+    `${group ? `${group}.` : ""}${property}${parameters.length ? `;${parameters.join(";")}` : ""}:${value}`
+  );
 }

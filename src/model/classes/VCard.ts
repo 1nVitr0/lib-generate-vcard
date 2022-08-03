@@ -705,7 +705,6 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
   public setUid(uid: UidProperty, parameters?: UIdPropertyParameters) {
     this._uid = VCard.asProperty(uid, parameters);
   }
-  /* istanbul ignore next */
   /**
    * Set the value of the clientPidMap property.
    *
@@ -943,7 +942,6 @@ export default class VCard implements VCardDefinition, Omit<VCardGroupDefinition
     if (this.revision) vCard.revision = this.revision;
     if (this.sound) vCard.sound = this.sound;
     if (this.uid) vCard.uid = this.uid;
-    /* istanbul ignore next */
     if (this.clientPidMap) vCard.clientPidMap = this.clientPidMap;
     if (this.url) vCard.url = this.url;
     if (this.version) vCard.version = this.version;
